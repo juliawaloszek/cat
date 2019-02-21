@@ -1,0 +1,69 @@
+.appicon {
+  @extend %fa-icon;
+  @extend .fa;
+
+  font-size: 1rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+.appmenu-icon {
+  @extend .appicon;
+
+  &:before {
+    content: fa-content($fa-var-ghost);
+  }
+}
+
+.sidenav-icon {
+  @extend .appicon;
+
+  &:before {
+    content: fa-content($fa-var-toolbox);
+  }
+}
+
+.confmenu-header-icon {
+  @extend .appicon;
+
+  &:before {
+    content: fa-content($fa-var-atom);
+  }
+}
+
+.user-icon {
+  @extend .appicon;
+  color: $cat-headers-color;
+  font-size: 1.25rem;
+
+  &:after {
+    margin-left: 0.4rem;
+    font-size: 2rem;
+    content: fa-content($fa-var-user-circle);
+  }
+}
+
+.login-icon {
+  @extend .appicon;
+
+  &:before {
+    content: fa-content($fa-var-sign-in-alt);
+  }
+}
+
+.logout-icon {
+  @extend .appicon;
+
+  &:before {
+    content: fa-content($fa-var-sign-out-alt);
+  }
+}
+
+.conf-app-list-item-icon {
+  @extend .appicon;
+
+  &:before {
+    font-size: 0.75rem;
+    content: fa-content($fa-var-chevron-right);
+  }
+}

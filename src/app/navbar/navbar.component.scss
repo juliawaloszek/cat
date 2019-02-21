@@ -1,0 +1,24 @@
+@import '~src/styles.scss';
+
+button {
+  margin: 5px;
+}
+
+div.wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+img.logo {
+  margin-left: 10px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.active-app-title {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: $cat-headers-color;
+}

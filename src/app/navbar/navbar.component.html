@@ -1,0 +1,25 @@
+<div class="wrapper">
+  <div>
+    <img alt="" class="logo" src="../../assets/img/cat1.gif" width="50" height="50">
+    <button mat-flat-button color="primary" routerLink="/appmenu">
+      <span class="appmenu-icon"></span>Aplikacje
+    </button>
+    <button mat-flat-button color="primary" routerLink="/sidenav">
+      <span class="sidenav-icon"></span>
+      Konfiguracja
+    </button>
+  </div>
+
+  <div class="active-app-title" *ngIf="activeApp">
+    {{ activeApp }}
+  </div>
+
+  <div class="login-info-container">
+    <span *ngIf="logged" class="user-icon">Lala Blabla</span>
+    <button mat-flat-button color="accent" (click)="onLoggingButtonClick()">
+      <span [ngClass]="logged ? 'logout-icon' : 'login-icon'"></span>
+      {{ logged ? "Wyloguj" : "Zaloguj" }}
+    </button>
+  </div>
+
+</div>

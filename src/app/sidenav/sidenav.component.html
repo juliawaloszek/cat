@@ -1,0 +1,47 @@
+<mat-divider></mat-divider>
+<mat-sidenav-container>
+  <mat-sidenav mode="side" opened>
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <span class="confmenu-header-icon"></span>
+        Lista aplikacji konfiguracyjnych
+      </mat-toolbar-row>
+    </mat-toolbar>
+
+    <mat-list>
+      <mat-list-item class="conf-app-list-item" *ngFor="let listItem of list" (click)="onSelect(listItem)" matRipple>
+        <span class="conf-app-list-item-icon"></span>
+        {{ listItem.name }}
+      </mat-list-item>
+    </mat-list>
+
+  </mat-sidenav>
+  <section>
+    <!--<mat-toolbar>-->
+      <!--<mat-toolbar-row>-->
+        <!--<span *ngIf="selectedItem">{{ selectedItem.name }}</span>-->
+      <!--</mat-toolbar-row>-->
+    <!--</mat-toolbar>-->
+
+    <div *ngIf="selectedItem">
+
+      <div class="iframe-container" *ngIf="selectedItem.url; else builtIn">
+        <iframe [src]="safeUrl"></iframe>
+        <!--<iframe src="https://vm-kajko:8181/app-gpt-configurator/modules/portal/index.xhtml"></iframe>-->
+      </div>
+
+      <ng-template #builtIn>
+        <div class="internal-content">
+          <span > {{ selectedItem.color }}</span>
+          <br><br>
+          <input [(ngModel)]="selectedItem.name" placeholder="name">
+
+          <br><br>
+          {{ selectedItem.content }}
+        </div>
+      </ng-template>
+
+    </div>
+
+  </section>
+</mat-sidenav-container>
