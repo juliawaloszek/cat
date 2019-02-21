@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ListItem } from './listitem';
-import { ApplicationlistService } from '../applicationlist.service';
+import { ApplicationlistService } from '../../applicationlist.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { LIST } from './sidenav/applist';
-import { ListItem } from './sidenav/listitem';
+import { LIST } from './content/sidenav/applist';
+import { ListItem } from './content/sidenav/listitem';
 import { Observable, of } from 'rxjs';
 
 @Injectable({

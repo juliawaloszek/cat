@@ -1,0 +1,51 @@
+@import '~src/styles';
+
+mat-sidenav-container {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-top-color: lightgray;
+  border-top-width: 1px;
+  border-top-style: solid;
+
+  * {
+    color: $cat-headers-color;
+  }
+}
+
+mat-sidenav {
+  width: 15%;
+  min-width: 200px;
+}
+
+mat-list {
+  margin: 0;
+  padding: 0;
+}
+
+section {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+section > div {
+  background-color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.internal-content {
+  margin: 10px;
+}
+
+.conf-app-list-item {
+  cursor: pointer;
+  height: 2.5rem !important;
+  display: flex;
+  align-items: center;
+}

@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  selector: 'app-navigation',
+  templateUrl: './navigation.component.html',
+  styleUrls: ['./navigation.component.scss']
 })
-
-export class NavbarComponent implements OnInit {
+export class NavigationComponent implements OnInit {
   logged = true;
   activeApp = 'dsafasd ddsffsd';
 
@@ -18,4 +17,5 @@ export class NavbarComponent implements OnInit {
   onLoggingButtonClick(): void {
     this.logged = !this.logged;
   }
+
 }

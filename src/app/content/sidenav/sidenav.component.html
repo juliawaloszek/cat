@@ -17,17 +17,11 @@
 
   </mat-sidenav>
   <section>
-    <!--<mat-toolbar>-->
-      <!--<mat-toolbar-row>-->
-        <!--<span *ngIf="selectedItem">{{ selectedItem.name }}</span>-->
-      <!--</mat-toolbar-row>-->
-    <!--</mat-toolbar>-->
 
     <div *ngIf="selectedItem">
 
       <div class="iframe-container" *ngIf="selectedItem.url; else builtIn">
         <iframe [src]="safeUrl"></iframe>
-        <!--<iframe src="https://vm-kajko:8181/app-gpt-configurator/modules/portal/index.xhtml"></iframe>-->
       </div>
 
       <ng-template #builtIn>
