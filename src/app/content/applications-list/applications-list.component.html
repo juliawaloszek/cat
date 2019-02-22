@@ -1,3 +1,6 @@
-<p>
-  applications-list works!
-</p>
+<mat-grid-list cols="3" rowHeight="150px">
+  <mat-grid-tile *ngFor="let application of applications" (click)="onTileClick(application)"
+                 [rowspan]="2" matRipple [matRippleCentered]="true">
+    {{ application.name }}
+  </mat-grid-tile>
+</mat-grid-list>

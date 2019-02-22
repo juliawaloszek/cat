@@ -13,26 +13,25 @@ import { MatListModule } from '@angular/material/list';
 import { MatRippleModule } from '@angular/material/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { NavigationComponent } from './content/navigation/navigation.component';
-import { AppmenuComponent } from './content/appmenu/appmenu.component';
-import { SidenavComponent } from './content/sidenav/sidenav.component';
 import { ApplicationsListComponent } from './content/applications-list/applications-list.component';
 import { ConfiguratorsListComponent } from './content/configurators-list/configurators-list.component';
 import { IframeComponent } from './components/iframe/iframe.component';
 import { GridComponent } from './components/grid/grid.component';
+import { TileComponent } from './components/tile/tile.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AppmenuComponent,
-    SidenavComponent,
     NavigationComponent,
     ApplicationsListComponent,
     ConfiguratorsListComponent,
     IframeComponent,
-    GridComponent
+    GridComponent,
+    TileComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +44,8 @@ import { GridComponent } from './components/grid/grid.component';
     MatListModule,
     MatRippleModule,
     MatGridListModule,
-    FormsModule
+    FormsModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

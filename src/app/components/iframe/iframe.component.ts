@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { Application } from '../../service/class/application';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import * as url from 'url';
 
@@ -14,11 +13,10 @@ export class IframeComponent implements OnInit {
   safeUrl: SafeResourceUrl;
 
   constructor(public sanitizer: DomSanitizer) {
-    console.log(this.url);
-    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
   }
 
   ngOnInit() {
+    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
   }
 
 }

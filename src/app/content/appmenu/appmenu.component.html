@@ -1,6 +1,0 @@
-<mat-grid-list cols="2" rowHeight="150px">
-  <mat-grid-tile *ngFor="let appItem of apps" (click)="onTileClick(appItem)" [rowspan]="2"
-        [style.background]="appItem.color" matRipple [matRippleCentered]="true">
-    {{ appItem.name }}
-  </mat-grid-tile>
-</mat-grid-list>

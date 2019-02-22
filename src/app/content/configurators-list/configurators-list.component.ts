@@ -10,7 +10,6 @@ import { ApplicationsService } from '../../service/applications.service';
 
 export class ConfiguratorsListComponent implements OnInit {
   applications = [];
-  showIframe = false;
 
   constructor( private applicationsService: ApplicationsService ) { }
 
@@ -19,12 +18,11 @@ export class ConfiguratorsListComponent implements OnInit {
   }
 
   onSelect( application: Application ): void {
-    this.showIframe = !!application.url;
     this.applicationsService.setActive(application);
   }
 
   getApplications(): void {
-    this.applicationsService.getApplications()
+    this.applicationsService.getApplications('configuration')
       .subscribe(applications => this.applications = applications);
   }
 }

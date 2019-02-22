@@ -6,7 +6,7 @@ export const APPS: Application[] = [{
   name: 'Konfigurator GPT',
   version: {},
   url: 'https://vm-kajko:8181/app-gpt-configurator/modules/portal/index.xhtml',
-  logo: '~src/assets/img/logo_gpt.png',
+  logo: '~src/assets/img/gpt-logo.png',
   type: 'configuration',
   restrictions: [],
   functionalities: []
@@ -16,7 +16,7 @@ export const APPS: Application[] = [{
   name: 'GPT',
   version: {},
   url: 'https://vm-kajko:8181/gpt4-dev',
-  logo: '~src/assets/img/logo_gpt.png',
+  logo: '~src/assets/img/gpt-logo.png',
   type: 'application',
   restrictions: [],
   functionalities: []
@@ -26,7 +26,7 @@ export const APPS: Application[] = [{
   name: 'Lelum Polelum',
   version: {},
   url: '',
-  logo: '~src/assets/img/logo_gpt.png',
+  logo: '~src/assets/img/gpt-logo.png',
   type: 'configuration',
   restrictions: [{
     id: 'gpt-tool-appliform',
@@ -58,7 +58,7 @@ export const APPS: Application[] = [{
   name: 'Konfigurator GPT',
   version: {},
   url: '',
-  logo: '~src/assets/img/cat1.gif',
+  logo: '~src/assets/img/gpt-logo.png',
   type: 'application',
   restrictions: [],
   functionalities: []
@@ -75,7 +75,27 @@ export const APPS: Application[] = [{
 }, {
   id: 'sgfdhgfh',
   guid: '',
-  name: 'Konfigurator GPT',
+  name: 'Jakaś inna aplikacja',
+  version: {},
+  url: '',
+  logo: '~src/assets/img/cat1.gif',
+  type: 'application',
+  restrictions: [],
+  functionalities: []
+}, {
+  id: 'sgfdhgfh',
+  guid: '',
+  name: 'JUUUUUU',
+  version: {},
+  url: '',
+  logo: '~src/assets/img/cat1.gif',
+  type: 'application',
+  restrictions: [],
+  functionalities: []
+}, {
+  id: 'sgfdhgfh',
+  guid: '',
+  name: 'AJ WAJ',
   version: {},
   url: '',
   logo: '~src/assets/img/cat1.gif',
@@ -85,7 +105,7 @@ export const APPS: Application[] = [{
 }, {
   id: 'gdfghjf',
   guid: '',
-  name: 'Konfigurator GPT',
+  name: 'HUHU',
   version: {},
   url: '',
   logo: '~src/assets/img/cat1.gif',
@@ -95,7 +115,7 @@ export const APPS: Application[] = [{
 }, {
   id: 'sgfdhwrtrtytruygfh',
   guid: '',
-  name: 'Konfigurator GPT',
+  name: 'JUPI',
   version: {},
   url: '',
   logo: '~src/assets/img/cat1.gif',

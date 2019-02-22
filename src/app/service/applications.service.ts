@@ -11,8 +11,12 @@ export class ApplicationsService {
 
   constructor() { }
 
-  getApplications(): Observable<Application[]> {
-    return of(APPS);
+  getApplications(type: string): Observable<Application[]> {
+    if (type !== '') {
+      return of(APPS.filter(application => application.type === type));
+    } else {
+      return of(APPS);
+    }
   }
 
   setActive(application: Application): void {
