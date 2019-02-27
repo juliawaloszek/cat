@@ -6,7 +6,7 @@ export const APPS: Application[] = [{
   name: 'Konfigurator GPT',
   version: {},
   url: 'https://vm-kajko:8181/app-gpt-configurator/modules/portal/index.xhtml',
-  logo: 'src/assets/img/gpt-logo.png',
+  logo: 'assets/img/gpt-logo.png',
   type: 'configuration',
   restrictions: [],
   functionalities: []
@@ -16,7 +16,7 @@ export const APPS: Application[] = [{
   name: 'GPT',
   version: {},
   url: 'https://vm-kajko:8181/gpt4-dev',
-  logo: 'src/assets/img/gpt-logo.png',
+  logo: 'assets/img/gpt-logo.png',
   type: 'application',
   restrictions: [],
   functionalities: []
@@ -26,7 +26,7 @@ export const APPS: Application[] = [{
   name: 'Lelum Polelum',
   version: {},
   url: '',
-  logo: '~src/assets/img/gpt-logo.png',
+  logo: 'assets/img/gpt-logo.png',
   type: 'configuration',
   restrictions: [{
     id: 'gpt-tool-appliform',
@@ -58,7 +58,7 @@ export const APPS: Application[] = [{
   name: 'Konfigurator GPT',
   version: {},
   url: '',
-  logo: '~src/assets/img/gpt-logo.png',
+  logo: 'assets/img/gpt-logo.png',
   type: 'application',
   restrictions: [],
   functionalities: []
@@ -68,7 +68,7 @@ export const APPS: Application[] = [{
   name: 'Konfigurator GPT',
   version: {},
   url: '',
-  logo: '~src/assets/img/cat1.gif',
+  logo: 'assets/img/cat1.gif',
   type: 'application',
   restrictions: [],
   functionalities: []
@@ -88,7 +88,7 @@ export const APPS: Application[] = [{
   name: 'JUUUUUU',
   version: {},
   url: '',
-  logo: '~src/assets/img/cat1.gif',
+  logo: 'assets/img/cat1.gif',
   type: 'application',
   restrictions: [],
   functionalities: []
@@ -98,7 +98,7 @@ export const APPS: Application[] = [{
   name: 'AJ WAJ',
   version: {},
   url: '',
-  logo: '~src/assets/img/cat1.gif',
+  logo: 'assets/img/cat1.gif',
   type: 'application',
   restrictions: [],
   functionalities: []
@@ -108,7 +108,7 @@ export const APPS: Application[] = [{
   name: 'HUHU',
   version: {},
   url: '',
-  logo: '~src/assets/img/cat1.gif',
+  logo: 'assets/img/cat1.gif',
   type: 'configuration',
   restrictions: [],
   functionalities: []
@@ -118,7 +118,7 @@ export const APPS: Application[] = [{
   name: 'JUPI',
   version: {},
   url: '',
-  logo: '~src/assets/img/cat1.gif',
+  logo: 'assets/img/cat1.gif',
   type: 'configuration',
   restrictions: [],
   functionalities: []

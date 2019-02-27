@@ -6,12 +6,13 @@ import { Observable, of } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ApplicationsService {
   activeApplication = null;
 
   constructor() { }
 
-  getApplications(type: string): Observable<Application[]> {
+  public getApplications(type: string): Observable<Application[]> {
     if (type !== '') {
       return of(APPS.filter(application => application.type === type));
     } else {
@@ -19,11 +20,11 @@ export class ApplicationsService {
     }
   }
 
-  setActive(application: Application): void {
+  public setActive(application: Application): void {
     this.activeApplication = application;
   }
 
-  getActive(): Application {
+  public getActive(): Application {
     return this.activeApplication;
   }
 }

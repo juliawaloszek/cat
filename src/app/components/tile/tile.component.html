@@ -1,4 +1,5 @@
-<div class="tile">
-  <img *ngIf="application.logo" [src]="application.logo" alt="">
-  <span class="application-name"> {{ application.name }} </span>
+<div class="tile" matRipple>
+  <div class="tile-logo" [matTooltip]="application.name">
+    <img *ngIf="application.logo" [src]="application.logo" alt="">
+  </div>
 </div>

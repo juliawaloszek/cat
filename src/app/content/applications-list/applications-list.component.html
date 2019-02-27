@@ -4,13 +4,13 @@
     <!--{{ application.name }}-->
   <!--</mat-grid-tile>-->
 <!--</mat-grid-list>-->
-
+<mat-divider></mat-divider>
 <div fxLayout="row wrap" fxLayoutGap="16px" fxLayoutAlign="flex-start">
   <app-tile *ngFor="let application of applications"
     [application]="application"
     (click)="onTileClick(application)"
     fxFlex="0 1 calc(33.3% - 32px)"
-    fxFlex.lt-md="0 1 calc(50% - 32px)"
-    fxFlex.lt-sm="100%"
+    fxFlex.lt-lg="0 1 calc(50% - 32px)"
+    fxFlex.lt-md="100%"
   ></app-tile>
 </div>
