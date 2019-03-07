@@ -4,10 +4,10 @@ import { ConfiguratorsListComponent } from './content/configurators-list/configu
 import { ApplicationsListComponent } from './content/applications-list/applications-list.component';
 
 const routes: Routes = [{
-  path: 'configurations',
+  path: 'configuration',
   component: ConfiguratorsListComponent
 }, {
-  path: 'applications',
+  path: 'application',
   component: ApplicationsListComponent
 }];
 

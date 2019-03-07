@@ -13,6 +13,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatRippleModule } from '@angular/material/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTooltipModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -46,6 +47,7 @@ import { TileComponent } from './components/tile/tile.component';
     MatRippleModule,
     MatGridListModule,
     MatTooltipModule,
+    MatIconModule,
     FormsModule,
     FlexLayoutModule
   ],

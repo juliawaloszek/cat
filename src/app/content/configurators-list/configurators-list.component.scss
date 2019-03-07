@@ -2,7 +2,7 @@
 
 mat-sidenav-container {
   position: fixed;
-  top: 50px;
+  top: $cat-toolbar-height;
   left: 0;
   right: 0;
   bottom: 0;
@@ -17,7 +17,16 @@ mat-sidenav-container {
 
 mat-sidenav {
   width: 15%;
-  min-width: 200px;
+  min-width: 270px;
+}
+
+mat-toolbar-row {
+  font-size: medium;
+  padding-left: 0.5rem;
+}
+
+mat-list-item {
+  padding-left: 1.5rem;
 }
 
 mat-list {

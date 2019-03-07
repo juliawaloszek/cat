@@ -1,8 +1,91 @@
-@import '~src/styles.scss';
+@import '~src/styles';
+
+button {
+  margin: 5px;
+}
+
+mat-toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .menu-list {
+    display: flex;
+  }
+
+  .logo-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: $cat-toolbar-height;
+    height: $cat-toolbar-height;
+
+    img {
+      width: 80%;
+      height: 80%;
+    }
+  }
+}
+
+.screen-under-960 {
+  display: none;
+}
+
+.active-app-title {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: $cat-headers-color;
+}
+
+@media screen and (max-width: 959px) {
+  .screen-over-960{
+    display: none;
+  }
+
+  .screen-under-960{
+    display: flex;
+    padding: 0;
+  }
+
+  .menu-button {
+    min-width: 32px;
+    padding: 0 8px;
+
+    * {
+      font-size: 1.5rem;
+    }
+  }
+
+  div.buttons-container {
+    display: none;
+  }
+
+  .list-item {
+    cursor: pointer;
+    height: 2.5rem !important;
+    display: flex;
+    align-items: center;
+  }
+
+  mat-sidenav-container {
+    position: absolute;
+    top: $cat-toolbar-height;
+  }
+}
 
 div.content-container {
-  position: fixed;
-  top: auto;
-  width: 100%;
+  position: absolute;
+  top: $cat-toolbar-height;
+  left: 0;
+  right: 0;
+  bottom: 0;
   overflow: auto;
+
+  * {
+    //position: absolute;
+    height: 100%;
+    width: 100%;
+  }
 }

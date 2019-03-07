@@ -65,11 +65,11 @@ export const APPS: Application[] = [{
 }, {
   id: 'dfasfasdfsd',
   guid: '',
-  name: 'Konfigurator GPT',
+  name: 'ONET',
   version: {},
-  url: '',
+  url: 'http://www.onet.pl',
   logo: 'assets/img/cat1.gif',
-  type: 'application',
+  type: 'configuration',
   restrictions: [],
   functionalities: []
 }, {

@@ -7,46 +7,25 @@ $cat-toolbar-height: 50px;
 
 // Plus imports for other components in your app.
 @import 'assets/fontawesome/scss/fontawesome.scss';
-@import 'assets/fontawesome/scss/solid.scss';
 @import 'assets/fontawesome/scss/brands.scss';
+@import 'assets/fontawesome/scss/regular.scss';
+@import 'assets/fontawesome/scss/solid.scss';
 @import 'assets/scss/icons.scss';
-
-//@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import 'assets/scss/theme-light.scss';
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
 @include mat-core();
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$cat-primary: mat-palette($mat-blue-gray);
-$cat-accent: mat-palette($mat-pink, A200, A100, A400);
-
-// The warn palette is optional (defaults to red).
-$cat-warn: mat-palette($mat-red);
-
-// Create the theme object (a Sass map containing all of the palettes).
-$cat-theme: mat-light-theme($cat-primary, $cat-accent, $cat-warn);
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include angular-material-theme($cat-theme);
-
 /* You can add global styles to this file, and also import other style files */
 
 body {
+  //background-color: map-get($cat-theme, background);
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: medium;
-  overflow: hidden;
   margin: 0;
   padding: 0;
-}
-
-button {
-  vertical-align: middle;
 }
 
 mat-toolbar {
@@ -58,11 +37,8 @@ mat-toolbar {
   min-height: auto;
 }
 
-mat-toolbar-row {
-  font-size: medium;
-  padding-left: 0.5rem;
-}
-
-mat-list-item {
-  padding-left: 1.5rem;
+.layout-flex-row {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
 }

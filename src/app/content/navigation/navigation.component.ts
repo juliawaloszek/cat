@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class NavigationComponent implements OnInit {
   logged = true;
   activeApp = 'dsafasd ddsffsd';
+  showMenu = false;
 
   constructor() { }
 
@@ -16,6 +17,10 @@ export class NavigationComponent implements OnInit {
 
   onLoggingButtonClick(): void {
     this.logged = !this.logged;
+  }
+
+  onMenuButtonClick(): void {
+    this.showMenu = !this.showMenu;
   }
 
 }

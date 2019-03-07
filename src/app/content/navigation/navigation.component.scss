@@ -4,15 +4,31 @@ button {
   margin: 5px;
 }
 
-div.wrapper {
+mat-toolbar {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
+
+  .menu-list {
+    display: flex;
+  }
+
+  .logo-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: $cat-toolbar-height;
+    height: $cat-toolbar-height;
+
+    img {
+      width: 80%;
+      height: 80%;
+    }
+  }
 }
 
-img.logo {
-  margin-left: 10px;
-  margin-right: 10px;
-  vertical-align: middle;
+.screen-under-960 {
+  display: none;
 }
 
 .active-app-title {
@@ -21,4 +37,40 @@ img.logo {
   font-size: 1.5rem;
   font-weight: 500;
   color: $cat-headers-color;
+}
+
+@media screen and (max-width: 959px) {
+  .screen-over-960{
+    display: none;
+  }
+
+  .screen-under-960{
+    display: flex;
+    padding: 0;
+  }
+
+  .menu-button {
+    min-width: 32px;
+    padding: 0 8px;
+
+    * {
+      font-size: 1.5rem;
+    }
+  }
+
+  div.buttons-container {
+    display: none;
+  }
+
+  .list-item {
+    cursor: pointer;
+    height: 2.5rem !important;
+    display: flex;
+    align-items: center;
+  }
+
+  #sidenav-menu {
+    position: absolute;
+    top: $cat-toolbar-height;
+  }
 }

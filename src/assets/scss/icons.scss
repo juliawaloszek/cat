@@ -1,4 +1,4 @@
-.appicon {
+.icon {
   @extend %fa-icon;
   @extend .fa;
 
@@ -7,8 +7,19 @@
   vertical-align: middle;
 }
 
+.bars-icon {
+  @extend .icon;
+  font-size: 1.5rem;
+
+  &:before {
+    content: fa-content($fa-var-bars);
+  }
+}
+
 .appmenu-icon {
-  @extend .appicon;
+  @extend .icon;
+  min-width: 16px;
+  text-align: center;
 
   &:before {
     content: fa-content($fa-var-ghost);
@@ -16,15 +27,16 @@
 }
 
 .sidenav-icon {
-  @extend .appicon;
+  @extend .icon;
 
   &:before {
+    width: 1.5rem;
     content: fa-content($fa-var-toolbox);
   }
 }
 
 .confmenu-header-icon {
-  @extend .appicon;
+  @extend .icon;
 
   &:before {
     content: fa-content($fa-var-atom);
@@ -32,7 +44,7 @@
 }
 
 .user-icon {
-  @extend .appicon;
+  @extend .icon;
   color: $cat-headers-color;
   font-size: 1.25rem;
 
@@ -44,7 +56,7 @@
 }
 
 .login-icon {
-  @extend .appicon;
+  @extend .icon;
 
   &:before {
     content: fa-content($fa-var-sign-in-alt);
@@ -52,7 +64,7 @@
 }
 
 .logout-icon {
-  @extend .appicon;
+  @extend .icon;
 
   &:before {
     content: fa-content($fa-var-sign-out-alt);
@@ -60,7 +72,7 @@
 }
 
 .conf-app-list-item-icon {
-  @extend .appicon;
+  @extend .icon;
 
   &:before {
     font-size: 0.75rem;
