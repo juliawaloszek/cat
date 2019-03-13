@@ -1,17 +1,13 @@
 @import '~src/styles';
 
-button {
-  margin: 5px;
+.mat-toolbar-multiple-rows {
+  height: $cat-toolbar-height;
 }
 
-mat-toolbar {
+mat-toolbar-row {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
-  .menu-list {
-    display: flex;
-  }
 
   .logo-container {
     display: flex;
@@ -21,14 +17,29 @@ mat-toolbar {
     height: $cat-toolbar-height;
 
     img {
-      width: 80%;
-      height: 80%;
+      width: 70%;
+      height: 70%;
     }
   }
 }
 
+.buttons-container {
+  display: flex;
+  align-items: center;
+}
+
+.content-container {
+  flex-grow: 100;
+}
+
+.footer-container {
+  position: fixed;
+  bottom: 0;
+}
+
 .screen-under-960 {
   display: none;
+  padding: 0;
 }
 
 .active-app-title {
@@ -46,7 +57,6 @@ mat-toolbar {
 
   .screen-under-960{
     display: flex;
-    padding: 0;
   }
 
   .menu-button {
@@ -58,34 +68,10 @@ mat-toolbar {
     }
   }
 
-  div.buttons-container {
-    display: none;
-  }
-
   .list-item {
     cursor: pointer;
     height: 2.5rem !important;
     display: flex;
     align-items: center;
-  }
-
-  mat-sidenav-container {
-    position: absolute;
-    top: $cat-toolbar-height;
-  }
-}
-
-div.content-container {
-  position: absolute;
-  top: $cat-toolbar-height;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow: auto;
-
-  * {
-    //position: absolute;
-    height: 100%;
-    width: 100%;
   }
 }

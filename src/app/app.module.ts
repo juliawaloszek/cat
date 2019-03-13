@@ -17,23 +17,27 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { NavigationComponent } from './content/navigation/navigation.component';
+// import { NavigationComponent } from './content/navigation/navigation.component';
 import { ApplicationsListComponent } from './content/applications-list/applications-list.component';
 import { ConfiguratorsListComponent } from './content/configurators-list/configurators-list.component';
 import { IframeComponent } from './components/iframe/iframe.component';
 import { GridComponent } from './components/grid/grid.component';
 import { TileComponent } from './components/tile/tile.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { InfoComponent } from './content/info/info.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationComponent,
+    // NavigationComponent,
     ApplicationsListComponent,
     ConfiguratorsListComponent,
     IframeComponent,
     GridComponent,
-    TileComponent
+    TileComponent,
+    FooterComponent,
+    InfoComponent
   ],
   imports: [
     BrowserModule,

@@ -1,16 +1,9 @@
-<!--<mat-grid-list cols="3" rowHeight="150px">-->
-  <!--<mat-grid-tile *ngFor="let application of applications" (click)="onTileClick(application)"-->
-                 <!--[rowspan]="2" matRipple [matRippleCentered]="true">-->
-    <!--{{ application.name }}-->
-  <!--</mat-grid-tile>-->
-<!--</mat-grid-list>-->
-<mat-divider></mat-divider>
-<div fxLayout="row wrap" fxLayoutGap="16px" fxLayoutAlign="flex-start">
+<div class="tile-container" fxLayout="row wrap" fxLayoutGap="16px" fxLayoutAlign="flex-start">
   <app-tile *ngFor="let application of applications"
     [application]="application"
     (click)="onTileClick(application)"
     fxFlex="0 1 calc(33.3% - 32px)"
     fxFlex.lt-lg="0 1 calc(50% - 32px)"
-    fxFlex.lt-md="100%"
+    fxFlex.lt-sm="100%"
   ></app-tile>
 </div>

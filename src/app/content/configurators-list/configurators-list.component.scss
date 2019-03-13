@@ -9,10 +9,6 @@ mat-sidenav-container {
   border-top-color: lightgray;
   border-top-width: 1px;
   border-top-style: solid;
-
-  * {
-    color: $cat-headers-color;
-  }
 }
 
 mat-sidenav {
@@ -25,13 +21,13 @@ mat-toolbar-row {
   padding-left: 0.5rem;
 }
 
-mat-list-item {
-  padding-left: 1.5rem;
-}
-
 mat-list {
   margin: 0;
   padding: 0;
+}
+
+mat-list-item {
+  padding-left: 1.5rem;
 }
 
 section {
@@ -57,4 +53,8 @@ section > div {
   height: 2.5rem !important;
   display: flex;
   align-items: center;
+}
+
+@media screen and (max-width: 959px) {
+
 }
