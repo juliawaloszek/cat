@@ -1,11 +1,11 @@
-:host > div {
-  padding: 20px 0 0 5%;
-}
+@import '~src/styles';
 
-mat-grid-tile {
-  background-color: beige;
-  padding: 20px;
-  border: solid 3px antiquewhite;
+.tile-container {
+  padding: 20px 0 0 5%;
+
+  :last-child {
+    margin-right: 16px;
+  }
 }
 
 .tile-list {

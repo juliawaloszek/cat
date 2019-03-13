@@ -3,7 +3,7 @@
 @import '~@angular/material/theming';
 
 $cat-headers-color: #555;
-$cat-toolbar-height: 50px;
+$cat-toolbar-height: 64px;
 
 // Plus imports for other components in your app.
 @import 'assets/fontawesome/scss/fontawesome.scss';
@@ -24,21 +24,45 @@ body {
   //background-color: map-get($cat-theme, background);
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: medium;
+  overflow: hidden;
   margin: 0;
   padding: 0;
 }
 
+app-root {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+  align-content: stretch;
+}
+
+button {
+  margin: 5px;
+}
+
 mat-toolbar {
+  height: $cat-toolbar-height;
+}
+
+mat-toolbar-row {
   line-height: 1rem;
   height: $cat-toolbar-height;
 }
 
-.mat-toolbar-multiple-rows {
-  min-height: auto;
-}
+//* {
+//  color: $cat-headers-color;
+//}
 
 .layout-flex-row {
   display: flex;
   justify-content: center;
   flex-direction: row;
+}
+
+.v-center {
+  align-items: center;
+  vertical-align: middle;
 }

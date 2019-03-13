@@ -1,68 +1,69 @@
-<mat-toolbar class="screen-over-960">
-  <div class="layout-flex-row">
-    <div class="logo-container">
-      <img alt="" class="logo" src="../../../assets/img/cat.png">
+<mat-toolbar>
+  <mat-toolbar-row class="header screen-over-960">
+    <div class="layout-flex-row">
+      <div class="logo-container">
+        <!--<button mat-button routerLink="/"></button>-->
+        <img alt="" routerLink="/" class="logo" src="../../../assets/img/cat.png">
+      </div>
+
+      <div class="buttons-container">
+        <button mat-flat-button color="primary" routerLink="/application">
+          <span class="appmenu-icon"></span>Aplikacje
+        </button>
+        <button mat-flat-button color="primary" routerLink="/configuration">
+          <span class="sidenav-icon"></span>Konfiguracja
+        </button>
+      </div>
     </div>
 
-    <div class="buttons-container">
-      <button mat-flat-button color="primary" routerLink="/application">
-        <span class="appmenu-icon"></span>Aplikacje
-      </button>
-      <button mat-flat-button color="primary" routerLink="/configuration">
-        <span class="sidenav-icon"></span>Konfiguracja
+    <div class="header login-container">
+      <span *ngIf="logged" class="user-icon">Lala Blabla</span>
+      <button mat-flat-button color="accent" (click)="onLoggingButtonClick()">
+        <span [ngClass]="logged ? 'logout-icon' : 'login-icon'"></span>
+        {{ logged ? "Wyloguj" : "Zaloguj" }}
       </button>
     </div>
-  </div>
-  <!--<div class="active-app-title" *ngIf="activeApp">-->
-  <!--{{ activeApp }}-->
-  <!--</div>-->
+  </mat-toolbar-row>
 
-  <div class="login-container">
-    <span *ngIf="logged" class="user-icon">Lala Blabla</span>
-    <button mat-flat-button color="accent" (click)="onLoggingButtonClick()">
-      <span [ngClass]="logged ? 'logout-icon' : 'login-icon'"></span>
-      {{ logged ? "Wyloguj" : "Zaloguj" }}
-    </button>
-  </div>
+  <mat-toolbar-row class="screen-under-960">
+    <div class="layout-flex-row v-center">
+      <button mat-icon-button color="accent" class="menu-button"
+              (click)="sidenavMenu.toggle()"><mat-icon>list</mat-icon></button>
+      <div class="logo-container">
+        <img alt="" routerLink="/" class="logo" src="../../../assets/img/cat.png">
+      </div>
+    </div>
+
+    <div class="user-container">
+      <span *ngIf="logged" class="user-icon">Lala Blabla</span>
+    </div>
+  </mat-toolbar-row>
 </mat-toolbar>
 
-<mat-toolbar class="screen-under-960">
-  <div class="layout-flex-row">
-    <button mat-icon-button color="accent" class="menu-button"
-            (click)="sidenavMenu.toggle()"><mat-icon>list</mat-icon></button>
-    <div class="logo-container">
-      <img alt="" class="logo" src="../../../assets/img/cat.png">
-    </div>
-  </div>
+<mat-divider></mat-divider>
 
+<mat-sidenav-container class="content-container">
 
-  <!--<div class="active-app-title" *ngIf="activeApp">-->
-  <!--{{ activeApp }}-->
-  <!--</div>-->
-
-  <div class="user-container">
-    <span *ngIf="logged" class="user-icon">Lala Blabla</span>
-  </div>
-</mat-toolbar>
-
-<mat-sidenav-container>
   <mat-sidenav #sidenavMenu>
     <mat-nav-list>
-      <mat-list-item class="list-item" routerLink="/application">
-        <span class="appmenu-icon"></span> Aplikacje
+      <mat-list-item *ngFor="let link of linksList" class="list-item" [routerLink]=link.link (click)="sidenavMenu.toggle()">
+        <span [ngClass]="link.iconClass"></span> {{ link.name }}
       </mat-list-item>
-      <mat-list-item class="list-item" routerLink="/configuration">
-        <span class="sidenav-icon"></span> Konfiguracja
-      </mat-list-item>
+      
       <mat-list-item class="list-item" routerLink="/logout" (click)="onLoggingButtonClick()">
         <span [ngClass]="logged ? 'logout-icon' : 'login-icon'"></span>
         {{ logged ? "Wyloguj" : "Zaloguj" }}
       </mat-list-item>
     </mat-nav-list>
+
+    <footer class="page-footer footer-container">
+      <div class="footer-copyright text-center py-3">© 2018 Copyright:</div>
+    </footer>
   </mat-sidenav>
-  <mat-sidenav-content>
-    <div class="content-container">
-      <router-outlet></router-outlet>
-    </div>
+
+  <mat-sidenav-content class="sidenav-content">
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
+
 </mat-sidenav-container>
+
