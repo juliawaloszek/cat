@@ -68,7 +68,7 @@ export const APPS: Application[] = [{
   name: 'ONET',
   version: {},
   url: 'http://www.onet.pl',
-  logo: 'assets/img/cat1.gif',
+  logo: 'assets/img/cat.png',
   type: 'configuration',
   restrictions: [],
   functionalities: []
@@ -78,7 +78,7 @@ export const APPS: Application[] = [{
   name: 'Jakaś inna aplikacja',
   version: {},
   url: '',
-  logo: '~src/assets/img/cat1.gif',
+  logo: '~src/assets/img/cat.png',
   type: 'application',
   restrictions: [],
   functionalities: []
@@ -88,7 +88,7 @@ export const APPS: Application[] = [{
   name: 'JUUUUUU',
   version: {},
   url: '',
-  logo: 'assets/img/cat1.gif',
+  logo: 'assets/img/cat.png',
   type: 'application',
   restrictions: [],
   functionalities: []
@@ -98,7 +98,7 @@ export const APPS: Application[] = [{
   name: 'AJ WAJ',
   version: {},
   url: '',
-  logo: 'assets/img/cat1.gif',
+  logo: 'assets/img/cat.png',
   type: 'application',
   restrictions: [],
   functionalities: []
@@ -108,7 +108,7 @@ export const APPS: Application[] = [{
   name: 'HUHU',
   version: {},
   url: '',
-  logo: 'assets/img/cat1.gif',
+  logo: 'assets/img/cat.png',
   type: 'configuration',
   restrictions: [],
   functionalities: []
@@ -118,7 +118,7 @@ export const APPS: Application[] = [{
   name: 'JUPI',
   version: {},
   url: '',
-  logo: 'assets/img/cat1.gif',
+  logo: 'assets/img/cat.png',
   type: 'configuration',
   restrictions: [],
   functionalities: []
