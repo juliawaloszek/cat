@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Application } from '../../service/class/application';
-import { ApplicationsService } from '../../service/applications.service';
+import {Component, OnInit} from '@angular/core';
+import {Application} from '../../service/class/application';
+import {ApplicationsService} from '../../service/applications.service';
 
 @Component({
   selector: 'app-applications-list',
@@ -8,16 +8,17 @@ import { ApplicationsService } from '../../service/applications.service';
   styleUrls: ['./applications-list.component.scss']
 })
 export class ApplicationsListComponent implements OnInit {
-  applications = [];
+  applications: Application[];
 
-  constructor( private applicationsService: ApplicationsService ) { }
+  constructor(private applicationsService: ApplicationsService) {
+  }
 
   ngOnInit() {
     this.getApplications();
     console.log(this.applications);
   }
 
-  onTileClick( application: Application ): void {
+  onTileClick(application: Application): void {
     // this.applicationsService.setActive(application);
     if (application.url) {
       window.open(application.url);

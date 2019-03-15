@@ -50,7 +50,17 @@ mat-toolbar-row {
   color: $cat-headers-color;
 }
 
+mat-sidenav {
+  * {
+    overflow-x: hidden;
+  }
+}
+
 @media screen and (max-width: 959px) {
+  mat-sidenav {
+    width: 40%;
+  }
+
   .screen-over-960{
     display: none;
   }
@@ -73,5 +83,18 @@ mat-toolbar-row {
     height: 2.5rem !important;
     display: flex;
     align-items: center;
+
+    app-list {
+      mat-list {
+        margin-left: 2rem;
+        padding: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 599px) {
+  mat-sidenav {
+    width: 75%;
   }
 }

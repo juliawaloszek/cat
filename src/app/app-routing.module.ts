@@ -11,6 +11,9 @@ const routes: Routes = [{
   path: 'configuration',
   component: ConfiguratorsListComponent
 }, {
+  path: 'configuration/:id',
+  component: ConfiguratorsListComponent
+}, {
   path: 'application',
   component: ApplicationsListComponent
 }];

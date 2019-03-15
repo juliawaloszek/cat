@@ -7,13 +7,15 @@
       </mat-toolbar-row>
     </mat-toolbar>
 
-    <mat-list>
-      <mat-list-item class="conf-app-list-item" *ngFor="let application of applications"
-                     (click)="onSelect(application)" matRipple>
+    <app-list [type]="'configuration'"></app-list>
 
-        <span class="conf-app-list-item-icon"></span> {{ application.name }}
-      </mat-list-item>
-    </mat-list>
+    <!--<mat-list>-->
+      <!--<mat-list-item class="conf-app-list-item" *ngFor="let application of applications"-->
+                     <!--(click)="onSelect(application)" matRipple>-->
+
+        <!--<span class="list-item-icon"></span> {{ application.name }}-->
+      <!--</mat-list-item>-->
+    <!--</mat-list>-->
 
   </mat-sidenav>
 

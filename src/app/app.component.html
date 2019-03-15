@@ -44,25 +44,28 @@
 
 <mat-sidenav-container class="content-container">
 
-  <mat-sidenav #sidenavMenu>
+  <mat-sidenav class="screen-under-960" #sidenavMenu>
     <mat-nav-list>
-      <mat-list-item *ngFor="let link of linksList" class="list-item" [routerLink]=link.link (click)="sidenavMenu.toggle()">
-        <span [ngClass]="link.iconClass"></span> {{ link.name }}
-      </mat-list-item>
+      <div *ngFor="let link of linksList">
+        <mat-list-item class="list-item" [routerLink]=link.link (click)="routerLink ? sidenavMenu.toggle() : return;">
+          <span [ngClass]="link.iconClass"></span> {{ link.name }}
+        </mat-list-item>
+        <app-list *ngIf="link.type" [type]="link.type"></app-list>
+      </div>
       
       <mat-list-item class="list-item" routerLink="/logout" (click)="onLoggingButtonClick()">
         <span [ngClass]="logged ? 'logout-icon' : 'login-icon'"></span>
         {{ logged ? "Wyloguj" : "Zaloguj" }}
       </mat-list-item>
     </mat-nav-list>
-
-    <footer class="page-footer footer-container">
-      <div class="footer-copyright text-center py-3">© 2018 Copyright:</div>
-    </footer>
   </mat-sidenav>
 
   <mat-sidenav-content class="sidenav-content">
     <router-outlet></router-outlet>
+
+    <footer class="page-footer footer-container">
+      <div class="footer-copyright text-center py-3">© 2018 Copyright</div>
+    </footer>
   </mat-sidenav-content>
 
 </mat-sidenav-container>

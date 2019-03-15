@@ -1,7 +1,7 @@
 <mat-list>
-  <mat-list-item class="conf-app-list-item" *ngFor="let application of applications"
+  <mat-list-item class="list-item" *ngFor="let application of applications"
                  (click)="onSelect(application)" matRipple>
+    <span class="list-item-icon"> {{ application.name }}</span>
     <img class="small-logo" *ngIf="application.logo" [src]="application.logo" alt="">
-    <span class="conf-app-list-item-icon"></span> {{ application.name }}
   </mat-list-item>
 </mat-list>
