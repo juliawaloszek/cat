@@ -20,6 +20,10 @@ export class ApplicationsService {
     }
   }
 
+  public getApplication(id: string): Observable<Application> {
+    return of(APPS.find(application => application.id === id));
+  }
+
   public setActive(application: Application): void {
     this.activeApplication = application;
   }

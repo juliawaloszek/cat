@@ -8,29 +8,20 @@
     </mat-toolbar>
 
     <app-list [type]="'configuration'"></app-list>
-
-    <!--<mat-list>-->
-      <!--<mat-list-item class="conf-app-list-item" *ngFor="let application of applications"-->
-                     <!--(click)="onSelect(application)" matRipple>-->
-
-        <!--<span class="list-item-icon"></span> {{ application.name }}-->
-      <!--</mat-list-item>-->
-    <!--</mat-list>-->
-
   </mat-sidenav>
 
-  <section>
-    <div *ngIf="applicationsService.getActive() as active;">
-      <div *ngIf="active.url; then external else internal"></div>
+  <section #appSection>
+    <div *ngIf="activeApp">
+      <div *ngIf="activeApp.url; then external else internal"></div>
 
       <ng-template #external>
-        <app-iframe [url]="active.url"></app-iframe>
+        <app-iframe [url]="activeApp.url"></app-iframe>
       </ng-template>
 
       <ng-template #internal>
         <div class="internal-content">
           <br><br>
-          <input [(ngModel)]="active.name" placeholder="name">
+          <input [(ngModel)]="activeApp.name" placeholder="name">
         </div>
       </ng-template>
 

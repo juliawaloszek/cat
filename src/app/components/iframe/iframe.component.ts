@@ -9,14 +9,17 @@ import * as url from 'url';
 })
 
 export class IframeComponent implements OnInit {
-  @Input() url: url;
   safeUrl: SafeResourceUrl;
 
   constructor(public sanitizer: DomSanitizer) {
   }
 
+  @Input()
+  set url(url: url) {
+    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
   ngOnInit() {
-    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
   }
 
 }

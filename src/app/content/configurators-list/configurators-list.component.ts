@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Application } from '../../service/class/application';
 import { ApplicationsService } from '../../service/applications.service';
+import { ActivatedRoute } from '@angular/router';
+import { MatSidenav } from '@angular/material';
 
 @Component({
   selector: 'app-configurators-list',
@@ -9,16 +11,27 @@ import { ApplicationsService } from '../../service/applications.service';
 })
 
 export class ConfiguratorsListComponent implements OnInit {
-  applications = [];
+  @ViewChild('appSection') section: MatSidenav;
+  applications: Application[];
+  activeApp: Application;
 
-  constructor( private applicationsService: ApplicationsService ) { }
+  constructor(
+    private applicationsService: ApplicationsService,
+    private route: ActivatedRoute
+    ) { }
 
   ngOnInit() {
     this.getApplications();
+    this.route.params.subscribe(params => {
+      console.log(params);
+      this.getApplication();
+    });
   }
 
-  onSelect( application: Application ): void {
-    this.applicationsService.setActive(application);
+  getApplication(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.applicationsService.getApplication(id)
+      .subscribe(application => this.activeApp = application);
   }
 
   getApplications(): void {
