@@ -8,7 +8,7 @@ import { Observable, of } from 'rxjs';
 })
 
 export class ApplicationsService {
-  activeApplication = null;
+  active = null;
 
   constructor() { }
 
@@ -25,10 +25,10 @@ export class ApplicationsService {
   }
 
   public setActive(application: Application): void {
-    this.activeApplication = application;
+    this.active = application;
   }
 
   public getActive(): Application {
-    return this.activeApplication;
+    return this.active;
   }
 }

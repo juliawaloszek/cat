@@ -16,6 +16,9 @@ const routes: Routes = [{
 }, {
   path: 'application',
   component: ApplicationsListComponent
+}, {
+  path: 'application/:id',
+  component: ApplicationsListComponent
 }];
 
 @NgModule({

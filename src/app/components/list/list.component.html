@@ -1,8 +1,9 @@
 <mat-list>
   <mat-list-item class="list-item" *ngFor="let application of applications"
-                 routerLink="/configuration/{{ application.id }}" matRipple>
+                 routerLink="/{{application.type}}/{{ application.id }}" matRipple>
                  <!--(click)="onSelect(application)" matRipple>-->
-    <span class="list-item-icon"> {{ application.name }}</span>
     <img class="small-logo" *ngIf="application.logo" [src]="application.logo" alt="">
+    {{ application.name }}
+    <!--<span class="list-item-icon"> {{ application.name }}</span>-->
   </mat-list-item>
 </mat-list>

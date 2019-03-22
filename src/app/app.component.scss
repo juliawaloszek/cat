@@ -51,6 +51,15 @@ mat-toolbar-row {
   color: $cat-headers-color;
 }
 
+.list-item-header-container {
+  background-color: mat-color($cat-primary, 300);
+  border: solid 1px silver;
+}
+
+.login-option {
+  background-color: mat-color($cat-accent);
+}
+
 mat-sidenav {
   * {
     overflow-x: hidden;
@@ -60,6 +69,10 @@ mat-sidenav {
 @media screen and (max-width: 959px) {
   mat-sidenav {
     width: 40%;
+  }
+
+  mat-nav-list {
+    padding: 0;
   }
 
   .screen-over-960{
@@ -84,6 +97,7 @@ mat-sidenav {
     height: 2.5rem !important;
     display: flex;
     align-items: center;
+
 
     app-list {
       mat-list {

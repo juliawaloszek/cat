@@ -1,17 +1,22 @@
 @import '~src/styles.scss';
 
 .small-logo {
-  max-width: 40px;
-  max-height: 40px;
+  width: 30px;
+  max-height: 30px;
+  margin-right: .25rem;
 }
 
 .list-item {
   cursor: pointer;
   height: 2.5rem !important;
-  display: flex;
   align-items: center;
-  width: 100%;
-  justify-content: space-between;
+  font-size: .75rem;
+
+  //:first-child {
+  //  display: flex;
+  //  justify-content: space-between !important;
+  //  width: 100%;
+  //}
 }
 
 //Stylowanie angularowego komponentu mat-list-item-content

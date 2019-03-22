@@ -1,4 +1,4 @@
-<div class="tile" matRipple>
+<div class="tile" routerLink="/{{ application.type }}/{{ application.id }}" matRipple>
   <div class="tile-logo" [matTooltip]="application.name">
     <div>  <!-- display-flex z klasy powyżej psuło proporcje-->
       <img *ngIf="application.logo" [src]="application.logo" alt="">

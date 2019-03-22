@@ -1,6 +1,6 @@
-import {Component, HostListener, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, HostListener, ViewChild} from '@angular/core';
 import {ApplicationsService} from './service/applications.service';
-import {MatSidenav} from '@angular/material';
+import {MatSidenav, MatSidenavContainer} from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +10,7 @@ import {MatSidenav} from '@angular/material';
 
 export class AppComponent {
   @ViewChild('sidenavMenu') sidenav: MatSidenav;
+  // @ViewChild('MatSidenavContainer') container: MatSidenavContainer;
 
   linksList = [{
     name: 'Strona Główna',
@@ -36,6 +37,10 @@ export class AppComponent {
   onResize() {
     this.sidenav.close();
   }
+
+  // ngAfterViewInit(): void {
+  //   this.container.scrollable.elementScrolled().subscribe(() => {});
+  // }
 
   onLoggingButtonClick(): void {
     this.logged = !this.logged;
