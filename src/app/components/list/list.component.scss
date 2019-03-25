@@ -13,3 +13,11 @@
   width: 100%;
   justify-content: space-between;
 }
+
+//Stylowanie angularowego komponentu mat-list-item-content
+//Żrodlo: https://angular.io/guide/component-styles#deprecated-deep--and-ng-deep
+:host /deep/ .mat-list-item-content {
+  display: flex !important;
+  justify-content: space-between;
+  width: 100%;
+}
