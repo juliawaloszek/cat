@@ -9,17 +9,23 @@ import * as url from 'url';
 })
 
 export class IframeComponent implements OnInit {
+  // @ViewChild('iframeSpinner') spinner: MatProgressSpinner;
   safeUrl: SafeResourceUrl;
+  showSpinner = true;
 
   constructor(public sanitizer: DomSanitizer) {
   }
 
   @Input()
   set url(url: url) {
-    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.location.protocol + '//' + window.location.hostname + url);
   }
 
   ngOnInit() {
+  }
+
+  onIframeLoad() {
+    this.showSpinner = false;
   }
 
 }

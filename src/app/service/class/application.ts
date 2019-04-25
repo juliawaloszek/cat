@@ -12,4 +12,5 @@ export class Application {
   logo: string;
   restrictions: Array<Restriction>;
   functionalities: Array<Functionality>;
+  plugin: any;
 }

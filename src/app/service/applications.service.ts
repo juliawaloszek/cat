@@ -1,60 +1,43 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, map, shareReplay, tap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
-import { APPS } from './mock/applications';
 import { Application } from './class/application';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class ApplicationsService {
+  private httpOptions = {
+    withCredentials: true // necessary for dev version
+  };
+  private pluginsCache$: Observable<Application[]>;
+  private baseUrl = 'http://vm-kajko/setup';
 
-  constructor(
-    private http: HttpClient
-  ) { }
-  private active = null;
-  private baseUrl = 'https://vm-kajko:8181/setup/plugins';
+  constructor(private http: HttpClient) { }
 
-  private static log(message: string) {
-    console.log(message);
+  get plugins(): Observable<Application[]> {
+    if (!this.pluginsCache$) {
+      this.pluginsCache$ = this.getApplications('/plugins').pipe(
+        shareReplay()
+      );
+    }
+    return this.pluginsCache$;
   }
 
-  public getApplications(type: string): Observable<Application[]> {
-    // if (type !== '') {
-    //   return of(APPS.filter(application => application.type === type));
-    // } else {
-    //   return of(APPS);
-    // }
-    return this.http.get<Application[]>(this.baseUrl).pipe(
-      tap(_ => ApplicationsService.log('fetched apps')),
+  private getApplications(type): Observable<Application[]> {
+    return this.http.get<Application[]>(this.baseUrl + type, this.httpOptions).pipe(
+      map(response => response = response.plugin),
+      tap(response => console.log(response)),
       catchError(this.handleError<Application[]>('getApplications', []))
     );
   }
 
-  public getApplication(id: string): Observable<Application> {
-    return of(APPS.find(application => application.id === id));
-  }
-
-  public setActive(application: Application): void {
-    this.active = application;
-  }
-
-  public getActive(): Application {
-    return this.active;
-  }
-
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.log(error);
-
-      // ApplicationsService.log('${operation} failed: ${error.message}');
+      console.log('${operation} failed: ${error.message}');
 
       return of(result as T);
     };

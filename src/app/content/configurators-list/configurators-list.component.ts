@@ -11,7 +11,7 @@ import { MatSidenav } from '@angular/material';
 })
 
 export class ConfiguratorsListComponent implements OnInit {
-  @ViewChild('appSection') section: MatSidenav;
+  // @ViewChild('appSection') section: MatSidenav;
   applications: Application[];
   activeApp: Application;
 
@@ -21,21 +21,18 @@ export class ConfiguratorsListComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.getApplications();
+    this.applicationsService.plugins.subscribe(applications => this.applications = applications);
     this.route.params.subscribe(params => {
-      console.log(params);
-      this.getApplication();
+      if (params.hasOwnProperty('id')) {
+        this.getApplication();
+      }
     });
   }
 
   getApplication(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.applicationsService.getApplication(id)
-      .subscribe(application => this.activeApp = application);
-  }
-
-  getApplications(): void {
-    this.applicationsService.getApplications('configuration')
-      .subscribe(applications => this.applications = applications);
+    this.applicationsService.plugins.subscribe((application) => {
+      this.activeApp = application.find(app => app.id === id);
+    });
   }
 }

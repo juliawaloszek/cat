@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {Application} from '../../service/class/application';
-import {ApplicationsService} from '../../service/applications.service';
-import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Application } from '../../service/class/application';
+import { ApplicationsService } from '../../service/applications.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-applications-list',
@@ -19,14 +19,16 @@ export class ApplicationsListComponent implements OnInit {
   ngOnInit() {
     this.getApplications();
     this.route.params.subscribe(params => {
-      this.getApplication();
+      if (params.hasOwnProperty('id')) {
+        this.getApplication();
+      }
     });
     console.log(this.applications);
   }
 
   onTileClick(application: Application): void {
     if (application.url) {
-      window.open(application.url);
+      window.open(window.location.protocol + '//' + window.location.hostname + application.url);
     }
 
     console.log('Aplikacja powinna zawierać url\'a pod którym można ją otworzyć.');
@@ -34,13 +36,13 @@ export class ApplicationsListComponent implements OnInit {
 
   getApplication(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.applicationsService.getApplication(id)
-      .subscribe(application => this.activeApp = application);
+    this.applicationsService.plugins.subscribe((application) => {
+      this.activeApp = application.find(app => app.id === id);
+    });
   }
 
   getApplications(): void {
-    this.applicationsService.getApplications('application')
-      .subscribe(applications => this.applications = applications);
+    this.applicationsService.plugins.subscribe(applications => this.applications = applications);
   }
 
 }

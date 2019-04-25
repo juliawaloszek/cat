@@ -17,7 +17,7 @@
     </div>
 
     <div class="header login-container">
-      <span *ngIf="logged" class="user-icon">Lala Blabla</span>
+      <span *ngIf="logged" class="user-icon">{{ activeUser.name.full }}</span>
       <button mat-flat-button color="accent" (click)="onLoggingButtonClick()">
         <span [ngClass]="logged ? 'logout-icon' : 'login-icon'"></span>
         {{ logged ? "Wyloguj" : "Zaloguj" }}
@@ -35,7 +35,7 @@
     </div>
 
     <div class="user-container">
-      <span *ngIf="logged" class="user-icon">Lala Blabla</span>
+      <span *ngIf="logged" class="user-icon">{{ activeUser.name.full }}</span>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>

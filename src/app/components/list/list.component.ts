@@ -18,11 +18,10 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getApplications(this.type);
+    this.applicationsService.plugins.subscribe(applications => this.applications = applications);
   }
 
   onSelect(application: Application): void {
-    this.applicationsService.setActive(application);
     // this.sidenav.close();
 
     if (application.url) {
@@ -32,11 +31,6 @@ export class ListComponent implements OnInit {
         this.router.navigate(['/configuration/' + application.id]);
       }
     }
-  }
-
-  getApplications(type: string): void {
-    this.applicationsService.getApplications(type)
-      .subscribe(applications => this.applications = applications);
   }
 
 }

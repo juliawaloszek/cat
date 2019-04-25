@@ -9,7 +9,8 @@ export const APPS: Application[] = [{
   logo: 'assets/img/gpt-logo.png',
   type: 'configuration',
   restrictions: [],
-  functionalities: []
+  functionalities: [],
+  plugin: {}
 }, {
   id: 'gpt-app',
   guid: '',
@@ -19,7 +20,8 @@ export const APPS: Application[] = [{
   logo: 'assets/img/gpt-logo.png',
   type: 'application',
   restrictions: [],
-  functionalities: []
+  functionalities: [],
+  plugin: {}
 }, {
   id: 'lelum-polelum',
   guid: '',
@@ -51,7 +53,8 @@ export const APPS: Application[] = [{
     id: 'nana',
     name: 'Nuna Nanu',
     privileges: []
-  }]
+  }],
+  plugin: {}
 }, {
   id: 'gpt-conf',
   guid: '',
@@ -61,7 +64,8 @@ export const APPS: Application[] = [{
   logo: 'assets/img/gpt-logo.png',
   type: 'application',
   restrictions: [],
-  functionalities: []
+  functionalities: [],
+  plugin: {}
 }, {
   id: 'dfasfasdfsd',
   guid: '',
@@ -71,7 +75,8 @@ export const APPS: Application[] = [{
   logo: 'assets/img/cat.png',
   type: 'configuration',
   restrictions: [],
-  functionalities: []
+  functionalities: [],
+  plugin: {}
 }, {
   id: 'sgfdhgfh',
   guid: '',
@@ -81,7 +86,8 @@ export const APPS: Application[] = [{
   logo: '~src/assets/img/cat.png',
   type: 'application',
   restrictions: [],
-  functionalities: []
+  functionalities: [],
+  plugin: {}
 }, {
   id: 'sgfdhgfh',
   guid: '',
@@ -91,7 +97,8 @@ export const APPS: Application[] = [{
   logo: 'assets/img/cat.png',
   type: 'application',
   restrictions: [],
-  functionalities: []
+  functionalities: [],
+  plugin: {}
 }, {
   id: 'sgfdhgfh',
   guid: '',
@@ -101,7 +108,8 @@ export const APPS: Application[] = [{
   logo: 'assets/img/cat.png',
   type: 'application',
   restrictions: [],
-  functionalities: []
+  functionalities: [],
+  plugin: {}
 }, {
   id: 'gdfghjf',
   guid: '',
@@ -111,7 +119,8 @@ export const APPS: Application[] = [{
   logo: 'assets/img/cat.png',
   type: 'configuration',
   restrictions: [],
-  functionalities: []
+  functionalities: [],
+  plugin: {}
 }, {
   id: 'sgfdhwrtrtytruygfh',
   guid: '',
@@ -121,5 +130,6 @@ export const APPS: Application[] = [{
   logo: 'assets/img/cat.png',
   type: 'configuration',
   restrictions: [],
-  functionalities: []
+  functionalities: [],
+  plugin: {}
 }];
