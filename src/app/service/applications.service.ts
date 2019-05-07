@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { isDevMode } from '@angular/core';
 
 import { Application } from './class/application';
 
@@ -14,9 +15,11 @@ export class ApplicationsService {
     withCredentials: true // necessary for dev version
   };
   private pluginsCache$: Observable<Application[]>;
-  private baseUrl = 'http://vm-kajko/setup';
+  private baseUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.baseUrl = (isDevMode() ? 'https://vm-kajko:8181' : window.location.origin) + '/setup';
+  }
 
   get plugins(): Observable<Application[]> {
     if (!this.pluginsCache$) {

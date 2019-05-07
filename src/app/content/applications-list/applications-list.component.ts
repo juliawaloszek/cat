@@ -23,12 +23,11 @@ export class ApplicationsListComponent implements OnInit {
         this.getApplication();
       }
     });
-    console.log(this.applications);
   }
 
   onTileClick(application: Application): void {
     if (application.url) {
-      window.open(window.location.protocol + '//' + window.location.hostname + application.url);
+      window.open(window.location.origin + application.url);
     }
 
     console.log('Aplikacja powinna zawierać url\'a pod którym można ją otworzyć.');

@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
-import { MatButtonModule } from '@angular/material';
+import { MatAutocompleteModule, MatButtonModule } from '@angular/material';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -15,9 +15,15 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTooltipModule } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatProgressSpinnerModule } from '@angular/material';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material';
 
 import { ApplicationsListComponent } from './content/applications-list/applications-list.component';
 import { ConfiguratorsListComponent } from './content/configurators-list/configurators-list.component';
@@ -27,6 +33,8 @@ import { TileComponent } from './components/tile/tile.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { InfoComponent } from './content/info/info.component';
 import { ListComponent } from './components/list/list.component';
+import { EligibilityComponent } from './content/eligibility/eligibility.component';
+import { UserInfoComponent } from './components/user-info/user-info.component';
 
 
 @NgModule({
@@ -39,7 +47,9 @@ import { ListComponent } from './components/list/list.component';
     TileComponent,
     FooterComponent,
     InfoComponent,
-    ListComponent
+    ListComponent,
+    EligibilityComponent,
+    UserInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +67,15 @@ import { ListComponent } from './components/list/list.component';
     MatIconModule,
     FormsModule,
     FlexLayoutModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTabsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatCardModule,
+    MatChipsModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule
   ],
   providers: [],
   bootstrap: [AppComponent]

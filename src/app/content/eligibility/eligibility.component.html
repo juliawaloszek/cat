@@ -1,0 +1,31 @@
+<div class="tab-container">
+  <mat-tab-group #eligibilityTabPanel (selectedTabChange)="onTabChange($event)">
+
+    <mat-tab label="Użytkownicy">
+      <mat-sidenav-container>
+        <mat-sidenav mode="side" opened>
+          <mat-list>
+            <mat-list-item class="" *ngFor="let user of users"
+                           routerLink="/eligibility/users/{{ user.id }}" matRipple>
+              {{ user.name.full }}
+            </mat-list-item>
+          </mat-list>
+        </mat-sidenav>
+        <section>
+          <div *ngIf="user">
+            <app-user-info [user]="user"></app-user-info>
+          </div>
+        </section>
+      </mat-sidenav-container>
+    </mat-tab>
+
+    <mat-tab label="Grupy">
+      <p>Some content</p>
+    </mat-tab>
+
+    <mat-tab label="Aplikacje">
+      <p>Some content</p>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>

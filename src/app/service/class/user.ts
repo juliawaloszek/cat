@@ -8,7 +8,7 @@ export class User {
   department: string;
   email: string;
   name: object;
-  groups: Array<Group>;
+  group: Array<Group>;
   history: object;
   lastLogon: object;
   password: object;

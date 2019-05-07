@@ -1,0 +1,26 @@
+@import '~src/styles';
+
+mat-sidenav-container {
+  position: fixed;
+  top: $cat-toolbar-height + 50px;
+  left: 0;
+  right: 0;
+  bottom: 2px;
+  border-top-color: lightgray;
+  border-top-width: 1px;
+  border-top-style: solid;
+}
+
+mat-sidenav {
+  width: 15%;
+  min-width: 270px;
+}
+
+section {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+mat-list-item {
+  font-size: small;
+}

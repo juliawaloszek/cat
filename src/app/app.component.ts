@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import { ApplicationsService } from './service/applications.service';
 import { MatSidenav, MatSidenavContainer } from '@angular/material';
-import { ActiveUserService } from './service/activeuser.service';
+import { UserService } from './service/user.service';
 import { User } from './service/class/user';
 
 @Component({
@@ -31,15 +31,15 @@ export class AppComponent implements OnInit {
     // link: '/configuration'
   }];
   title = 'CAT';
-  logged = true;
+  logged = false;
 
   constructor(
     private applicationsService: ApplicationsService,
-    private activeUserService: ActiveUserService
+    private userService: UserService
   ) {}
 
   ngOnInit() {
-    this.activeUserService.user.subscribe(user => {
+    this.userService.activeUser.subscribe(user => {
       if (user.hasOwnProperty('name')) {
         this.activeUser = user;
         this.logged = true;
@@ -53,10 +53,6 @@ export class AppComponent implements OnInit {
   onResize() {
     this.sidenav.close();
   }
-
-  // ngAfterViewInit(): void {
-  //   this.container.scrollable.elementScrolled().subscribe(() => {});
-  // }
 
   onLoggingButtonClick(): void {
     this.logged = !this.logged;

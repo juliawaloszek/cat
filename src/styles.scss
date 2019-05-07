@@ -70,3 +70,8 @@ mat-toolbar-row {
 *:focus {
   outline: 0;
 }
+
+.filler {
+  align-self: stretch;
+  flex-grow: 1;
+}
