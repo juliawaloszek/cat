@@ -5,8 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { isDevMode } from '@angular/core';
 
 import { User } from './class/user';
-import { USERS } from './mock/users';
-import {Application} from './class/application';
+import { Application } from './class/application';
 
 @Injectable({
   providedIn: 'root'
@@ -34,8 +33,11 @@ export class UserService {
   get users(): Observable<User[]> {
     if (!this.usersCache$) {
       this.usersCache$ = this.http.get<User[]>(this.url, this.httpOptions).pipe(
-        map(response => response = response.user.sort()),
+        map(response => response = response.user),
         tap(response => {
+          response = response.sort((u1: User, u2: User) => {
+            return u1.name.full > u2.name.full;
+          });
           console.log(response);
         }),
         catchError(this.handleError<User[]>('getUsers', []))
@@ -48,22 +50,14 @@ export class UserService {
 
   get activeUser(): Observable<User> {
     if (!this.activeUserCache$) {
-      this.activeUserCache$ = this.userRequest().pipe(
+      this.activeUserCache$ = this.http.get<User>(this.activeUserUrl, this.httpOptions).pipe(
+        tap(response => console.log(response)),
+        // catchError(this.handleError<User>('getApplications', ''))
+      ).pipe(
         shareReplay()
       );
     }
     return this.activeUserCache$;
-  }
-
-  // private getUsers(realm): Observable<User[]> {
-  //   return
-  // }
-
-  private userRequest(): Observable<User> {
-    return this.http.get<User>(this.url, this.httpOptions).pipe(
-      tap(response => console.log(response)),
-      // catchError(this.handleError<User>('getApplications', ''))
-    );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

@@ -4,7 +4,7 @@ export class User {
   id: string;
   accountId: string;
   active: boolean;
-  administrator: boolean;
+  administrator = false;
   department: string;
   email: string;
   name: object;

@@ -45,16 +45,16 @@
       <mat-card-content>
         <mat-form-field>
 
-          <mat-chip-list>
+          <mat-chip-list #chipList>
             <mat-chip *ngFor="let group of user.group" [selectable]="true"
               [removable]="true" (removed)="onRemoveGroup(group)">
               {{ group.name }}</mat-chip>
 <!--            <mat-icon matChipRemove></mat-icon> z jakiegoś powodu nie działa-->
-<!--            <input [formControl]="" [matAutocomplete]="auto">-->
+            <input [formControl]="groupControl" [matChipInputFor]="chipList" > <!-- [matAutocomplete]="auto" -->
           </mat-chip-list>
 
-          <mat-autocomplete *ngIf="allGroups" #auto="matAutocomplete" (optionSelected)="onGroupOptionSelected($event)">
-            <mat-option *ngFor="let group of allGroups" [value]="group.id">
+          <mat-autocomplete *ngIf="filteredGroups" #auto="matAutocomplete" (optionSelected)="onGroupOptionSelected($event)">
+            <mat-option *ngFor="let group of filteredGroups | async" [value]="group.id">
               {{ group.name }}
             </mat-option>
           </mat-autocomplete>
