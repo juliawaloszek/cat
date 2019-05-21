@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { Application } from '../../service/class/application';
+import { Application } from '../../service/model/application';
 
 @Component({
   selector: 'app-tile',

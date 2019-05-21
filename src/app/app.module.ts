@@ -24,6 +24,7 @@ import { MatInputModule } from '@angular/material';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material';
+import { MatTreeModule } from '@angular/material';
 
 import { ApplicationsListComponent } from './content/applications-list/applications-list.component';
 import { ConfiguratorsListComponent } from './content/configurators-list/configurators-list.component';
@@ -35,6 +36,8 @@ import { InfoComponent } from './content/info/info.component';
 import { ListComponent } from './components/list/list.component';
 import { EligibilityComponent } from './content/eligibility/eligibility.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
+import { ApplicationInfoComponent } from './components/application-info/application-info.component';
+import { GroupInfoComponent } from './content/eligibility/group-info/group-info.component';
 
 
 @NgModule({
@@ -49,7 +52,9 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
     InfoComponent,
     ListComponent,
     EligibilityComponent,
-    UserInfoComponent
+    UserInfoComponent,
+    ApplicationInfoComponent,
+    GroupInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -74,6 +79,7 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
     MatCheckboxModule,
     MatCardModule,
     MatChipsModule,
+    MatTreeModule,
     ReactiveFormsModule,
     MatAutocompleteModule
   ],

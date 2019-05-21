@@ -4,7 +4,9 @@ import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { isDevMode } from '@angular/core';
 
-import { Group} from './class/group';
+import { Group} from './model/group';
+import {User} from './model/user';
+import {Application} from './model/application';
 
 @Injectable({
   providedIn: 'root'
@@ -17,15 +19,57 @@ export class GroupService {
   private baseUrl;
 
   constructor(private http: HttpClient) {
-    this.baseUrl = (isDevMode() ? 'https://vm-kajko:8181' : '') + '/setup/groups';
+    this.baseUrl = (isDevMode() ? 'https://vm-kajko:8181' : '') + '/setup/groups/';
   }
 
-  get groups(): Observable<Group[]> {
+  public list(): Observable<Group[]> {
     if (!this.groupsCache$) {
-      this.groupsCache$ = this.http.get<Group>(this.baseUrl, this.httpOptions).pipe(
-        map(response => response = response.group)
+      this.groupsCache$ = this.http.get<Group[]>(this.baseUrl, this.httpOptions).pipe(
+        map(response => response.group),
+        shareReplay()
       );
     }
     return this.groupsCache$;
   }
+
+  public read(id: string, config: any): Observable<Group> {
+    const options = Object.assign({
+      params: config
+    }, this.httpOptions);
+
+    return this.http.get<Group>(this.baseUrl + id, options);
+  }
+
+  public create(group: Group): Observable<Group> {
+    return this.http.post<Group>(this.baseUrl, group);
+  }
+
+  public update(group: Group): Observable<Group> {
+    return this.http.put<Group>(this.baseUrl, group);
+  }
+
+  public delete(id: string) {
+    this.http.delete(this.baseUrl + id).pipe(
+      catchError(this.handleError<Group>())
+    );
+  }
+
+  get groups(): Observable<Group[]> {
+    if (!this.groupsCache$) {
+      this.groupsCache$ = this.http.get<Group[]>(this.baseUrl, this.httpOptions).pipe(
+        map(response => response.group),
+        shareReplay()
+      );
+    }
+    return this.groupsCache$;
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.log('${operation} failed: ${error.message}');
+
+      return of(result as T);
+    };
+  }
+
 }

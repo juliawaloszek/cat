@@ -17,19 +17,15 @@
       <input matInput [(ngModel)]="user.email" placeholder="Email" required>
     </mat-form-field>
 
-    <mat-form-field [hideRequiredMarker]="true" [floatLabel]="'always'">
-      <input matInput [(ngModel)]="user.password.id" placeholder="Hasło" required>
-    </mat-form-field>
-
     <mat-checkbox [(ngModel)]="user.active">Aktywny</mat-checkbox>
     <mat-checkbox [(ngModel)]="user.administrator">Administrator</mat-checkbox>
-    <mat-checkbox [(ngModel)]="user.password.id">Hasło nigdy nie wygasa</mat-checkbox>
-    <mat-checkbox [(ngModel)]="user.password.name">Użytkownik może zmienić hasło</mat-checkbox>
-    <mat-checkbox [(ngModel)]="user.password.value">Użytkownik musi zmienić hasło przy następnym logowaniu</mat-checkbox>
-    <mat-checkbox [(ngModel)]="user.password.hm" [disabled]="true">Konto zablokowane</mat-checkbox>
+    <mat-checkbox [(ngModel)]="!user.password.expires">Hasło nigdy nie wygasa</mat-checkbox>
+    <mat-checkbox [(ngModel)]="user.password.immutable">Użytkownik może zmienić hasło</mat-checkbox>
+    <mat-checkbox [(ngModel)]="user.password.mustChange">Użytkownik musi zmienić hasło przy następnym logowaniu</mat-checkbox>
+    <mat-checkbox [(ngModel)]="user" [disabled]="true">Konto zablokowane</mat-checkbox>
 
     <div class="filler"></div>
-    <div class="user-history">
+    <div class="user-history" *ngIf="user.history">
       <div>Udane logowanie: {{ user.lastLogon.successful }}</div>
       <div>Nieudane logowanie: {{ user.lastLogon.failed }}</div>
       <div>Utworzony: {{ user.history.created }}</div>
@@ -48,7 +44,8 @@
           <mat-chip-list #chipList>
             <mat-chip *ngFor="let group of user.group" [selectable]="true"
               [removable]="true" (removed)="onRemoveGroup(group)">
-              {{ group.name }}</mat-chip>
+              {{ group.name }}
+              <mat-icon class="mat-icon-size-medium">close</mat-icon></mat-chip>
 <!--            <mat-icon matChipRemove></mat-icon> z jakiegoś powodu nie działa-->
             <input [formControl]="groupControl" [matChipInputFor]="chipList" > <!-- [matAutocomplete]="auto" -->
           </mat-chip-list>

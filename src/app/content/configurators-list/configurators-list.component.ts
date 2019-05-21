@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Application } from '../../service/class/application';
-import { ApplicationsService } from '../../service/applications.service';
+import { Component, OnInit } from '@angular/core';
+import { Plugin } from '../../service/model/plugin';
 import { ActivatedRoute } from '@angular/router';
-import { MatSidenav } from '@angular/material';
+import {PluginService} from '../../service/plugin.service';
+import {find, tap} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-configurators-list',
@@ -11,17 +12,15 @@ import { MatSidenav } from '@angular/material';
 })
 
 export class ConfiguratorsListComponent implements OnInit {
-  // @ViewChild('appSection') section: MatSidenav;
-  applications: Application[];
-  activeApp: Application;
+  plugins$: Observable<Plugin[]>;
+  activePlugin$: Observable<Plugin>;
 
-  constructor(
-    private applicationsService: ApplicationsService,
+  constructor(private pluginsService: PluginService,
     private route: ActivatedRoute
     ) { }
 
   ngOnInit() {
-    this.applicationsService.plugins.subscribe(applications => this.applications = applications);
+    this.plugins$ = this.pluginsService.list();
     this.route.params.subscribe(params => {
       if (params.hasOwnProperty('id')) {
         this.getApplication();
@@ -31,8 +30,8 @@ export class ConfiguratorsListComponent implements OnInit {
 
   getApplication(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.applicationsService.plugins.subscribe((application) => {
-      this.activeApp = application.find(app => app.id === id);
-    });
+    this.activePlugin$ = this.pluginsService.read(id).pipe(
+      tap(plugin => console.log(plugin))
+    );
   }
 }

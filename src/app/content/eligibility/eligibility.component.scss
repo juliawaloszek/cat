@@ -2,7 +2,7 @@
 
 mat-sidenav-container {
   position: fixed;
-  top: $cat-toolbar-height + 50px;
+  top: $cat-toolbar-height + 54px;
   left: 0;
   right: 0;
   bottom: 2px;
@@ -14,6 +14,22 @@ mat-sidenav-container {
 mat-sidenav {
   width: 15%;
   min-width: 270px;
+  overflow: hidden;
+}
+
+mat-toolbar {
+  height: 3rem;
+}
+
+.sticky-toolbar {
+  position: absolute;
+  z-index: 999;
+  top: 0;
+}
+
+.under-sticky {
+  top: 2.5rem;
+  position: relative;
 }
 
 section {
@@ -21,6 +37,18 @@ section {
   flex-flow: column nowrap;
 }
 
+mat-list {
+  overflow: auto;
+}
+
 mat-list-item {
   font-size: small;
+  cursor: pointer;
+}
+.add-new-element {
+  background-color: #8fbc8faa;
+}
+
+.spacer {
+  flex: 1 1 auto;
 }

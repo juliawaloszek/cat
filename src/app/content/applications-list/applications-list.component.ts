@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Application } from '../../service/class/application';
-import { ApplicationsService } from '../../service/applications.service';
+import { Plugin } from '../../service/model/plugin';
 import { ActivatedRoute } from '@angular/router';
+import {PluginService} from '../../service/plugin.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-applications-list',
@@ -9,15 +10,15 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./applications-list.component.scss']
 })
 export class ApplicationsListComponent implements OnInit {
-  applications: Application[];
-  activeApp: Application;
+  plugins$: Observable<Plugin[]>;
+  activePlugin$: Observable<Plugin>;
 
-  constructor(private applicationsService: ApplicationsService,
+  constructor(private pluginsService: PluginService,
               private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.getApplications();
+    this.plugins$ = this.pluginsService.list();
     this.route.params.subscribe(params => {
       if (params.hasOwnProperty('id')) {
         this.getApplication();
@@ -25,9 +26,9 @@ export class ApplicationsListComponent implements OnInit {
     });
   }
 
-  onTileClick(application: Application): void {
-    if (application.url) {
-      window.open(window.location.origin + application.url);
+  onTileClick(plugin: Plugin): void {
+    if (plugin.url) {
+      window.open(window.location.origin + plugin.url);
     }
 
     console.log('Aplikacja powinna zawierać url\'a pod którym można ją otworzyć.');
@@ -35,13 +36,7 @@ export class ApplicationsListComponent implements OnInit {
 
   getApplication(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.applicationsService.plugins.subscribe((application) => {
-      this.activeApp = application.find(app => app.id === id);
-    });
-  }
-
-  getApplications(): void {
-    this.applicationsService.plugins.subscribe(applications => this.applications = applications);
+    this.activePlugin$ = this.pluginsService.read(id);
   }
 
 }

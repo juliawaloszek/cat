@@ -7,21 +7,21 @@
       </mat-toolbar-row>
     </mat-toolbar>
 
-    <app-list></app-list>
+    <app-list [plugins$]="plugins$"></app-list>
   </mat-sidenav>
 
   <section #appSection>
-    <div *ngIf="activeApp">
-      <div *ngIf="activeApp.url; then external else internal"></div>
+    <div *ngIf="activePlugin$ | async as activePlugin">
+      <div *ngIf="activePlugin.url; then external else internal"></div>
 
       <ng-template #external>
-        <app-iframe [url]="activeApp.url"></app-iframe>
+        <app-iframe [url]="activePlugin.url"></app-iframe>
       </ng-template>
 
       <ng-template #internal>
         <div class="internal-content">
           <br><br>
-          <input [(ngModel)]="activeApp.name" placeholder="name">
+          <input [(ngModel)]="activePlugin.name" placeholder="name">
         </div>
       </ng-template>
 

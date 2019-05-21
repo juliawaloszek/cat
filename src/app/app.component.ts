@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, HostListener, OnInit, ViewChild} from '@angular/core';
-import { ApplicationsService } from './service/applications.service';
-import { MatSidenav, MatSidenavContainer } from '@angular/material';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import { MatSidenav } from '@angular/material';
 import { UserService } from './service/user.service';
-import { User } from './service/class/user';
+import { User } from './service/model/user';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +12,7 @@ import { User } from './service/class/user';
 
 export class AppComponent implements OnInit {
   @ViewChild('sidenavMenu') sidenav: MatSidenav;
-  private activeUser: User;
-  // @ViewChild('MatSidenavContainer') container: MatSidenavContainer;
+  private activeUser$: Observable<User>;
 
   linksList = [{
     name: 'Strona Główna',
@@ -23,30 +22,23 @@ export class AppComponent implements OnInit {
     type: 'application',
     name: 'Aplikacje',
     iconClass: 'appmenu-icon',
-    link: '/application'
+    link: '/application',
+    matIcon: 'web',
   }, {
     type: 'configuration',
     name: 'Konfiguracja',
     iconClass: 'sidenav-icon',
-    // link: '/configuration'
+    matIcon: 'settings',
+    link: '/configuration'
   }];
   title = 'CAT';
   logged = false;
 
-  constructor(
-    private applicationsService: ApplicationsService,
-    private userService: UserService
-  ) {}
+  constructor(private userService: UserService) {
+  }
 
   ngOnInit() {
-    this.userService.activeUser.subscribe(user => {
-      if (user.hasOwnProperty('name')) {
-        this.activeUser = user;
-        this.logged = true;
-      } else {
-        this.logged = false;
-      }
-    });
+    this.activeUser$ = this.userService.active();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -55,6 +47,10 @@ export class AppComponent implements OnInit {
   }
 
   onLoggingButtonClick(): void {
-    this.logged = !this.logged;
+    if (this.activeUser$) {
+      this.activeUser$ = undefined;
+    } else {
+      this.activeUser$ = this.userService.active();
+    }
   }
 }
