@@ -7,11 +7,13 @@
       </div>
 
       <div class="buttons-container">
-        <button mat-flat-button color="primary" routerLink="/application">
-          <span class="appmenu-icon"></span>Aplikacje
+        <button mat-icon-button color="primary" routerLink="/application">
+<!--          <span class="appmenu-icon"></span>Aplikacje-->
+          <mat-icon>web</mat-icon>Aplikacje
         </button>
-        <button mat-flat-button color="primary" routerLink="/configuration">
-          <span class="sidenav-icon"></span>Konfiguracja
+        <button mat-icon-button color="primary" routerLink="/configuration">
+<!--          <span class="sidenav-icon"></span>Konfiguracja-->
+          <mat-icon>settings</mat-icon>Konfiguracja
         </button>
         <button mat-flat-button color="primary" routerLink="/eligibility">
           <span class="sidenav-icon"></span>Uprawnienia
@@ -20,7 +22,7 @@
     </div>
 
     <div class="header login-container">
-      <span *ngIf="logged" class="user-icon">{{ activeUser.name.full }}</span>
+      <span *ngIf="activeUser$ | async as activeUser" class="user-icon">{{ activeUser.name.full }}</span>
       <button mat-flat-button color="accent" (click)="onLoggingButtonClick()">
         <span [ngClass]="logged ? 'logout-icon' : 'login-icon'"></span>
         {{ logged ? "Wyloguj" : "Zaloguj" }}
@@ -38,7 +40,7 @@
     </div>
 
     <div class="user-container">
-      <span *ngIf="logged" class="user-icon">{{ activeUser.name.full }}</span>
+      <span *ngIf="activeUser$ | async as activeUser" class="user-icon">{{ activeUser.name.full }}</span>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
@@ -51,7 +53,8 @@
     <mat-nav-list>
       <div *ngFor="let link of linksList">
         <mat-list-item class="list-item list-item-header-container" [routerLink]=link.link (click)="routerLink ? sidenavMenu.close() : return;">
-          <span [ngClass]="link.iconClass"></span>{{ link.name }}
+<!--          <span [ngClass]="link.iconClass"></span>{{ link.name }}-->
+          <mat-icon>link.matIcon</mat-icon>{{ link.name }}
         </mat-list-item>
         <app-list *ngIf="link.type" [type]="link.type"></app-list>
       </div>

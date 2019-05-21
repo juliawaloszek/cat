@@ -1,3 +1,27 @@
+.mat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat-icon-size-small {
+  @extend .mat-icon;
+
+  font-size: .75rem;
+}
+
+.mat-icon-size-medium {
+  @extend .mat-icon;
+
+  font-size: 1rem;
+}
+
+.mat-icon-size-big {
+  @extend .mat-icon;
+
+  font-size: 1.5rem;
+}
+
 .icon {
   @extend %fa-icon;
   @extend .fa;

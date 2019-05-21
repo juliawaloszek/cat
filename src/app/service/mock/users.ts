@@ -1,4 +1,4 @@
-import { User } from '../class/user';
+import { User } from '../model/user';
 
 export const USERS: User[] = [{
   id: 'kalisz',
@@ -10,7 +10,7 @@ export const USERS: User[] = [{
   administrator: true,
   department: '',
   email: 'rsokol@ispik.pl',
-  groups: [],
+  group: [],
   history: {
     created: '1980-01-01T00:00:00+01:00',
     modified: '1980-01-01T00:00:00+01:00'
@@ -30,7 +30,7 @@ export const USERS: User[] = [{
   administrator: false,
   department: '',
   email: 'tgruszka@ispik.pl',
-  groups: [],
+  group: [],
   history: {
     created: '1980-01-01T00:00:00+01:00',
     modified: '1980-01-01T00:00:00+01:00'

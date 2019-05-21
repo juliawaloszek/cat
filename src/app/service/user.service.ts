@@ -4,51 +4,33 @@ import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { isDevMode } from '@angular/core';
 
-import { User } from './class/user';
-import { Application } from './class/application';
+import { User } from './model/user';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class UserService {
-  private httpOptions = {
-    withCredentials: true // necessary for dev version
-  };
+  private httpOptions = {};
+  private activeUserUrl = '';
+  private url = '';
+
   private usersCache$: Observable<User[]>;
   private activeUserCache$: Observable<User>;
-  private activeUserUrl;
-  private url;
 
   constructor(private http: HttpClient) {
     if (isDevMode()) {
-      this.activeUserUrl = 'https://vm-kajko:8181/setup/user';
-      this.url = 'https://vm-kajko:8181/setup/realms/iuip/users';
-    } else {
-      this.activeUserUrl = window.location.origin + '/setup/user';
-      this.url = window.location.origin + '/setup/realms/iuip/users';
+      this.httpOptions = {
+        withCredentials: true // necessary for dev version
+      }; // dalej może być przydatna funkcja Object.assign
+      this.activeUserUrl = this.url = 'https://vm-kajko:8181';
     }
+
+    this.activeUserUrl += '/setup/user/';
+    this.url += '/setup/realms/iuip/users/';
   }
 
-  get users(): Observable<User[]> {
-    if (!this.usersCache$) {
-      this.usersCache$ = this.http.get<User[]>(this.url, this.httpOptions).pipe(
-        map(response => response = response.user),
-        tap(response => {
-          response = response.sort((u1: User, u2: User) => {
-            return u1.name.full > u2.name.full;
-          });
-          console.log(response);
-        }),
-        catchError(this.handleError<User[]>('getUsers', []))
-      ).pipe(
-        shareReplay()
-      );
-    }
-    return this.usersCache$;
-  }
-
-  get activeUser(): Observable<User> {
+  public active(): Observable<User> {
     if (!this.activeUserCache$) {
       this.activeUserCache$ = this.http.get<User>(this.activeUserUrl, this.httpOptions).pipe(
         tap(response => console.log(response)),
@@ -58,6 +40,35 @@ export class UserService {
       );
     }
     return this.activeUserCache$;
+  }
+
+  public list(): Observable<User[]> {
+    if (!this.usersCache$) {
+      this.usersCache$ = this.http.get<User[]>(this.url, this.httpOptions).pipe(
+        map(users => users.user),
+        catchError(this.handleError<User[]>('getUsers', [])),
+        shareReplay()
+      );
+    }
+    return this.usersCache$;
+  }
+
+  public read(id: string): Observable<User> {
+    return this.http.get<User>(this.url + id, this.httpOptions);
+  }
+
+  public create(user: User): Observable<User> {
+    return this.http.post<User>(this.url, user);
+  }
+
+  public update(user: User): Observable<User> {
+    return this.http.put<User>(this.url + user.id, user);
+  }
+
+  public delete(id: string) {
+    this.http.delete(this.url + id).pipe(
+      catchError(this.handleError<User>())
+    );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
