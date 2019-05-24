@@ -46,7 +46,6 @@
               [removable]="true" (removed)="onRemoveGroup(group)">
               {{ group.name }}
               <mat-icon class="mat-icon-size-medium">close</mat-icon></mat-chip>
-<!--            <mat-icon matChipRemove></mat-icon> z jakiegoś powodu nie działa-->
             <input [formControl]="groupControl" [matChipInputFor]="chipList" > <!-- [matAutocomplete]="auto" -->
           </mat-chip-list>
 

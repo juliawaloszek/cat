@@ -1,3 +1,48 @@
-<p>
-  group-info works!
-</p>
+<div *ngIf="group" class="container">
+  <mat-card class="group-info-container">
+    <mat-form-field [floatLabel]="'always'"> <!-- [formGroup]="groupForm">-->
+      <input matInput [(ngModel)]="group.id" placeholder="ID">
+    </mat-form-field>
+
+    <mat-form-field [floatLabel]="'always'"> <!-- [formGroup]="groupForm">-->
+      <input matInput [(ngModel)]="group.name" placeholder="Nazwa">
+    </mat-form-field>
+  </mat-card>
+
+  <div class="eligibility-container">
+    <mat-card class="users-info-container">
+      <mat-card-header>
+        <mat-card-title>Użytkownicy</mat-card-title>
+        <div class="spacer"></div>
+        <button mat-mini-fab color="accent" (click)="onAddUsersButton()">
+          <mat-icon class="mat-18">add</mat-icon>
+
+        </button>
+        <button mat-mini-fab color="accent" (click)="onRemoveUsersButton()">
+          <mat-icon class="mat-18">delete</mat-icon>
+        </button>
+      </mat-card-header>
+      <mat-card-content>
+        <app-simple-table [list]="group.user || []" [nameLabel]="'Imię i Nazwisko'"></app-simple-table>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="applications-info-container">
+      <mat-card-header>
+        <mat-card-title>Aplikacje</mat-card-title>
+        <div class="spacer"></div>
+        <button mat-mini-fab color="accent" (click)="onAddApplicationsButton()">
+          <mat-icon class="mat-18">add</mat-icon>
+        </button>
+        <button mat-mini-fab color="accent" (click)="onRemoveApplicationsButton()">
+          <mat-icon class="mat-18">delete</mat-icon>
+        </button>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngIf="applications$ | async as applications">
+          <app-simple-table [list]="applications"></app-simple-table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

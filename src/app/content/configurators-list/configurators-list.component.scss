@@ -1,11 +1,9 @@
 @import '~src/styles';
 
 mat-sidenav-container {
-  position: fixed;
-  top: $cat-toolbar-height;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  @extend .absolute-container;
+
+  margin-bottom: .75rem;
   border-top-color: lightgray;
   border-top-width: 1px;
   border-top-style: solid;
@@ -36,12 +34,9 @@ section {
 }
 
 section > div {
+  @extend .absolute-container;
+
   background-color: white;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
 }
 
 .internal-content {

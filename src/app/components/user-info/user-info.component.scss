@@ -1,11 +1,8 @@
 @import '~src/styles';
 
 .form-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  @extend .absolute-container;
+
   margin-top: .5rem;
   display: flex;
   flex-direction: row;
@@ -37,12 +34,12 @@
 }
 
 .groups-container {
-  flex-grow: 1;
+  flex: 1;
   margin: 0 .5rem .5rem .5rem;
 }
 
 .applications-container {
-  flex-grow: 2;
+  flex: 2;
   margin: .5rem .5rem 0 .5rem;
 }
 
@@ -53,5 +50,15 @@ mat-form-field {
 mat-card-content {
   mat-form-field {
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 959px) {
+  .form-container {
+    flex-wrap: wrap;
+  }
+
+  .groups-container, .applications-container {
+    margin: 0 !important;
   }
 }

@@ -25,6 +25,10 @@ export class EligibilityComponent implements OnInit {
   applications$: Observable<Application[]>;
   application$: Observable<Application>;
 
+  createNew = false;
+  newUser: User;
+  newGroup: Group;
+
   constructor(private userService: UserService,
               private groupService: GroupService,
               private applicationService: ApplicationService,
@@ -34,6 +38,9 @@ export class EligibilityComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
+      this.createNew = params.id === 'new';
+      console.log(this.createNew);
+
       switch (params.name) {
         case 'groups':
           this.eligibilityTabPanel.selectedIndex = 1;
@@ -68,9 +75,15 @@ export class EligibilityComponent implements OnInit {
   private initUsers(id: string) {
     this.users$ = this.userService.list();
 
-    if (id && id !== 'new' && id !== 'delete') {
-      this.user$ = this.userService.read(id);
-      console.log(this.user$);
+    if (id) {
+      if (id === 'new') {
+        this.newUser = new User();
+      } else if (id === 'delete') {
+        // TODO delete array of users
+      } else {
+        this.user$ = this.userService.read(id);
+        console.log(this.user$);
+      }
     }
   }
 
@@ -78,10 +91,15 @@ export class EligibilityComponent implements OnInit {
     this.groups$ = this.groupService.list();
 
     if (id) {
-      this.group$ = this.groupService.read(id, {
-        users: true
-      });
-      console.log(this.group$);
+      if (id === 'new') {
+        this.newGroup = new Group();
+      } else if (id === 'delete') {
+        // TODO delete array of groups
+      } else {
+        this.group$ = this.groupService.read(id, {
+          users: true
+        });
+      }
     }
   }
 

@@ -1,0 +1,56 @@
+@import '~src/styles';
+
+.container {
+  @extend .absolute-container;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  align-content: stretch;
+}
+
+.group-info-container, .eligibility-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: .5rem;
+
+  mat-form-field {
+    margin: 0 .5rem;
+    flex: 1;
+  }
+
+  mat-card {
+    flex: 1;
+  }
+
+  :first-child {
+    margin-right: .5rem;
+  }
+
+  :last-child {
+    margin-left: .5rem;
+  }
+}
+
+.eligibility-container {
+  flex: 1;
+  height: 100%;
+}
+
+@media screen and (max-width: 959px) {
+  .group-info-container, .eligibility-container {
+    flex-wrap: wrap;
+  }
+
+  .eligibility-container {
+    .users-info-container {
+      margin-right: 0;
+    }
+
+    .applications-info-container {
+      margin-top: 1rem !important;
+      margin-left: 0;
+    }
+  }
+}

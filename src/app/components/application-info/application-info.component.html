@@ -1,20 +1,20 @@
 <div class="form-container">
   <mat-sidenav-container>
     <mat-sidenav mode="side" opened>
-      <mat-list>
-        <mat-list-item *ngFor="let functionality of application.functionalities.functionality" matRipple
-                        routerLink="/eligibility/applications/{{ application.id }}/functionalities/{{ functionality.id }}">
-          {{ functionality.name }}
-          <div *ngIf="functionality.privileges">
-            <mat-list dense>
-              <mat-list-item *ngFor="let privilege of functionality.privileges" matRipple
-                             routerLink="/eligibility/applications/{{ application.id }}/functionalities/{{ functionality.id }}/privileges/{{ privilege.id }}">
-                {{ privilege.name }}
-              </mat-list-item>
-            </mat-list>
-          </div>
-        </mat-list-item>
-      </mat-list>
+<!--      <mat-list>-->
+<!--        <mat-list-item *ngFor="let functionality of application.functionalities.functionality" matRipple-->
+<!--                        routerLink="/eligibility/applications/{{ application.id }}/functionalities/{{ functionality.id }}">-->
+<!--          {{ functionality.name }}-->
+<!--          <div *ngIf="functionality.privileges">-->
+<!--            <mat-list dense>-->
+<!--              <mat-list-item *ngFor="let privilege of functionality.privileges" matRipple-->
+<!--                             routerLink="/eligibility/applications/{{ application.id }}/functionalities/{{ functionality.id }}/privileges/{{ privilege.id }}">-->
+<!--                {{ privilege.name }}-->
+<!--              </mat-list-item>-->
+<!--            </mat-list>-->
+<!--          </div>-->
+<!--        </mat-list-item>-->
+<!--      </mat-list>-->
     </mat-sidenav>
   </mat-sidenav-container>
 </div>

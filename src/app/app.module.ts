@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
-import { MatAutocompleteModule, MatButtonModule } from '@angular/material';
+import {MatAutocompleteModule, MatButtonModule, MatTableModule} from '@angular/material';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -38,6 +38,7 @@ import { EligibilityComponent } from './content/eligibility/eligibility.componen
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { ApplicationInfoComponent } from './components/application-info/application-info.component';
 import { GroupInfoComponent } from './content/eligibility/group-info/group-info.component';
+import { SimpleTableComponent } from './components/simple-table/simple-table.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { GroupInfoComponent } from './content/eligibility/group-info/group-info.
     EligibilityComponent,
     UserInfoComponent,
     ApplicationInfoComponent,
-    GroupInfoComponent
+    GroupInfoComponent,
+    SimpleTableComponent
   ],
   imports: [
     BrowserModule,
@@ -81,7 +83,8 @@ import { GroupInfoComponent } from './content/eligibility/group-info/group-info.
     MatChipsModule,
     MatTreeModule,
     ReactiveFormsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

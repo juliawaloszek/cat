@@ -1,8 +1,12 @@
 @import '~src/styles';
 
+.tab-container {
+  @extend .absolute-container;
+}
+
 mat-sidenav-container {
   position: fixed;
-  top: $cat-toolbar-height + 54px;
+  top: $cat-toolbar-height + 49px;
   left: 0;
   right: 0;
   bottom: 2px;
@@ -45,10 +49,41 @@ mat-list-item {
   font-size: small;
   cursor: pointer;
 }
+
 .add-new-element {
   background-color: #8fbc8faa;
 }
 
-.spacer {
-  flex: 1 1 auto;
+.right-align {
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  float: right;
+
+  //button {
+  //  border: solid 1px black;
+  //}
 }
+
+//::ng-deep .mat-tab-disabled {
+//  position: absolute;
+//  right: 0;
+//}
+
+//::ng-deep .mat-tab-labels {
+//  .mat-tab-disabled {
+//    float: right;
+//  }
+//  //:last-child :parent {
+//  //  position: absolute;
+//  //  right: 0;
+//  //}
+//}
+
+//.overflow-auto {
+//  overflow: auto;
+//}
+//
+//.spacer {
+//  flex: 1 1 auto;
+//}

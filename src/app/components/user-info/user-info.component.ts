@@ -26,11 +26,6 @@ export class UserInfoComponent implements OnInit {
 
   ngOnInit() {
     this.groups$ = this.groupService.groups;
-
-    if (!this.user) {
-      this.user = new User();
-    }
-    console.log(this.user);
   }
 
   private onRemoveGroup(group) {
