@@ -50,7 +50,7 @@
   <mat-sidenav #sidenavMenu class="screen-under-960" role="navigation" autoFocus="false">
     <mat-nav-list>
       <div *ngFor="let link of linksList">
-        <mat-list-item class="list-item list-item-header-container" [routerLink]=link.link (click)="routerLink ? sidenavMenu.close() : return;">
+        <mat-list-item class="list-item list-item-header-container" [routerLink]=link.link (click)="link.link ? sidenavMenu.close() : null;">
           <span [ngClass]="link.iconClass"></span>{{ link.name }}
         </mat-list-item>
         <app-list *ngIf="link.type" [type]="link.type"></app-list>

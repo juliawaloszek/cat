@@ -3,6 +3,7 @@ import { Plugin } from '../../service/model/plugin';
 import { ActivatedRoute } from '@angular/router';
 import {PluginService} from '../../service/plugin.service';
 import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-applications-list',
@@ -21,22 +22,9 @@ export class ApplicationsListComponent implements OnInit {
     this.plugins$ = this.pluginsService.list();
     this.route.params.subscribe(params => {
       if (params.hasOwnProperty('id')) {
-        this.getApplication();
+        this.activePlugin$ = this.pluginsService.read(params.id);
       }
     });
-  }
-
-  onTileClick(plugin: Plugin): void {
-    if (plugin.url) {
-      window.open(window.location.origin + plugin.url);
-    }
-
-    console.log('Aplikacja powinna zawierać url\'a pod którym można ją otworzyć.');
-  }
-
-  getApplication(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.activePlugin$ = this.pluginsService.read(id);
   }
 
 }

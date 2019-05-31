@@ -11,20 +11,14 @@ import {filter, map} from 'rxjs/operators';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  @Input() type = 'configuration';
+  @Input() type = 'administrative';
   @Input() plugins$: Observable<Plugin[]>;
 
   constructor(private pluginsService: PluginService,
               private router: Router) {}
 
   ngOnInit() {
-    if (!this.plugins$) {
-      this.plugins$ = this.pluginsService.list();
-    }
-
-    this.plugins$ = this.plugins$.pipe(
-      map(plugins => plugins.filter(plugin => plugin.type !== this.type))
-    );
+    this.plugins$ = this.pluginsService.list();
   }
 
 }

@@ -25,7 +25,7 @@ export class GroupService {
   public list(): Observable<Group[]> {
     if (!this.groupsCache$) {
       this.groupsCache$ = this.http.get<Group[]>(this.baseUrl, this.httpOptions).pipe(
-        map(response => response.group),
+        map(response => response.group.sort((groupA, groupB) => groupB.name > groupA.name ? -1 : 1)),
         shareReplay()
       );
     }
@@ -38,20 +38,6 @@ export class GroupService {
     }, this.httpOptions);
 
     return this.http.get<Group>(this.baseUrl + id, options);
-  }
-
-  public applications(id: string, config: any): Observable<Application[]> {
-    const options = Object.assign({
-      params: config
-    }, this.httpOptions);
-
-    return this.http.get<Application[]>(this.baseUrl + id + '/applications', options).pipe(
-      map(applications => applications.application),
-      catchError(value => {
-        console.log(value);
-        return [];
-      })
-    );
   }
 
   public create(group: Group): Observable<Group> {

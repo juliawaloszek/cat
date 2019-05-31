@@ -1,36 +1,46 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Group} from '../../../service/model/group';
-import {Application} from '../../../service/model/application';
-import {Observable} from 'rxjs';
-import {GroupService} from '../../../service/group.service';
-import {catchError, tap} from 'rxjs/operators';
-import {ActivatedRoute, Router} from '@angular/router';
+import {MatDialog} from '@angular/material';
+import {InterpolateDialogComponent} from '../interpolate-dialog/interpolate-dialog.component';
+import {UserService} from '../../../service/user.service';
+import {catchError, map, tap} from 'rxjs/operators';
+import {pipe} from 'rxjs';
 
 @Component({
   selector: 'app-group-info',
   templateUrl: './group-info.component.html',
   styleUrls: ['./group-info.component.scss']
 })
+
 export class GroupInfoComponent implements OnInit {
   @Input() group: Group;
-  applications$: Observable<Application[]>;
 
-  constructor(private groupService: GroupService,
-              private route: ActivatedRoute) { }
+  constructor(public dialog: MatDialog,
+              private userService: UserService) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      if (params.id && params.id !== 'new') {
-        this.applications$ = this.groupService.applications(this.group.id, {
-          functionalities: true,
-          privileges: true
-        });
-      }
-    });
   }
 
   onAddUsersButton() {
-    // TODO dodaj użytkowników
+    this.userService.list().subscribe(users => {
+      users = users.filter(user => !this.group.user.some(gUser => user.id === gUser.id));
+
+      const dialogRef = this.createDialog({
+        list: users,
+        userLabel: true,
+        dialogTitle: 'Dodaj użytkowników'
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+        if (result) {
+          result.forEach(user => {
+            this.group.user.push(user);
+          });
+          console.log(this.group.user);
+        }
+      });
+    });
   }
 
   onRemoveUsersButton() {
@@ -43,6 +53,14 @@ export class GroupInfoComponent implements OnInit {
 
   onRemoveApplicationsButton() {
     // TODO usuń aplikacje
+  }
+
+  createDialog(data: object) {
+    return this.dialog.open(InterpolateDialogComponent, {
+      width: '350px',
+      height: '50%',
+      data: data
+    });
   }
 
 }

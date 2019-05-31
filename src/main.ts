@@ -1,9 +1,10 @@
 import 'hammerjs';
-import { enableProdMode } from '@angular/core';
+import {enableProdMode, NgModule} from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import {InterpolateDialogComponent} from './app/content/eligibility/interpolate-dialog/interpolate-dialog.component';
 
 if (environment.production) {
   enableProdMode();

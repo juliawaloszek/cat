@@ -21,8 +21,8 @@ export class UserService {
   constructor(private http: HttpClient) {
     if (isDevMode()) {
       this.httpOptions = {
-        withCredentials: true // necessary for dev version
-      }; // dalej może być przydatna funkcja Object.assign
+        withCredentials: true
+      };
       this.activeUserUrl = this.url = 'https://vm-kajko:8181';
     }
 
@@ -34,7 +34,6 @@ export class UserService {
     if (!this.activeUserCache$) {
       this.activeUserCache$ = this.http.get<User>(this.activeUserUrl, this.httpOptions).pipe(
         tap(response => console.log(response)),
-        // catchError(this.handleError<User>('getApplications', ''))
       ).pipe(
         shareReplay()
       );
@@ -45,7 +44,7 @@ export class UserService {
   public list(): Observable<User[]> {
     if (!this.usersCache$) {
       this.usersCache$ = this.http.get<User[]>(this.url, this.httpOptions).pipe(
-        map(users => users.user),
+        map(response => response.user.sort((userA, userB) => userB.id > userA.id ? -1 : 1)),
         catchError(this.handleError<User[]>('getUsers', [])),
         shareReplay()
       );

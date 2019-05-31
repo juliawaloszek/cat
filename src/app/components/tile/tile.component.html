@@ -1,7 +1,7 @@
-<div class="tile" routerLink="/{{ application.type }}/{{ application.id }}" matRipple>
-  <div class="tile-logo" [matTooltip]="application.name">
+<div class="tile" (click)="onClick()" matRipple>
+  <div class="tile-logo" [matTooltip]="plugin.name">
     <div>  <!-- display-flex z klasy powyżej psuło proporcje-->
-      <img *ngIf="application.logo" [src]="application.logo" alt="">
+      <img *ngIf="plugin.logo" [src]="plugin.logo" alt="">
       <!--{{ aplication.logo }}-->
     </div>
   </div>

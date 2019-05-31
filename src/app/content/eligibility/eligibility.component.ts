@@ -3,13 +3,13 @@ import {User} from '../../service/model/user';
 import {Group} from '../../service/model/group';
 import {UserService} from '../../service/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MatTab, MatTabChangeEvent, MatTabGroup} from '@angular/material';
-import {NAVLINKS} from './navlinks';
+import {MatTabGroup} from '@angular/material';
 import {GroupService} from '../../service/group.service';
 import {Observable} from 'rxjs';
 import {ApplicationService} from '../../service/application.service';
 import {Application} from '../../service/model/application';
 import {tap} from 'rxjs/operators';
+import {FlatTreeControl} from '@angular/cdk/tree';
 
 @Component({
   selector: 'app-eligibility',
@@ -18,6 +18,7 @@ import {tap} from 'rxjs/operators';
 })
 export class EligibilityComponent implements OnInit {
   @ViewChild('eligibilityTabPanel') eligibilityTabPanel: MatTabGroup;
+
   users$: Observable<User[]>;
   user$: Observable<User>;
   groups$: Observable<Group[]>;
@@ -97,6 +98,7 @@ export class EligibilityComponent implements OnInit {
         // TODO delete array of groups
       } else {
         this.group$ = this.groupService.read(id, {
+          applications: true,
           users: true
         });
       }

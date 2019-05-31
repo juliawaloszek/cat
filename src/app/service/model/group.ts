@@ -5,7 +5,9 @@ export class Group {
   id: string;
   name: string;
   user: Array<User>;
-  applications: Array<Application>;
+  applications: {
+    application: Array<Application>
+  };
 
   constructor() {
     if (!this.user) {
@@ -13,7 +15,9 @@ export class Group {
     }
 
     if (!this.applications) {
-      this.applications = new Array<Application>();
+      this.applications = {
+        application: new Array<Application>()
+      };
     }
   }
 }

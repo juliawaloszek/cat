@@ -16,14 +16,13 @@
         <div class="spacer"></div>
         <button mat-mini-fab color="accent" (click)="onAddUsersButton()">
           <mat-icon class="mat-18">add</mat-icon>
-
         </button>
         <button mat-mini-fab color="accent" (click)="onRemoveUsersButton()">
           <mat-icon class="mat-18">delete</mat-icon>
         </button>
       </mat-card-header>
       <mat-card-content>
-        <app-simple-table [list]="group.user || []" [nameLabel]="'Imię i Nazwisko'"></app-simple-table>
+        <app-simple-table [list]="group.user || []" [nameLabel]="true"></app-simple-table>
       </mat-card-content>
     </mat-card>
 
@@ -39,9 +38,9 @@
         </button>
       </mat-card-header>
       <mat-card-content>
-        <div *ngIf="applications$ | async as applications">
-          <app-simple-table [list]="applications"></app-simple-table>
-        </div>
+<!--        <div *ngIf="group.applications">-->
+          <app-simple-table [list]="group.applications.application"></app-simple-table>
+<!--        </div>-->
       </mat-card-content>
     </mat-card>
   </div>

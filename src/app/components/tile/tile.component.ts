@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import { Application } from '../../service/model/application';
+import {Component, Input, isDevMode, OnInit} from '@angular/core';
+import {Plugin} from '../../service/model/plugin';
 
 @Component({
   selector: 'app-tile',
@@ -7,12 +7,21 @@ import { Application } from '../../service/model/application';
   styleUrls: ['./tile.component.scss']
 })
 export class TileComponent implements OnInit {
-  @Input() application: Application;
+  @Input() plugin: Plugin;
 
   constructor() { }
 
   ngOnInit() {
-    console.log(this.application);
+  }
+
+  onClick() {
+    if (this.plugin.url) {
+      if (isDevMode()) {
+        window.open('http://' + window.location.hostname + '/' + this.plugin.url);
+      } else {
+        window.open(this.plugin.url);
+      }
+    }
   }
 
 }

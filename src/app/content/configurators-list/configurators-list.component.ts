@@ -23,13 +23,13 @@ export class ConfiguratorsListComponent implements OnInit {
     this.plugins$ = this.pluginsService.list();
     this.route.params.subscribe(params => {
       if (params.hasOwnProperty('id')) {
-        this.getApplication();
+        this.getApplication(params.id);
       }
     });
   }
 
-  getApplication(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+  getApplication(id: string): void {
+    // const id = this.route.snapshot.paramMap.get('id');
     this.activePlugin$ = this.pluginsService.read(id).pipe(
       tap(plugin => console.log(plugin))
     );

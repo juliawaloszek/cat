@@ -80,14 +80,15 @@
     <mat-tab label="Aplikacje">
       <mat-sidenav-container>
         <mat-sidenav mode="side" opened>
-<!--          <mat-list>-->
-<!--            <mat-list-item class="" *ngFor="let application of applications$ | async"-->
-<!--                           routerLink="/eligibility/applications/{{ application.id }}" matRipple>-->
-<!--              {{ application.name }}-->
-<!--            </mat-list-item>-->
-<!--          </mat-list>-->
+          <mat-list>
+            <mat-list-item class="" *ngFor="let application of applications$ | async"
+                           routerLink="/eligibility/applications/{{ application.id }}" matRipple>
+              {{ application.name }}
+            </mat-list-item>
+          </mat-list>
+<!--          <mat-tree>-->
 
-          <mat-tree></mat-tree>
+<!--          </mat-tree>-->
         </mat-sidenav>
         <section>
           <div *ngIf="application$ | async as application">

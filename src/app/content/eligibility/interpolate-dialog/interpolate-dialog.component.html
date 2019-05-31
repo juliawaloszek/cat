@@ -1,0 +1,13 @@
+<div class="dialog-container">
+  <h1 mat-dialog-title>{{ data.dialogTitle }}</h1>
+
+  <div mat-dialog-content class="list-container">
+    <app-simple-table mat-dialog-content (selectionChanged)="selectionChanged($event)" [list]="data.list" [nameLabel]="data.userLabel"></app-simple-table>
+<!--    <input matInput [(ngModel)]="checkedObjects" hidden>-->
+  </div>
+
+  <div mat-dialog-actions class="buttons-container">
+    <button mat-button (click)="closeDialog()">Anuluj</button>
+    <button mat-button [mat-dialog-close]="checkedObjects" okFocusInitial>Dodaj</button>
+  </div>
+</div>

@@ -9,14 +9,14 @@
       </th>
       <td mat-cell *matCellDef="let row">
         <mat-checkbox (click)="$event.stopPropagation()"
-                      (change)="$event ? selection.toggle(row) : null"
+                      (change)="onSelectionChanged($event, row)"
                       [checked]="selection.isSelected(row)"
                       [aria-label]="checkboxLabel(row)"></mat-checkbox>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>{{ nameLabel ? nameLabel : 'Nazwa' }}</th>
+      <th mat-header-cell *matHeaderCellDef>{{ nameLabel ? 'Imię i Nazwisko' : 'Nazwa' }}</th>
       <td mat-cell *matCellDef="let element"> {{ element.name.full || element.name }} </td>
     </ng-container>
 

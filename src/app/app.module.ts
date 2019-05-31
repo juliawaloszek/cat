@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
-import {MatAutocompleteModule, MatButtonModule, MatTableModule} from '@angular/material';
+import { MatAutocompleteModule, MatButtonModule, MatTableModule } from '@angular/material';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -25,6 +25,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material';
 import { MatTreeModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material';
 
 import { ApplicationsListComponent } from './content/applications-list/applications-list.component';
 import { ConfiguratorsListComponent } from './content/configurators-list/configurators-list.component';
@@ -39,6 +40,7 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
 import { ApplicationInfoComponent } from './components/application-info/application-info.component';
 import { GroupInfoComponent } from './content/eligibility/group-info/group-info.component';
 import { SimpleTableComponent } from './components/simple-table/simple-table.component';
+import { InterpolateDialogComponent } from './content/eligibility/interpolate-dialog/interpolate-dialog.component';
 
 
 @NgModule({
@@ -56,7 +58,8 @@ import { SimpleTableComponent } from './components/simple-table/simple-table.com
     UserInfoComponent,
     ApplicationInfoComponent,
     GroupInfoComponent,
-    SimpleTableComponent
+    SimpleTableComponent,
+    InterpolateDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -84,9 +87,11 @@ import { SimpleTableComponent } from './components/simple-table/simple-table.com
     MatTreeModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [InterpolateDialogComponent]
 })
 export class AppModule { }
