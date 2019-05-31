@@ -87,3 +87,16 @@ mat-list-item {
 //.spacer {
 //  flex: 1 1 auto;
 //}
+
+mat-sidenav {
+  width: 20px;
+}
+
+mat-sidenav-content {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.p-0 {
+  padding:  0 10px !important;
+}
