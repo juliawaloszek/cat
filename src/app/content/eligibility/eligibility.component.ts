@@ -47,7 +47,7 @@ export class EligibilityComponent implements OnInit {
               private groupService: GroupService,
               private applicationService: ApplicationService,
               private route: ActivatedRoute,
-              private router: Router,
+              private router: Router
   ) { }
 
   ngOnInit() {
