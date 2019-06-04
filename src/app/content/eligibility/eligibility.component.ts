@@ -5,16 +5,21 @@ import {UserService} from '../../service/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatTabGroup} from '@angular/material';
 import {GroupService} from '../../service/group.service';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {ApplicationService} from '../../service/application.service';
 import {Application} from '../../service/model/application';
 import {tap} from 'rxjs/operators';
 import {FlatTreeControl} from '@angular/cdk/tree';
+import { animateSideNav, animateSideNavContent, displayMenuText } from 'src/app/animations/animations';
 
 @Component({
   selector: 'app-eligibility',
   templateUrl: './eligibility.component.html',
-  styleUrls: ['./eligibility.component.scss']
+  styleUrls: ['./eligibility.component.scss'],
+  animations: [
+    animateSideNav,
+    animateSideNavContent,
+    displayMenuText]
 })
 export class EligibilityComponent implements OnInit {
   @ViewChild('eligibilityTabPanel') eligibilityTabPanel: MatTabGroup;
@@ -29,13 +34,21 @@ export class EligibilityComponent implements OnInit {
   createNew = false;
   newUser: User;
   newGroup: Group;
+  sideNavState$: Subject<boolean> = new Subject();
+
+
+
+
+  sideNavState = false;
+  linkText = false;
+
 
   constructor(private userService: UserService,
               private groupService: GroupService,
               private applicationService: ApplicationService,
               private route: ActivatedRoute,
               private router: Router
-  ) {  }
+  ) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -120,7 +133,15 @@ export class EligibilityComponent implements OnInit {
   }
 
   private deleteSelected(name: string)  {
+    // TODO
+  }
 
+  onSinenavToggle() {
+    this.sideNavState = !this.sideNavState;
+    setTimeout(() => {
+      this.linkText = this.sideNavState;
+    }, 200);
+    this.sideNavState$.next(this.sideNavState);
   }
 
 }

@@ -1,43 +1,54 @@
 <div class="tab-container">
-
   <div class="right-align">
     <button mat-button disabled>Zapisz</button>
     <button mat-button disabled>Anuluj</button>
   </div>
 
   <mat-tab-group #eligibilityTabPanel (selectedTabChange)="onTabChange($event.index)">
-
     <mat-tab label="Użytkownicy">
       <mat-sidenav-container>
-        <mat-sidenav mode="side" opened>
-          <mat-toolbar class="sticky-toolbar">
-            <span class="spacer"></span>
-            <button mat-icon-button class="mat-icon" routerLink="/eligibility/users/new">
-              <mat-icon>add</mat-icon>
-            </button>
-            <button mat-icon-button class="mat-icon" (click)="deleteSelected('users')">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </mat-toolbar>
-
-          <div class="overflow-auto">
-            <mat-list class="under-sticky">
-              <mat-list-item class="" *ngFor="let user of users$ | async"
-                             routerLink="/eligibility/users/{{ user.id }}" matRipple>
-                {{ user.name.full }}
-              </mat-list-item>
-            </mat-list>
+        <mat-sidenav [@animateSideNav]="sideNavState ? 'close' : 'open'" #leftSidenav mode="side" opened>
+          <div class="no-v-scroll">
+            <mat-toolbar>
+              <span class="spacer"></span>
+              <button mat-icon-button class="mat-icon" routerLink="/eligibility/users/new"
+                [@displayMenuText]="linkText ? 'hide' : 'show'">
+                <mat-icon>add</mat-icon>
+              </button>
+              <button mat-icon-button class="mat-icon" (click)="deleteSelected('users')"
+                [@displayMenuText]="linkText ? 'hide' : 'show'">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <button mat-icon-button class="mat-icon" (click)="onSinenavToggle()">
+                <mat-icon *ngIf="sideNavState">keyboard_arrow_right</mat-icon>
+                <mat-icon *ngIf="!sideNavState">keyboard_arrow_left</mat-icon>
+              </button>
+            </mat-toolbar>
+            <div class="sidenav-list-content" style="">
+              <mat-list class="">
+                <mat-list-item [@displayMenuText]="linkText ? 'hide' : 'show'" class=""
+                  *ngFor="let user of users$ | async"
+                  routerLink="/eligibility/users/{{ user.id }}" matRipple>
+                  {{ user.name.full }}
+                </mat-list-item>
+              </mat-list>
+            </div>
           </div>
-
         </mat-sidenav>
-        <section>
-          <div *ngIf="!createNew">
-            <app-user-info [user]="user$ | async"></app-user-info>
+        <mat-sidenav-content [@animateSideNavContent]="sideNavState ? 'close' : 'open'">
+          <div class="main_content">
+            <div style="padding: 20px">
+              <section>
+                <div *ngIf="!createNew">
+                  <app-user-info [user]="user$ | async"></app-user-info>
+                </div>
+                <div *ngIf="createNew">
+                  <app-user-info [user]="newUser"></app-user-info>
+                </div>
+              </section>
+            </div>
           </div>
-          <div *ngIf="createNew">
-            <app-user-info [user]="newUser"></app-user-info>
-          </div>
-        </section>
+        </mat-sidenav-content>
       </mat-sidenav-container>
     </mat-tab>
 
@@ -54,10 +65,9 @@
             </button>
           </mat-toolbar>
 
-
           <mat-list class="under-sticky">
-            <mat-list-item *ngFor="let group of groups$ | async"
-                           routerLink="/eligibility/groups/{{ group.id }}" matRipple>
+            <mat-list-item *ngFor="let group of groups$ | async" 
+              routerLink="/eligibility/groups/{{ group.id }}" matRipple>
               {{ group.name }}
             </mat-list-item>
           </mat-list>
@@ -69,10 +79,10 @@
           <div *ngIf="createNew">
             <app-group-info [group]="newGroup"></app-group-info>
           </div>
-<!--          <div *ngIf="group$ | async as group">-->
-<!--&lt;!&ndash;            <app-user-info [group]="group"></app-user-info>&ndash;&gt;-->
-<!--            Grupa: {{ group.name }}-->
-<!--          </div>-->
+          <!--          <div *ngIf="group$ | async as group">-->
+          <!--&lt;!&ndash;            <app-user-info [group]="group"></app-user-info>&ndash;&gt;-->
+          <!--            Grupa: {{ group.name }}-->
+          <!--          </div>-->
         </section>
       </mat-sidenav-container>
     </mat-tab>
@@ -82,22 +92,21 @@
         <mat-sidenav mode="side" opened>
           <mat-list>
             <mat-list-item class="" *ngFor="let application of applications$ | async"
-                           routerLink="/eligibility/applications/{{ application.id }}" matRipple>
+              routerLink="/eligibility/applications/{{ application.id }}" matRipple>
               {{ application.name }}
             </mat-list-item>
           </mat-list>
-<!--          <mat-tree>-->
+          <!--          <mat-tree>-->
 
-<!--          </mat-tree>-->
+          <!--          </mat-tree>-->
         </mat-sidenav>
         <section>
           <div *ngIf="application$ | async as application">
-                        <app-application-info [application]="application"></app-application-info>
+            <app-application-info [application]="application"></app-application-info>
             Aplikacja: {{ application.name }}
           </div>
         </section>
       </mat-sidenav-container>
     </mat-tab>
-
   </mat-tab-group>
 </div>
