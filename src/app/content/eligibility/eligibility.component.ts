@@ -136,7 +136,7 @@ export class EligibilityComponent implements OnInit {
     // TODO
   }
 
-  onSinenavToggle() {
+  onSideNavToggle() {
     this.sideNavState = !this.sideNavState;
     setTimeout(() => {
       this.linkText = this.sideNavState;
