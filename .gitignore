@@ -45,3 +45,6 @@ Thumbs.db
 
 #Beautify-brakets
 .jsbeautifyrc
+
+#Temporary changelog
+ChangeLog.txt

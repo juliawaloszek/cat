@@ -3,12 +3,12 @@ import { trigger, state, style, transition, animate, animateChild, query } from 
 export const animateSideNav = trigger('animateSideNav', [
     state('close',
       style({
-        'min-width': '48px',
+        'min-width': '58px',
       })
     ),
     state('open',
       style({
-        'min-width': '15%',
+        'min-width': '270px',
       })
     ),
     transition('close => open', animate('250ms ease-in')),
@@ -18,12 +18,13 @@ export const animateSideNav = trigger('animateSideNav', [
 export const animateSideNavContent = trigger('animateSideNavContent', [
     state('close',
       style({
+        // 'margin-left': '82px'
         'margin-left': '62px'
       })
     ),
     state('open',
       style({
-        'margin-left': '15%'
+        'margin-left': '270px'
       })
     ),
     transition('close => open', animate('250ms ease-in')),
