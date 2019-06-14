@@ -29,8 +29,9 @@
             <div class="sidenav-list-content" >
               <mat-list class="">
                 <mat-list-item [@displayMenuText]="linkText ? 'hide' : 'show'"
-                  *ngFor="let user of users$ | async" 
-                  routerLink="/eligibility/users/{{ user.id }}" matRipple>
+                  *ngFor="let user of users$ | async"
+                  routerLink="/eligibility/users/{{ user.id }}" matRipple
+                  routerLinkActive="active">
                   {{ user.name.full }}
                 </mat-list-item>
               </mat-list>
