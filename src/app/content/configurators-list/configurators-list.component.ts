@@ -16,8 +16,8 @@ export class ConfiguratorsListComponent implements OnInit {
   activePlugin$: Observable<Plugin>;
 
   constructor(private pluginsService: PluginService,
-    private route: ActivatedRoute
-    ) { }
+              private route: ActivatedRoute
+              ) { }
 
   ngOnInit() {
     this.plugins$ = this.pluginsService.list();

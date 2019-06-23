@@ -7,6 +7,8 @@
   <mat-tab-group #eligibilityTabPanel (selectedTabChange)="onTabChange($event.index)">
     <mat-tab label="Użytkownicy">
       <mat-sidenav-container>
+        <!-- to nie zawartość znika tylko chowa się boczny panel z jakiegoś powodu -->
+        <!-- może spróbować z innymi typami paneli -->
         <mat-sidenav [@animateSideNav]="sideNavState ? 'close' : 'open'" mode="side" opened>
           <div class="no-v-scroll">
             <mat-toolbar>
@@ -27,7 +29,7 @@
             <div class="sidenav-list-content" >
               <mat-list class="">
                 <mat-list-item [@displayMenuText]="linkText ? 'hide' : 'show'"
-                  *ngFor="let user of users$ | async" 
+                  *ngFor="let user of users$ | async"
                   routerLink="/eligibility/users/{{ user.id }}" matRipple>
                   {{ user.name.full }}
                 </mat-list-item>
@@ -54,7 +56,7 @@
 
     <mat-tab label="Grupy" routerLink="/eligibility/groups">
         <mat-sidenav-container>
-          <mat-sidenav [@animateSideNav]="sideNavState ? 'close' : 'open'" #leftSidenav mode="side" opened>
+          <mat-sidenav [@animateSideNav]="sideNavState ? 'close' : 'open'" mode="side" opened>
             <div class="no-v-scroll">
               <mat-toolbar>
                 <span class="spacer"></span>

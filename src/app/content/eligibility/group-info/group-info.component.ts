@@ -4,7 +4,7 @@ import {MatDialog} from '@angular/material';
 import {InterpolateDialogComponent} from '../interpolate-dialog/interpolate-dialog.component';
 import {UserService} from '../../../service/user.service';
 import {catchError, map, tap} from 'rxjs/operators';
-import {pipe} from 'rxjs';
+import {Observable, pipe} from 'rxjs';
 
 @Component({
   selector: 'app-group-info',
@@ -14,6 +14,8 @@ import {pipe} from 'rxjs';
 
 export class GroupInfoComponent implements OnInit {
   @Input() group: Group;
+
+  private group$: Observable<Group>;
 
   constructor(public dialog: MatDialog,
               private userService: UserService) { }
@@ -32,11 +34,11 @@ export class GroupInfoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
         if (result) {
           result.forEach(user => {
             this.group.user.push(user);
           });
+          // może na odświeżanie tej tabeli pomoże zmiana elementu na observable
           console.log(this.group.user);
         }
       });

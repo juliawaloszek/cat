@@ -20,6 +20,7 @@ import { animateSideNav, animateSideNavContent, displayMenuText } from 'src/app/
     animateSideNavContent,
     displayMenuText]
 })
+
 export class EligibilityComponent implements OnInit {
   @ViewChild('eligibilityTabPanel') eligibilityTabPanel: MatTabGroup;
 
@@ -37,7 +38,7 @@ export class EligibilityComponent implements OnInit {
 
   sideNavState = false;
   linkText = false;
-
+  opened = true;
 
   constructor(private userService: UserService,
               private groupService: GroupService,
@@ -49,7 +50,6 @@ export class EligibilityComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.createNew = params.id === 'new';
-      console.log(this.createNew);
 
       switch (params.name) {
         case 'groups':
@@ -83,7 +83,9 @@ export class EligibilityComponent implements OnInit {
   }
 
   private initUsers(id: string) {
-    this.users$ = this.userService.list();
+    if (!this.users$) {
+      this.users$ = this.userService.list();
+    }
 
     if (id) {
       if (id === 'new') {

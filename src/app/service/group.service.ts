@@ -4,9 +4,7 @@ import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { isDevMode } from '@angular/core';
 
-import { Group} from './model/group';
-import {User} from './model/user';
-import {Application} from './model/application';
+import { Group } from './model/group';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +22,7 @@ export class GroupService {
 
   public list(): Observable<Group[]> {
     if (!this.groupsCache$) {
-      this.groupsCache$ = this.http.get<Group[]>(this.baseUrl, this.httpOptions).pipe(
+      this.groupsCache$ = this.http.get<{group}>(this.baseUrl, this.httpOptions).pipe(
         map(response => response.group.sort((groupA, groupB) => groupB.name > groupA.name ? -1 : 1)),
         shareReplay()
       );
@@ -56,7 +54,7 @@ export class GroupService {
 
   get groups(): Observable<Group[]> {
     if (!this.groupsCache$) {
-      this.groupsCache$ = this.http.get<Group[]>(this.baseUrl, this.httpOptions).pipe(
+      this.groupsCache$ = this.http.get<{group}>(this.baseUrl, this.httpOptions).pipe(
         map(response => response.group),
         shareReplay()
       );

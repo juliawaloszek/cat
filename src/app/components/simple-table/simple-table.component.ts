@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges} from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
-import {MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatTable, MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-simple-table',
@@ -8,7 +8,8 @@ import {MatTableDataSource} from '@angular/material';
   styleUrls: ['./simple-table.component.scss']
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SimpleTableComponent implements OnInit, OnChanges {
+
+export class SimpleTableComponent implements OnInit,  OnChanges {
   selection = new SelectionModel<any>(true, []);
   dataSource: MatTableDataSource<any>;
 
@@ -19,9 +20,26 @@ export class SimpleTableComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges) {
+    if (!this.dataSource) {
+      this.dataSource = new MatTableDataSource<any>(this.list);
+    }
     const list: SimpleChange = changes.list;
-    console.log(list, this.dataSource);
+
+    // if (list.isFirstChange()) {
+    //   this.dataSource = new MatTableDataSource<any>(this.list);
+    // } else {
+    //   this.dataSource = new MatTableDataSource<any>(list.currentValue);
+    // }
     this.dataSource.data = list.currentValue;
+    console.log(this.dataSource);
+    // console.log(list.currentValue);
+    // console.log(this.table);
+
+    this.dataSource.connect();
+    // this.dataSource._pageData(list.currentValue);
+
+    // console.log(this.dataSource.data);
+    // this.refreshTable(list.currentValue);
   }
 
   ngOnInit() {
@@ -52,6 +70,13 @@ export class SimpleTableComponent implements OnInit, OnChanges {
       this.selection.toggle(row);
     }
     this.selectionChanged.emit(this.selection.selected);
+  }
+
+  refreshTable(data) {
+    console.log(this.dataSource);
+    this.dataSource.connect().next(data);
+    this.dataSource._updateChangeSubscription();
+    // this.paginator._changePageSize(this.paginator.pageSize);
   }
 
 }

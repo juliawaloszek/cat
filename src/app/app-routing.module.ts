@@ -8,9 +8,9 @@ import { EligibilityComponent } from './content/eligibility/eligibility.componen
 const routes: Routes = [{
   path: '',
   component: InfoComponent
-}, {
-  path: 'eligibility',
-  component: EligibilityComponent
+// }, {
+//   path: 'eligibility/',
+//   component: EligibilityComponent
 }, {
   path: 'eligibility/:name',
   component: EligibilityComponent

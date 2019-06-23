@@ -25,7 +25,7 @@ export class ApplicationService {
 
   public list(): Observable<Application[]> {
     if (!this.applicationsCache$) {
-      this.applicationsCache$ = this.http.get<Application[]>(this.baseUrl, this.httpOptions).pipe(
+      this.applicationsCache$ = this.http.get<{application}>(this.baseUrl, this.httpOptions).pipe(
         map(applications => applications.application),
         catchError(this.handleError<Plugin[]>('getApplications', [])),
         shareReplay()
