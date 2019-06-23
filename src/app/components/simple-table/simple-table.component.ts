@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges} from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material';
-import {Group} from '../../service/model/group';
 
 @Component({
   selector: 'app-simple-table',
@@ -22,7 +21,7 @@ export class SimpleTableComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     const list: SimpleChange = changes.list;
     console.log(list, this.dataSource);
-    // this.dataSource.data = list.currentValue;
+    this.dataSource.data = list.currentValue;
   }
 
   ngOnInit() {

@@ -9,7 +9,6 @@ import {Observable, Subject} from 'rxjs';
 import {ApplicationService} from '../../service/application.service';
 import {Application} from '../../service/model/application';
 import {tap} from 'rxjs/operators';
-import {FlatTreeControl} from '@angular/cdk/tree';
 import { animateSideNav, animateSideNavContent, displayMenuText } from 'src/app/animations/animations';
 
 @Component({
@@ -35,9 +34,6 @@ export class EligibilityComponent implements OnInit {
   newUser: User;
   newGroup: Group;
   sideNavState$: Subject<boolean> = new Subject();
-
-
-
 
   sideNavState = false;
   linkText = false;

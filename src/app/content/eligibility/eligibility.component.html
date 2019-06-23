@@ -7,7 +7,7 @@
   <mat-tab-group #eligibilityTabPanel (selectedTabChange)="onTabChange($event.index)">
     <mat-tab label="Użytkownicy">
       <mat-sidenav-container>
-        <mat-sidenav [@animateSideNav]="sideNavState ? 'close' : 'open'" #leftSidenav mode="side" opened>
+        <mat-sidenav [@animateSideNav]="sideNavState ? 'close' : 'open'" mode="side" opened>
           <div class="no-v-scroll">
             <mat-toolbar>
               <span class="spacer"></span>
