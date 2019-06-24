@@ -12,44 +12,54 @@ import {MatPaginator, MatTable, MatTableDataSource} from '@angular/material';
 export class SimpleTableComponent implements OnInit,  OnChanges {
   selection = new SelectionModel<any>(true, []);
   dataSource: MatTableDataSource<any>;
+  keys: Array<string> = [];
 
-  @Input() list: any;
-  @Input() nameLabel = false;
+  @Input() config: {
+    data: any[],
+    checkColumn: boolean,
+    columns: Array<{
+      dataIndex: string,
+      header: string,
+      mapping: string
+    }>
+  };
   @Output() selectionChanged = new EventEmitter<any>();
 
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (!this.dataSource) {
-      this.dataSource = new MatTableDataSource<any>(this.list);
+      this.dataSource = new MatTableDataSource<any>(this.config.data);
     }
-    const list: SimpleChange = changes.list;
-
-    // if (list.isFirstChange()) {
-    //   this.dataSource = new MatTableDataSource<any>(this.list);
-    // } else {
-    //   this.dataSource = new MatTableDataSource<any>(list.currentValue);
-    // }
-    this.dataSource.data = list.currentValue;
-    console.log(this.dataSource);
-    // console.log(list.currentValue);
-    // console.log(this.table);
+    const list: SimpleChange = changes.config;
+    this.dataSource.data = list.currentValue.data;
+    // console.log(this.dataSource);
 
     this.dataSource.connect();
-    // this.dataSource._pageData(list.currentValue);
-
-    // console.log(this.dataSource.data);
-    // this.refreshTable(list.currentValue);
   }
 
   ngOnInit() {
-    if (this.list) {
-      this.dataSource = new MatTableDataSource(this.list);
+    const self = this;
+    self.getDataSource();
+
+    if (self.config.checkColumn) {
+      self.keys.push('select');
     }
+
+    this.config.columns.forEach(column => {
+      self.keys.push(column.dataIndex);
+    });
+  }
+
+  getDataSource() {
+    if (!this.dataSource) {
+      this.dataSource =  new MatTableDataSource(this.config.data);
+    }
+    return this.dataSource;
   }
 
   isAllSelected() {
-    return this.selection.selected.length === this.dataSource.data.length;
+    return this.selection.selected.length === this.getDataSource().data.length;
   }
 
   masterToggle() {

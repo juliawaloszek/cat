@@ -89,15 +89,13 @@
               <div style="padding: 20px">
                   <section>
                       <div *ngIf="!createNew">
-                        <app-group-info [group]="group$ | async"></app-group-info>
+                        <div *ngIf="group$ | async as group">
+                          <app-group-info [group]="group"></app-group-info>
+                        </div>
                       </div>
                       <div *ngIf="createNew">
                         <app-group-info [group]="newGroup"></app-group-info>
                       </div>
-                      <!--          <div *ngIf="group$ | async as group">-->
-                      <!--&lt;!&ndash;            <app-user-info [group]="group"></app-user-info>&ndash;&gt;-->
-                      <!--            Grupa: {{ group.name }}-->
-                      <!--          </div>-->
                     </section>
               </div>
             </div>
