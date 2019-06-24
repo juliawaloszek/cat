@@ -1,6 +1,8 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges, ViewChild} from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
-import {MatPaginator, MatTable, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTable, MatTableDataSource} from '@angular/material';
+import {SimpleDataSource} from './simple-data-source';
+import {fromEvent} from 'rxjs';
 
 @Component({
   selector: 'app-simple-table',
@@ -10,52 +12,72 @@ import {MatPaginator, MatTable, MatTableDataSource} from '@angular/material';
 })
 
 export class SimpleTableComponent implements OnInit,  OnChanges {
-  selection = new SelectionModel<any>(true, []);
-  dataSource: MatTableDataSource<any>;
-
-  @Input() list: any;
-  @Input() nameLabel = false;
+  @Output() dataSource: SimpleDataSource | null;
   @Output() selectionChanged = new EventEmitter<any>();
+
+  selection = new SelectionModel<any>(true, []);
+  keys: Array<string> = [];
+
+  @Input() config: {
+    data: any[],
+    checkColumn: boolean,
+    columns: Array<{
+      dataIndex: string,
+      header: string,
+      mapping: string
+    }>
+  };
 
   constructor() { }
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('filter') filter: ElementRef;
+
   ngOnChanges(changes: SimpleChanges) {
-    if (!this.dataSource) {
-      this.dataSource = new MatTableDataSource<any>(this.list);
-    }
-    const list: SimpleChange = changes.list;
-
-    // if (list.isFirstChange()) {
-    //   this.dataSource = new MatTableDataSource<any>(this.list);
-    // } else {
-    //   this.dataSource = new MatTableDataSource<any>(list.currentValue);
-    // }
-    this.dataSource.data = list.currentValue;
-    console.log(this.dataSource);
-    // console.log(list.currentValue);
-    // console.log(this.table);
-
-    this.dataSource.connect();
-    // this.dataSource._pageData(list.currentValue);
-
-    // console.log(this.dataSource.data);
-    // this.refreshTable(list.currentValue);
+    // const list: SimpleChange = changes.config;
+    // this.dataSource.data = list.currentValue.data;
+    console.log(this.getDataSource());
+    //
+    // this.dataSource.connect();
   }
 
   ngOnInit() {
-    if (this.list) {
-      this.dataSource = new MatTableDataSource(this.list);
+    const me = this;
+    me.loadData();
+
+    if (me.config.checkColumn) {
+      me.keys.push('select');
     }
+
+    this.config.columns.forEach(column => {
+      me.keys.push(column.dataIndex);
+    });
+  }
+
+  getDataSource() {
+    if (!this.dataSource) {
+      this.dataSource = new SimpleDataSource(this.config.data, this.paginator);
+    }
+    return this.dataSource;
+  }
+
+  public loadData() {
+    this.getDataSource();
+
+    fromEvent(this.filter.nativeElement, 'keyup').subscribe(() => {
+      this.dataSource.filter = this.filter.nativeElement.value;
+    });
   }
 
   isAllSelected() {
-    return this.selection.selected.length === this.dataSource.data.length;
+    return this.selection.selected.length === this.getDataSource().filteredData.length;
   }
 
   masterToggle() {
     this.isAllSelected() ?
       this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
+      this.dataSource.filteredData.forEach(row => this.selection.select(row));
   }
 
   checkboxLabel(row?: any): string {
@@ -73,9 +95,9 @@ export class SimpleTableComponent implements OnInit,  OnChanges {
   }
 
   refreshTable(data) {
-    console.log(this.dataSource);
-    this.dataSource.connect().next(data);
-    this.dataSource._updateChangeSubscription();
+    // console.log(this.dataSource);
+    // this.dataSource.connect().next(data);
+    // this.dataSource._updateChangeSubscription();
     // this.paginator._changePageSize(this.paginator.pageSize);
   }
 

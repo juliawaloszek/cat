@@ -16,11 +16,41 @@ export class GroupInfoComponent implements OnInit {
   @Input() group: Group;
 
   private group$: Observable<Group>;
+  private usersData: any;
+  private appsData: any;
 
   constructor(public dialog: MatDialog,
               private userService: UserService) { }
 
   ngOnInit() {
+    console.log(this.group);
+
+    this.usersData = {
+      data: this.group.user,
+      checkColumn: true,
+      columns: [{
+        dataIndex: 'name',
+        header: 'Imię i Nazwisko',
+        mapping: 'full'
+      }, {
+        dataIndex: 'departament',
+        header: 'Wydział'
+      }, {
+        dataIndex: 'id',
+        header: 'ID'
+      }]
+    };
+    console.log('usersData', this.usersData);
+
+    this.appsData = {
+      data: this.group.applications.application,
+      checkColumn: true,
+      columns: [{
+        dataIndex: 'name',
+        header: 'Nazwa'
+      }]
+    };
+    console.log('appsData', this.appsData);
   }
 
   onAddUsersButton() {
@@ -28,12 +58,14 @@ export class GroupInfoComponent implements OnInit {
       users = users.filter(user => !this.group.user.some(gUser => user.id === gUser.id));
 
       const dialogRef = this.createDialog({
-        list: users,
-        userLabel: true,
+        list: Object.assign(this.usersData, {
+          data: users
+        }),
         dialogTitle: 'Dodaj użytkowników'
-      });
+      }, '500px');
 
       dialogRef.afterClosed().subscribe(result => {
+        console.log('result', result);
         if (result) {
           result.forEach(user => {
             this.group.user.push(user);
@@ -57,11 +89,11 @@ export class GroupInfoComponent implements OnInit {
     // TODO usuń aplikacje
   }
 
-  createDialog(data: object) {
+  createDialog(data: object, width: string = '350px') {
     return this.dialog.open(InterpolateDialogComponent, {
-      width: '350px',
+      width,
       height: '50%',
-      data: data
+      data
     });
   }
 

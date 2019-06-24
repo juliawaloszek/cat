@@ -22,7 +22,7 @@
         </button>
       </mat-card-header>
       <mat-card-content>
-        <app-simple-table [list]="group.user || []" [nameLabel]="true"></app-simple-table>
+        <app-simple-table [config]="usersData"></app-simple-table>
       </mat-card-content>
     </mat-card>
 
@@ -39,7 +39,7 @@
       </mat-card-header>
       <mat-card-content>
 <!--        <div *ngIf="group.applications">-->
-          <app-simple-table [list]="group.applications.application"></app-simple-table>
+          <app-simple-table [config]="appsData"></app-simple-table>
 <!--        </div>-->
       </mat-card-content>
     </mat-card>

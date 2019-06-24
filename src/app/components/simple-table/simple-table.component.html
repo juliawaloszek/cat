@@ -1,6 +1,13 @@
 <div class="table-container">
-  <table mat-table [dataSource]="dataSource">
-    <ng-container matColumnDef="select">
+  <div class="form">
+    <mat-form-field floatPlaceholder="never" color="accent">
+      <input matInput #filter placeholder="filtruj...">
+<!--      <mat-icon>loop</mat-icon>-->
+    </mat-form-field>
+  </div>
+
+  <table mat-table #table [dataSource]="dataSource">
+    <ng-container *ngIf="config.checkColumn" matColumnDef="select">
       <th class="checkbox-column" mat-header-cell *matHeaderCellDef>
         <mat-checkbox (change)="$event ? masterToggle() : null"
                       [checked]="selection.hasValue() && isAllSelected()"
@@ -15,15 +22,22 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>{{ nameLabel ? 'Imię i Nazwisko' : 'Nazwa' }}</th>
-      <td mat-cell *matCellDef="let element"> {{ element.name.full || element.name }} </td>
+    <ng-container *ngFor="let column of config.columns" matColumnDef="{{ column.dataIndex }}">
+      <th mat-header-cell *matHeaderCellDef>{{ column.header }}</th>
+      <td mat-cell *matCellDef="let element">
+        {{ column.mapping ? element[column.dataIndex][column.mapping] : element[column.dataIndex] }}
+      </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="['select', 'name']"> </tr>
-    <tr mat-row *matRowDef="let row; columns : ['select', 'name'];"
+    <tr mat-header-row *matHeaderRowDef="keys"> </tr>
+    <tr mat-row *matRowDef="let row; columns : keys;"
       (click)="selection.toggle(row)"></tr>
   </table>
 
-  <div *ngIf="list.length === 0">Brak danych do wyświetlenia.</div>
+  <mat-paginator #paginator
+                 [length]="dataSource.filteredData.length"
+                 [pageIndex]="0">
+  </mat-paginator>
+
+  <div *ngIf="config && (config.data.length === 0)">Brak danych do wyświetlenia.</div>
 </div>
