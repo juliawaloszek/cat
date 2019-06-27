@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, map, shareReplay, tap } from 'rxjs/operators';
+import { catchError, map, shareReplay } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { isDevMode } from '@angular/core';
 
@@ -30,7 +30,7 @@ export class GroupService {
     return this.groupsCache$;
   }
 
-  public read(id: string, config: any): Observable<Group> {
+  public read(id: string, config: {applications, users}): Observable<Group> {
     const options = Object.assign({
       params: config
     }, this.httpOptions);

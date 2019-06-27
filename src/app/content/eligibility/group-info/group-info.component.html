@@ -1,4 +1,4 @@
-<div *ngIf="group" class="container">
+<div *ngIf="group" class="container" >
   <mat-card class="group-info-container">
     <mat-form-field [floatLabel]="'always'"> <!-- [formGroup]="groupForm">-->
       <input matInput [(ngModel)]="group.id" placeholder="ID">
@@ -22,7 +22,7 @@
         </button>
       </mat-card-header>
       <mat-card-content>
-        <app-simple-table [config]="usersData"></app-simple-table>
+        <app-simple-table #userTable [config]="usersData"></app-simple-table>
       </mat-card-content>
     </mat-card>
 
