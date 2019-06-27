@@ -1,10 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Group} from '../../../service/model/group';
 import {MatDialog} from '@angular/material';
 import {InterpolateDialogComponent} from '../interpolate-dialog/interpolate-dialog.component';
 import {UserService} from '../../../service/user.service';
-import {catchError, map, tap} from 'rxjs/operators';
-import {pipe} from 'rxjs';
+import {GroupService} from '../../../service/group.service';
+import {SimpleTableComponent} from '../../../components/simple-table/simple-table.component';
 
 @Component({
   selector: 'app-group-info',
@@ -14,11 +14,39 @@ import {pipe} from 'rxjs';
 
 export class GroupInfoComponent implements OnInit {
   @Input() group: Group;
+  @Input() groupId: string;
+
+  private usersData: any;
+  private appsData: any;
 
   constructor(public dialog: MatDialog,
+              private groupService: GroupService,
               private userService: UserService) { }
 
+  @ViewChild('userTable') userTable: SimpleTableComponent;
+
   ngOnInit() {
+    this.usersData = {
+      data: this.group.user || [],
+      checkColumn: true,
+      columns: [{
+        dataIndex: 'name',
+        header: 'Imię i Nazwisko',
+        mapping: 'full'
+      }, {
+        dataIndex: 'departament',
+        header: 'Wydział'
+      }]
+    };
+
+    this.appsData = {
+      data: this.group.applications.application || [],
+      checkColumn: true,
+      columns: [{
+        dataIndex: 'name',
+        header: 'Nazwa'
+      }]
+    };
   }
 
   onAddUsersButton() {
@@ -26,18 +54,19 @@ export class GroupInfoComponent implements OnInit {
       users = users.filter(user => !this.group.user.some(gUser => user.id === gUser.id));
 
       const dialogRef = this.createDialog({
-        list: users,
-        userLabel: true,
+        list: Object.assign(this.usersData, {
+          data: users
+        }),
         dialogTitle: 'Dodaj użytkowników'
-      });
+      }, '500px');
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
         if (result) {
           result.forEach(user => {
             this.group.user.push(user);
           });
-          console.log(this.group.user);
+
+          this.userTable.getDataSource().loadData(this.group.user);
         }
       });
     });
@@ -55,11 +84,11 @@ export class GroupInfoComponent implements OnInit {
     // TODO usuń aplikacje
   }
 
-  createDialog(data: object) {
+  createDialog(data: object, width: string = '350px') {
     return this.dialog.open(InterpolateDialogComponent, {
-      width: '350px',
+      width,
       height: '50%',
-      data: data
+      data
     });
   }
 

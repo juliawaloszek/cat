@@ -4,7 +4,7 @@ import {Application} from './application';
 export class Group {
   id: string;
   name: string;
-  user: Array<User>;
+  user: Array<User> = [];
   applications: {
     application: Array<Application>
   };

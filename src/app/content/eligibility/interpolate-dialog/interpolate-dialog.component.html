@@ -2,7 +2,7 @@
   <h1 mat-dialog-title>{{ data.dialogTitle }}</h1>
 
   <div mat-dialog-content class="list-container">
-    <app-simple-table mat-dialog-content (selectionChanged)="selectionChanged($event)" [list]="data.list" [nameLabel]="data.userLabel"></app-simple-table>
+    <app-simple-table mat-dialog-content (selectionChanged)="selectionChanged($event)" [config]="data.list"></app-simple-table>
 <!--    <input matInput [(ngModel)]="checkedObjects" hidden>-->
   </div>
 

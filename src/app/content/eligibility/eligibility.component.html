@@ -7,7 +7,9 @@
   <mat-tab-group #eligibilityTabPanel (selectedTabChange)="onTabChange($event.index)">
     <mat-tab label="Użytkownicy">
       <mat-sidenav-container>
-        <mat-sidenav [@animateSideNav]="sideNavState ? 'close' : 'open'" #leftSidenav mode="side" opened>
+        <!-- to nie zawartość znika tylko chowa się boczny panel z jakiegoś powodu -->
+        <!-- może spróbować z innymi typami paneli -->
+        <mat-sidenav [@animateSideNav]="sideNavState ? 'close' : 'open'" mode="side" opened>
           <div class="no-v-scroll">
             <mat-toolbar>
               <span class="spacer"></span>
@@ -29,9 +31,9 @@
             <div class="sidenav-list-content" >
               <mat-list class="">
                 <mat-list-item [@displayMenuText]="linkText ? 'hide' : 'show'"
-                  *ngFor="let user of users$ | async"
-                  routerLink="/eligibility/users/{{ user.id }}" matRipple
-                  routerLinkActive="active">
+                                *ngFor="let user of users$ | async"
+                                routerLink="/eligibility/users/{{ user.id }}" matRipple
+                                routerLinkActive="active">
                   {{ user.name.full }}
                 </mat-list-item>
               </mat-list>
@@ -57,7 +59,7 @@
 
     <mat-tab label="Grupy" routerLink="/eligibility/groups">
         <mat-sidenav-container>
-          <mat-sidenav [@animateSideNav]="sideNavState ? 'close' : 'open'" #leftSidenav mode="side" opened>
+          <mat-sidenav [@animateSideNav]="sideNavState ? 'close' : 'open'" mode="side" opened>
             <div class="no-v-scroll">
               <mat-toolbar>
                 <span class="spacer"></span>
@@ -92,15 +94,13 @@
               <div style="padding: 20px">
                   <section>
                       <div *ngIf="!createNew">
-                        <app-group-info [group]="group$ | async"></app-group-info>
+                        <div *ngIf="group$ | async as group">
+                          <app-group-info [group]="group"></app-group-info>
+                        </div>
                       </div>
                       <div *ngIf="createNew">
                         <app-group-info [group]="newGroup"></app-group-info>
                       </div>
-                      <!--          <div *ngIf="group$ | async as group">-->
-                      <!--&lt;!&ndash;            <app-user-info [group]="group"></app-user-info>&ndash;&gt;-->
-                      <!--            Grupa: {{ group.name }}-->
-                      <!--          </div>-->
                     </section>
               </div>
             </div>

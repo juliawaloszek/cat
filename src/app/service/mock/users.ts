@@ -19,7 +19,11 @@ export const USERS: User[] = [{
     successful: '2019-05-06T16:49:48+02:00',
     failed: '2019-05-06T15:49:48+02:00'
   },
-  password: {}
+  password: {
+    expires: false,
+    immutable: true,
+    mustChange: false
+  }
 }, {
   id: 'kalisz2',
   accountId: '6ad11ea7-8395-4c91-a9dd-04cb8262706e',
@@ -39,5 +43,9 @@ export const USERS: User[] = [{
     successful: '2019-05-06T16:12:48+02:00',
     failed: '2019-04-06T12:49:48+02:00'
   },
-  password: {}
+  password: {
+    expires: false,
+    immutable: true,
+    mustChange: false
+  }
 }];

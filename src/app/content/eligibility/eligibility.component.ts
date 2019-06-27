@@ -9,7 +9,6 @@ import {Observable, Subject} from 'rxjs';
 import {ApplicationService} from '../../service/application.service';
 import {Application} from '../../service/model/application';
 import {tap} from 'rxjs/operators';
-import {FlatTreeControl} from '@angular/cdk/tree';
 import { animateSideNav, animateSideNavContent, displayMenuText } from 'src/app/animations/animations';
 
 @Component({
@@ -21,6 +20,7 @@ import { animateSideNav, animateSideNavContent, displayMenuText } from 'src/app/
     animateSideNavContent,
     displayMenuText]
 })
+
 export class EligibilityComponent implements OnInit {
   @ViewChild('eligibilityTabPanel') eligibilityTabPanel: MatTabGroup;
 
@@ -36,12 +36,9 @@ export class EligibilityComponent implements OnInit {
   newGroup: Group;
   sideNavState$: Subject<boolean> = new Subject();
 
-
-
-
   sideNavState = false;
   linkText = false;
-
+  opened = true;
 
   constructor(private userService: UserService,
               private groupService: GroupService,
@@ -53,7 +50,6 @@ export class EligibilityComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.createNew = params.id === 'new';
-      console.log(this.createNew);
 
       switch (params.name) {
         case 'groups':
@@ -87,7 +83,9 @@ export class EligibilityComponent implements OnInit {
   }
 
   private initUsers(id: string) {
-    this.users$ = this.userService.list();
+    if (!this.users$) {
+      this.users$ = this.userService.list();
+    }
 
     if (id) {
       if (id === 'new') {

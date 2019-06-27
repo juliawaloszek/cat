@@ -13,7 +13,7 @@
         <button mat-flat-button color="primary" routerLink="/configuration">
           <span class="sidenav-icon"></span>Konfiguracja
         </button>
-        <button mat-flat-button color="primary" routerLink="/eligibility">
+        <button mat-flat-button color="primary" routerLink="/eligibility/users">
           <span class="sidenav-icon"></span>Uprawnienia
         </button>
       </div>
@@ -55,7 +55,7 @@
         </mat-list-item>
         <app-list *ngIf="link.type" [type]="link.type"></app-list>
       </div>
-      
+
       <mat-list-item class="list-item login-option" routerLink="/logout" (click)="onLoggingButtonClick()">
         <span [ngClass]="logged ? 'logout-icon' : 'login-icon'"></span>
         {{ logged ? "Wyloguj" : "Zaloguj" }}
@@ -67,9 +67,8 @@
     <router-outlet></router-outlet>
 
     <!--<footer class="page-footer footer-container">-->
-      <!--<div class="footer-copyright text-center py-3">© 2018 Copyright</div>-->
+    <!--<div class="footer-copyright text-center py-3">© 2018 Copyright</div>-->
     <!--</footer>-->
   </mat-sidenav-content>
 
 </mat-sidenav-container>
-

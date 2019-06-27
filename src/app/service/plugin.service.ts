@@ -20,7 +20,7 @@ export class PluginService {
 
   public list(): Observable<Plugin[]> {
     if (!this.plugins$) {
-      this.plugins$ = this.http.get<Plugin[]>(this.baseUrl, this.httpOptions).pipe(
+      this.plugins$ = this.http.get<{plugin}>(this.baseUrl, this.httpOptions).pipe(
         map(plugins => plugins.plugin),
         catchError(this.handleError<Plugin[]>('getApplications', []))
       ).pipe(

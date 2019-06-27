@@ -43,7 +43,7 @@ export class UserService {
 
   public list(): Observable<User[]> {
     if (!this.usersCache$) {
-      this.usersCache$ = this.http.get<User[]>(this.url, this.httpOptions).pipe(
+      this.usersCache$ = this.http.get<{user}>(this.url, this.httpOptions).pipe(
         map(response => response.user.sort((userA, userB) => userB.id > userA.id ? -1 : 1)),
         catchError(this.handleError<User[]>('getUsers', [])),
         shareReplay()
