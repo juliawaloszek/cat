@@ -13,24 +13,27 @@
           <div class="no-v-scroll">
             <mat-toolbar>
               <span class="spacer"></span>
-              <button mat-icon-button class="mat-icon" routerLink="/eligibility/users/new"
-                [@displayMenuText]="linkText ? 'hide' : 'show'">
-                <mat-icon>add</mat-icon>
-              </button>
-              <button mat-icon-button class="mat-icon" (click)="deleteSelected('users')"
-                [@displayMenuText]="linkText ? 'hide' : 'show'">
-                <mat-icon>delete</mat-icon>
-              </button>
-              <button mat-icon-button class="mat-icon" (click)="onSideNavToggle()">
-                <mat-icon *ngIf="sideNavState">keyboard_arrow_right</mat-icon>
-                <mat-icon *ngIf="!sideNavState">keyboard_arrow_left</mat-icon>
-              </button>
+              <div class="buttons-container">
+                <button mat-icon-button class="mat-icon" routerLink="/eligibility/users/new"
+                  [@displayMenuText]="linkText ? 'hide' : 'show'">
+                  <mat-icon>add</mat-icon>
+                </button>
+                <button mat-icon-button class="mat-icon" (click)="deleteSelected('users')"
+                  [@displayMenuText]="linkText ? 'hide' : 'show'">
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-icon-button class="mat-icon" (click)="onSideNavToggle()">
+                  <mat-icon *ngIf="sideNavState">keyboard_arrow_right</mat-icon>
+                  <mat-icon *ngIf="!sideNavState">keyboard_arrow_left</mat-icon>
+                </button>
+              </div>
             </mat-toolbar>
             <div class="sidenav-list-content" >
               <mat-list class="">
                 <mat-list-item [@displayMenuText]="linkText ? 'hide' : 'show'"
-                  *ngFor="let user of users$ | async"
-                  routerLink="/eligibility/users/{{ user.id }}" matRipple>
+                                *ngFor="let user of users$ | async"
+                                routerLink="/eligibility/users/{{ user.id }}" matRipple
+                                routerLinkActive="active">
                   {{ user.name.full }}
                 </mat-list-item>
               </mat-list>
@@ -60,18 +63,20 @@
             <div class="no-v-scroll">
               <mat-toolbar>
                 <span class="spacer"></span>
-                <button mat-icon-button class="mat-icon" routerLink="/eligibility/groups/new"
-                  [@displayMenuText]="linkText ? 'hide' : 'show'">
-                  <mat-icon>add</mat-icon>
-                </button>
-                <button mat-icon-button class="mat-icon" (click)="deleteSelected('users')"
-                  [@displayMenuText]="linkText ? 'hide' : 'show'">
-                  <mat-icon>delete</mat-icon>
-                </button>
-                <button mat-icon-button class="mat-icon" (click)="onSideNavToggle()">
-                  <mat-icon *ngIf="sideNavState">keyboard_arrow_right</mat-icon>
-                  <mat-icon *ngIf="!sideNavState">keyboard_arrow_left</mat-icon>
-                </button>
+                <div class="buttons-container">
+                  <button mat-icon-button class="mat-icon" routerLink="/eligibility/groups/new"
+                    [@displayMenuText]="linkText ? 'hide' : 'show'">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                  <button mat-icon-button class="mat-icon" (click)="deleteSelected('users')"
+                    [@displayMenuText]="linkText ? 'hide' : 'show'">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                  <button mat-icon-button class="mat-icon" (click)="onSideNavToggle()">
+                    <mat-icon *ngIf="sideNavState">keyboard_arrow_right</mat-icon>
+                    <mat-icon *ngIf="!sideNavState">keyboard_arrow_left</mat-icon>
+                  </button>
+              </div>
               </mat-toolbar>
               <div class="sidenav-list-content">
                 <mat-list class="">

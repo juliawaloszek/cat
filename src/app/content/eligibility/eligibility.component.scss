@@ -119,3 +119,14 @@ mat-sidenav-content {
 .sidenav-list-content{
   overflow-y: auto;
 }
+
+.buttons-container{
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+}
+
+.active{
+  background-color: #e8e8e8 !important;
+  color: #607d8b !important;
+}
