@@ -60,6 +60,11 @@ export class SimpleTableComponent implements OnInit {
     });
   }
 
+  public removeSelection() {
+    this.getDataSource().removeData(this.selection.selected);
+    this.selection.clear();
+  }
+
   isAllSelected() {
     return this.selection.selected.length === this.getDataSource().filteredData.length;
   }

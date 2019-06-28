@@ -1,15 +1,18 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {User} from '../../service/model/user';
 import {Group} from '../../service/model/group';
 import {UserService} from '../../service/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MatTabGroup} from '@angular/material';
+import {MatButton, MatSidenav, MatTabGroup} from '@angular/material';
 import {GroupService} from '../../service/group.service';
 import {Observable, Subject} from 'rxjs';
 import {ApplicationService} from '../../service/application.service';
 import {Application} from '../../service/model/application';
 import {tap} from 'rxjs/operators';
 import { animateSideNav, animateSideNavContent, displayMenuText } from 'src/app/animations/animations';
+import {GroupInfoComponent} from './group-info/group-info.component';
+import {UserInfoComponent} from '../../components/user-info/user-info.component';
+import {ApplicationInfoComponent} from '../../components/application-info/application-info.component';
 
 @Component({
   selector: 'app-eligibility',
@@ -23,6 +26,10 @@ import { animateSideNav, animateSideNavContent, displayMenuText } from 'src/app/
 
 export class EligibilityComponent implements OnInit {
   @ViewChild('eligibilityTabPanel') eligibilityTabPanel: MatTabGroup;
+  @ViewChild('userData') userDataPanel: UserInfoComponent;
+  @ViewChild('groupData') groupDataPanel: GroupInfoComponent;
+  @ViewChild('appData') appDataPanel: ApplicationInfoComponent;
+  private params: any = {};
 
   users$: Observable<User[]>;
   user$: Observable<User>;
@@ -38,7 +45,6 @@ export class EligibilityComponent implements OnInit {
 
   sideNavState = false;
   linkText = false;
-  opened = true;
 
   constructor(private userService: UserService,
               private groupService: GroupService,
@@ -50,6 +56,7 @@ export class EligibilityComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.createNew = params.id === 'new';
+      this.params = params;
 
       switch (params.name) {
         case 'groups':
@@ -69,6 +76,7 @@ export class EligibilityComponent implements OnInit {
   }
 
   private onTabChange(index) {
+    console.log(this.eligibilityTabPanel);
     switch (index) {
       case 0:
         this.router.navigate(['/eligibility/users']);
@@ -134,12 +142,43 @@ export class EligibilityComponent implements OnInit {
     // TODO
   }
 
+  onSaveButtonClick() {
+    console.log('save');
+    let dataPanel;
+    switch (this.params.name) {
+      case 'groups':
+        dataPanel = this.groupDataPanel;
+        break;
+      case 'applications':
+        dataPanel = this.appDataPanel;
+        break;
+      default:
+        dataPanel = this.userDataPanel;
+        break;
+    }
+
+    dataPanel.save(this.params.id);
+  }
+
+  onCancelButtonClick() {
+    console.log('cancel');
+  }
+
   onSideNavToggle() {
     this.sideNavState = !this.sideNavState;
     setTimeout(() => {
       this.linkText = this.sideNavState;
     }, 200);
     this.sideNavState$.next(this.sideNavState);
+  }
+
+  closedStart(sideNavId) {
+    console.log('user sidenav close');
+    console.log('sidenav', this[sideNavId]);
+
+    // to nie działa
+    this[sideNavId].open();
+
   }
 
 }

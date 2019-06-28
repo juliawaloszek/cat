@@ -17,8 +17,8 @@ export class IframeComponent implements OnInit {
   }
 
   @Input()
-  set url(url: url) {
-    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.location.protocol + '//' + window.location.hostname + url);
+  set url(stringUrl: url) {
+    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.location.protocol + '//' + window.location.hostname + stringUrl);
   }
 
   ngOnInit() {

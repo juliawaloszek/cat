@@ -3,8 +3,9 @@ import {User} from '../../service/model/user';
 import {Group} from '../../service/model/group';
 import {GroupService} from '../../service/group.service';
 import {FormControl} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
+import {catchError, map, startWith, tap} from 'rxjs/operators';
+import {UserService} from '../../service/user.service';
 
 @Component({
   selector: 'app-user-info',
@@ -18,7 +19,9 @@ export class UserInfoComponent implements OnInit {
   private groupControl = new FormControl();
   private filteredGroups: Observable<Group[]>;
 
-  constructor(private groupService: GroupService) {
+  constructor(private userService: UserService,
+              private groupService: GroupService) {
+
     this.filteredGroups = this.groupControl.valueChanges.pipe(
       // map((value: string | null) => value ? this.filterGroups(value) : this.groups$.slice())
     );
@@ -46,6 +49,32 @@ export class UserInfoComponent implements OnInit {
         return caseSensitive ? group.name === value : group.name.toLowerCase() === value.toLowerCase();
       }))
     );
+  }
+
+  public save(id: string) {
+    const request = id === 'new' ? this.userService.create(this.user) : this.userService.update(this.user);
+
+    request.pipe(
+      map(response => {
+        console.log('map', response);
+        return response;
+      }),
+      catchError(error => {
+        console.log('usererror', error);
+        return of();
+      })
+    );
+
+    //   .subscribe(
+    // value => {
+    //   console.log('success', value);
+    // },
+    // error => {
+    //   console.log('error', error);
+    // },
+    // () => {
+    //   console.log('complete');
+    // });
   }
 
 }

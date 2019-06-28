@@ -35,20 +35,35 @@ export class GroupService {
       params: config
     }, this.httpOptions);
 
-    return this.http.get<Group>(this.baseUrl + id, options);
+    return this.http.get<Group>(this.baseUrl + id, options).pipe(
+      shareReplay()
+    );
   }
 
-  public create(group: Group): Observable<Group> {
-    return this.http.post<Group>(this.baseUrl, group);
+  public create(group: Group): Observable<any> {
+    return this.http.post<Group>(this.baseUrl, group).pipe(
+      catchError(error => {
+        console.log('bład dodawania użytkownika', error);
+        return of();
+      }),
+      shareReplay()
+    );
   }
 
-  public update(group: Group): Observable<Group> {
-    return this.http.put<Group>(this.baseUrl, group);
+  public update(group: Group): Observable<any> {
+    return this.http.put<Group>(this.baseUrl, group).pipe(
+      catchError(error => {
+        console.log('bład edycji użytkownika', error);
+        return of();
+      }),
+      shareReplay()
+    );
   }
 
   public delete(id: string) {
     this.http.delete(this.baseUrl + id).pipe(
-      catchError(this.handleError<Group>())
+      catchError(this.handleError<Group>()),
+      shareReplay()
     );
   }
 

@@ -56,12 +56,20 @@ export class UserService {
     return this.http.get<User>(this.url + id, this.httpOptions);
   }
 
-  public create(user: User): Observable<User> {
-    return this.http.post<User>(this.url, user);
+  public create(user: User): Observable<any> {
+    return this.http.post<User>(this.url, user).pipe(
+      catchError(error => {
+        console.log('bład dodawania użytkownika', error);
+        return of();
+      }));
   }
 
-  public update(user: User): Observable<User> {
-    return this.http.put<User>(this.url + user.id, user);
+  public update(user: User): Observable<any> {
+    return this.http.put<User>(this.url + user.id, user).pipe(
+      catchError(error => {
+        console.log('bład edycji użytkownika', error);
+        return of();
+      }));
   }
 
   public delete(id: string) {

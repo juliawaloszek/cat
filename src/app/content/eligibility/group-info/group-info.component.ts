@@ -5,6 +5,9 @@ import {InterpolateDialogComponent} from '../interpolate-dialog/interpolate-dial
 import {UserService} from '../../../service/user.service';
 import {GroupService} from '../../../service/group.service';
 import {SimpleTableComponent} from '../../../components/simple-table/simple-table.component';
+import {catchError, map} from 'rxjs/operators';
+import {ApplicationService} from '../../../service/application.service';
+import {of} from 'rxjs';
 
 @Component({
   selector: 'app-group-info',
@@ -13,17 +16,17 @@ import {SimpleTableComponent} from '../../../components/simple-table/simple-tabl
 })
 
 export class GroupInfoComponent implements OnInit {
+  @ViewChild('userTable') userTable: SimpleTableComponent;
   @Input() group: Group;
-  @Input() groupId: string;
 
   private usersData: any;
   private appsData: any;
 
-  constructor(public dialog: MatDialog,
+  constructor(private dialog: MatDialog,
               private groupService: GroupService,
-              private userService: UserService) { }
-
-  @ViewChild('userTable') userTable: SimpleTableComponent;
+              private userService: UserService,
+              private applicationService: ApplicationService) {
+  }
 
   ngOnInit() {
     this.usersData = {
@@ -73,7 +76,7 @@ export class GroupInfoComponent implements OnInit {
   }
 
   onRemoveUsersButton() {
-    // TODO usuń użytkowników
+    this.userTable.removeSelection();
   }
 
   onAddApplicationsButton() {
@@ -86,10 +89,23 @@ export class GroupInfoComponent implements OnInit {
 
   createDialog(data: object, width: string = '350px') {
     return this.dialog.open(InterpolateDialogComponent, {
-      width,
-      height: '50%',
-      data
+      width, height: '50%', data
     });
+  }
+
+  public save(id: string) {
+    const request = id === 'new' ? this.groupService.create(this.group) : this.groupService.update(this.group);
+
+    request.pipe(
+      map(response => {
+        console.log('map', response);
+        return response;
+      }),
+      catchError(error => {
+        console.log('grouperror', error);
+        return of();
+      })
+    );
   }
 
 }
