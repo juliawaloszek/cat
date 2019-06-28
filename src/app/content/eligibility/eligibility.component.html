@@ -1,7 +1,7 @@
 <div class="tab-container">
   <div class="right-align">
-    <button mat-button disabled>Zapisz</button>
-    <button mat-button disabled>Anuluj</button>
+    <button mat-button [disabled]="!params.id" (click)="onSaveButtonClick()">Zapisz</button>
+    <button mat-button [disabled]="!params.id" (click)="onCancelButtonClick()">Anuluj</button>
   </div>
 
   <mat-tab-group #eligibilityTabPanel (selectedTabChange)="onTabChange($event.index)">
@@ -9,7 +9,7 @@
       <mat-sidenav-container>
         <!-- to nie zawartość znika tylko chowa się boczny panel z jakiegoś powodu -->
         <!-- może spróbować z innymi typami paneli -->
-        <mat-sidenav [@animateSideNav]="sideNavState ? 'close' : 'open'" mode="side" opened>
+        <mat-sidenav #userSideNav (closedStart)="closedStart('userSideNav')" [@animateSideNav]="sideNavState ? 'close' : 'open'" mode="side" opened>
           <div class="no-v-scroll">
             <mat-toolbar>
               <span class="spacer"></span>
@@ -45,10 +45,12 @@
             <div style="padding: 20px">
               <section>
                 <div *ngIf="!createNew">
-                  <app-user-info [user]="user$ | async"></app-user-info>
+                  <div *ngIf="user$ | async as user">
+                    <app-user-info #userData [user]="user"></app-user-info>
+                  </div>
                 </div>
                 <div *ngIf="createNew">
-                  <app-user-info [user]="newUser"></app-user-info>
+                  <app-user-info #userData [user]="newUser"></app-user-info>
                 </div>
               </section>
             </div>
@@ -59,7 +61,7 @@
 
     <mat-tab label="Grupy" routerLink="/eligibility/groups">
         <mat-sidenav-container>
-          <mat-sidenav [@animateSideNav]="sideNavState ? 'close' : 'open'" mode="side" opened>
+          <mat-sidenav #groupSideNav [@animateSideNav]="sideNavState ? 'close' : 'open'" mode="side" opened>
             <div class="no-v-scroll">
               <mat-toolbar>
                 <span class="spacer"></span>
@@ -95,11 +97,11 @@
                   <section>
                       <div *ngIf="!createNew">
                         <div *ngIf="group$ | async as group">
-                          <app-group-info [group]="group"></app-group-info>
+                          <app-group-info #groupData [group]="group"></app-group-info>
                         </div>
                       </div>
                       <div *ngIf="createNew">
-                        <app-group-info [group]="newGroup"></app-group-info>
+                        <app-group-info #groupData [group]="newGroup"></app-group-info>
                       </div>
                     </section>
               </div>
@@ -110,7 +112,7 @@
 
     <mat-tab label="Aplikacje">
       <mat-sidenav-container>
-        <mat-sidenav mode="side" opened>
+        <mat-sidenav #appSideNav mode="side" opened>
           <mat-list>
             <mat-list-item class="" *ngFor="let application of applications$ | async"
               routerLink="/eligibility/applications/{{ application.id }}" matRipple>
@@ -123,7 +125,7 @@
         </mat-sidenav>
         <section>
           <div *ngIf="application$ | async as application">
-            <app-application-info [application]="application"></app-application-info>
+            <app-application-info #appData [application]="application"></app-application-info>
             Aplikacja: {{ application.name }}
           </div>
         </section>

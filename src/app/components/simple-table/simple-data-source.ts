@@ -20,7 +20,7 @@ export class SimpleDataSource implements DataSource<any> {
 
   set filter(filter) {
     this.filterValue = filter;
-    this.filterData(filter);
+    this.filterData();
   }
 
   connect(): Observable<any[]> {
@@ -30,19 +30,26 @@ export class SimpleDataSource implements DataSource<any> {
   disconnect() {}
 
   loadData(data) {
-    this.database = this.filteredData = data;
-    this.dataSubject.next(data);
+    this.database = data;
+    this.filterData();
   }
 
-  filterData(value) {
+  filterData() {
     const me = this;
-    const filter = value.toLowerCase();
+    const filter = this.filter.toLowerCase();
 
-    this.filteredData = this.database.filter((item: any) => {
+    me.filteredData = me.database.filter((item: any) => {
       return me.searchInObject(item, filter);
     });
 
-    this.dataSubject.next(this.filteredData);
+    me.dataSubject.next(me.filteredData);
+  }
+
+  removeData(data: any[]) {
+    const newData = this.database.filter((item: any) =>
+      !data.some(toRemoveItem => item.id === toRemoveItem.id));
+
+    this.loadData(newData);
   }
 
   // sortData(data: any[]): any[] {

@@ -13,7 +13,7 @@ export class User {
   name = {
     full: ''
   };
-  group: Array<Group>;
+  group: Group[];
   history: History;
   lastLogon: LastLogon;
   password: Password;
@@ -24,7 +24,7 @@ export class User {
     }
 
     if (this.group) {
-      this.group = new Array<Group>();
+      this.group = [];
     }
   }
 }
