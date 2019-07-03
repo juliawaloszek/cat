@@ -1,3 +1,6 @@
+<!-- <body  [ngClass]="theme" class="absolute-container"> -->
+<!-- <div class="custom-light-theme"> -->
+<div  class="absolute-container">
 <mat-toolbar>
   <mat-toolbar-row class="header screen-over-960">
     <div class="layout-flex-row">
@@ -17,6 +20,22 @@
           <span class="sidenav-icon"></span>Uprawnienia
         </button>
       </div>
+
+      <div class="buttons-container">
+        <button mat-raised-button color="primary" >Primary</button>
+        <button mat-raised-button color="accent" >Accent</button>
+        <button mat-raised-button color="warn">Warn</button>
+      </div>
+      <!-- (selectionChange)="updateThemeOverlay()" -->
+      <mat-form-field>
+        <mat-select
+        [(ngModel)]="theme"
+        (selectionChange)="onThemeChange()"
+        >
+          <mat-option value="custom-black-theme">Black</mat-option>
+          <mat-option value="custom-light-theme">Light</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
 
     <div class="header login-container">
@@ -45,7 +64,7 @@
 
 <mat-divider></mat-divider>
 
-<mat-sidenav-container class="content-container">
+<mat-sidenav-container class="content-container" style="min-height: 50px; height: 100%;">
 
   <mat-sidenav #sidenavMenu class="screen-under-960" role="navigation" autoFocus="false">
     <mat-nav-list>
@@ -63,7 +82,7 @@
     </mat-nav-list>
   </mat-sidenav>
 
-  <mat-sidenav-content class="sidenav-content" role="main">
+  <mat-sidenav-content class="sidenav-content" role="main" style="min-height: 50px; height: 100%;">
     <router-outlet></router-outlet>
 
     <!--<footer class="page-footer footer-container">-->
@@ -72,3 +91,5 @@
   </mat-sidenav-content>
 
 </mat-sidenav-container>
+</div>
+
