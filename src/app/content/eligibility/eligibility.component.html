@@ -81,9 +81,9 @@
               </div>
               </mat-toolbar>
               <div class="sidenav-list-content">
-                <mat-list class="">
+                <mat-list *ngIf="groups" class="">
                     <mat-list-item [@displayMenuText]="linkText ? 'hide' : 'show'"
-                    *ngFor="let group of groups$ | async"
+                    *ngFor="let group of groups"
                     routerLink="/eligibility/groups/{{ group.id }}" matRipple>
                     {{ group.name }}
                   </mat-list-item>

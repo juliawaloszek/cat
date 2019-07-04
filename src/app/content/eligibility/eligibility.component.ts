@@ -34,6 +34,7 @@ export class EligibilityComponent implements OnInit {
   users$: Observable<User[]>;
   user$: Observable<User>;
   groups$: Observable<Group[]>;
+  groups: Group[];
   group$: Observable<Group>;
   applications$: Observable<Application[]>;
   application$: Observable<Application>;
@@ -108,7 +109,10 @@ export class EligibilityComponent implements OnInit {
   }
 
   private initGroups(id: string) {
-    this.groups$ = this.groupService.list();
+    // this.groups$ =
+    this.groupService.list().subscribe(
+      list => this.groups = list
+    );
 
     if (id) {
       if (id === 'new') {
@@ -177,7 +181,7 @@ export class EligibilityComponent implements OnInit {
     console.log('sidenav', this[sideNavId]);
 
     // to nie działa
-    this[sideNavId].open();
+    // this[sideNavId].open();
 
   }
 

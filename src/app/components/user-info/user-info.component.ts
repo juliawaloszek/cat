@@ -33,8 +33,10 @@ export class UserInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.groups$ = this.groupService.groups;
-    this.groupSource = new GroupSource(this.user.group || []);
+    if (this.user) {
+      this.groups$ = this.groupService.groups;
+      this.groupSource = new GroupSource(this.user.group || []);
+    }
   }
 
   onAddGroupButton() {

@@ -77,18 +77,20 @@ export class GroupInfoComponent implements OnInit {
   }
 
   public save(id: string) {
-    const request = id === 'new' ? this.groupService.create(this.group) : this.groupService.update(this.group);
+    const request = (id === 'new') ? this.groupService.create(this.group) : this.groupService.update(this.group, id);
 
-    request.pipe(
-      map(response => {
+    request.subscribe(
+      response => {
         console.log('map', response);
         return response;
-      }),
-      catchError(error => {
+      },
+      error => {
         console.log('grouperror', error);
         return of();
-      })
-    );
+      },
+      () => {
+        console.log('complete');
+      });
   }
 
 }
