@@ -1,0 +1,25 @@
+.settings-wrapper{
+    display: flex;
+    justify-content:space-evenly;
+    flex-direction: column;
+    // border:solid green;
+}
+
+.card-wrapper{
+    display: flex;
+    // border:solid red;
+    // width: 100%;
+
+    // flex-direction: column;
+    // justify-content:space-evenly;
+}
+
+
+mat-card{
+    display: flex;
+    flex-direction: column;
+    margin: .5rem;
+    width: 47%;
+    min-height: 278px
+}
+
