@@ -20,23 +20,39 @@
           <span class="sidenav-icon"></span>Uprawnienia
         </button>
       </div>
-
       <div class="buttons-container">
+          <mat-form-field>
+          <mat-select  [(ngModel)]="theme$">
+              <mat-option *ngFor="let themeSelection of keys(themeSelections)" [value]="themeSelection" >{{themeSelections[themeSelection]}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+      <!-- <mat-select>
+        <mat-option *ngFor="let themeSelection of keys(themeSelections)" [value]="themeSelection">{{themeSelections[themeSelection]}}</mat-option>
+      </mat-select> -->
+      </div>
+      <!-- <div class="buttons-container">
         <button mat-raised-button color="primary" >Primary</button>
         <button mat-raised-button color="accent" >Accent</button>
         <button mat-raised-button color="warn" (click)='test()'>Test setTheme</button>
-      </div>
+      </div> -->
       <!-- (selectionChange)="updateThemeOverlay()" -->
       <mat-form-field>
         <mat-select
         [(ngModel)]="theme"
         (selectionChange)="onThemeChange()"
         >
-          <mat-option value="dark-theme">Black</mat-option>
-          <mat-option value="light-theme">Light</mat-option>
+          <!-- <mat-option value="dark-theme">Black</mat-option>
+          <mat-option value="light-theme">Light</mat-option> -->
+          <!-- <option *ngFor="let item of countries | keys" [value]="item.key">{{item.value}}</option> -->
+          <!-- *ngFor="let key of keys" [value]="key" [label]="countries[key]"> -->
+          <!-- <mat-option *ngFor="let key of themes" [value]="key" > {{themes[key]}}</mat-option> -->
+          <option *ngFor="let theme of keys(themes)" [ngValue]="theme">{{themes[theme]}}</option>
         </mat-select>
       </mat-form-field>
     </div>
+
+
+
 
     <div class="header login-container">
       <span *ngIf="activeUser$ | async as user" class="user-icon">{{ user.name.full }}</span>

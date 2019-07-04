@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 
 export enum Themes {
@@ -13,31 +14,30 @@ export enum Themes {
 })
 export class ThemeService {
 
-  defaultTheme = Themes.LIGHT;
+  // defaultTheme = Themes.LIGHT;
   theme = Themes.LIGHT;
+
   themeSource = new BehaviorSubject<any>(this.theme);
   theme$ = this.themeSource.asObservable();
+  cookieName = 'THEME';
 
 
-  constructor() { }
+  constructor( private cookieService: CookieService, ) { }
 
   setTheme(themeName: string) {
 
     this.theme = Themes[themeName];
     console.log(this.theme);
 
-    // this.theme = this.themes[this.themes.findIndex(theme => {
-    //   return name === theme.name;
-    //     })];
-    //     this.setHighchartTheme();
-    //     localStorage.setItem('theme', JSON.stringify(this.theme));
+    this.cookieService.set( this.cookieName , themeName, 365);
+    this.themeSource.next(this.theme);
 
-  //   for (var enumMember in myEnum) {
-  //     var isValueProperty = parseInt(enumMember, 10) >= 0
-  //     if (isValueProperty) {
-  //        console.log("enum member: ", myEnum[enumMember]);
-  //     }
-  //  }
+    // if (!this.cookieService.check( this.cookieName )) {
+    //   this.cookieService.set( this.cookieName , this.theme , 365);
+    // }
+
+
+
   }
 
   getTheme() {
