@@ -13,6 +13,6 @@ $cat-theme: mat-light-theme($cat-primary, $cat-accent, $cat-warn);
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include angular-material-theme($cat-theme);
+// @include angular-material-theme($cat-theme);
 
 $theme-colors: map-get($cat-theme, background);

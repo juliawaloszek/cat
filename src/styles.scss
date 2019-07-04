@@ -18,6 +18,22 @@ $cat-toolbar-height: 64px;
 // Be sure that you only ever include this mixin once!
 @include mat-core();
 
+@import 'themes/light-theme.scss';
+@import 'themes/dark-theme.scss';
+
+.light-theme{
+  @include angular-material-theme($light-theme);
+}
+
+.dark-theme{
+  @include angular-material-theme($dark-theme);
+}
+
+
+
+
+
+
 /* You can add global styles to this file, and also import other style files */
 
 .absolute-container {
