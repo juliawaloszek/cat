@@ -1,0 +1,9 @@
+$custom-light-primary: mat-palette($mat-grey, 200, 500, 300);
+$custom-light-accent: mat-palette($mat-brown, 200);
+$custom-light-warn: mat-palette($mat-deep-orange, 200);
+
+$custom-light-theme: mat-light-theme(
+  $custom-light-primary,
+  $custom-light-accent,
+  $custom-light-warn
+);

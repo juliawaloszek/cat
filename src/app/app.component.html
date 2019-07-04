@@ -17,6 +17,33 @@
           <span class="sidenav-icon"></span>Uprawnienia
         </button>
       </div>
+
+      <button mat-raised-button color="primary" (click)=themeComponent()>Primary</button>
+      <div>Message: {{ message }}</div>
+      <!-- <div> 
+        <i class="fa fa-american-sign-language-interpreting fa-5x"> </i> 
+        <i class="fa fa-sign-in-alt"> </i> 
+        <i class="fa fa-user"> </i>  
+        <i class="fa fa-cog"> </i>  
+
+      </div> -->
+
+      <!-- <div class="buttons-container">
+        <button mat-raised-button color="primary" >Primary</button>
+        <button mat-raised-button color="accent" >Accent</button>
+        <button mat-raised-button color="warn">Warn</button>
+      </div> -->
+
+      <!-- (selectionChange)="updateThemeOverlay()" -->
+      <!-- <mat-form-field>
+        <mat-select
+        [(ngModel)]="theme"
+        (selectionChange)="onThemeChange()"
+        >
+          <mat-option value="custom-black-theme">Black</mat-option>
+          <mat-option value="custom-light-theme">Light</mat-option>
+        </mat-select>
+      </mat-form-field> -->
     </div>
 
     <div class="header login-container">
@@ -25,6 +52,20 @@
         <span [ngClass]="logged ? 'logout-icon' : 'login-icon'"></span>
         {{ logged ? "Wyloguj" : "Zaloguj" }}
       </button>
+
+      <!-- <button mat-flat-button 
+      routerLink="/settings"
+      [matMenuTriggerFor]="userSettings"> -->
+      <button mat-flat-button
+      routerLink="/settings">
+        <i class="fa fa-cog"> </i>
+      </button>
+      <!-- <mat-menu #userSettings="matMenu">
+        <button mat-menu-item routerLink="/settings">
+          <i class="fa fa-user"> </i>
+          <span>Ustawienia</span>
+        </button>
+      </mat-menu> -->
     </div>
   </mat-toolbar-row>
 
@@ -37,15 +78,18 @@
       </div>
     </div>
 
+    <div class="layout-flex-row ">
     <div class="user-container">
       <span *ngIf="activeUser$ | async as user" class="user-icon">{{ user.name.full }}</span>
+    </div>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
 
 <mat-divider></mat-divider>
 
-<mat-sidenav-container class="content-container">
+<!-- <mat-sidenav-container class="content-container" style="min-height: 50px; height: 100%;"> -->
+  <mat-sidenav-container class="content-container">
 
   <mat-sidenav #sidenavMenu class="screen-under-960" role="navigation" autoFocus="false">
     <mat-nav-list>
@@ -56,14 +100,25 @@
         <app-list *ngIf="link.type" [type]="link.type"></app-list>
       </div>
 
-      <mat-list-item class="list-item login-option" routerLink="/logout" (click)="onLoggingButtonClick()">
+      <!-- <mat-list-item class="list-item list-item-header-container" routerLink="/settings">
+        <i class="fa fa-user"> </i>
+        <span>Ustawienia</span>
+    </mat-list-item> -->
+
+    <mat-list-item class="list-item list-item-header-container" routerLink="/settings">
+      <i class="fa fa-user"> </i>
+      <span>Ustawienia</span>
+    </mat-list-item>
+
+      <mat-list-item class="list-item login-option single-item" routerLink="/logout" (click)="onLoggingButtonClick()">
         <span [ngClass]="logged ? 'logout-icon' : 'login-icon'"></span>
         {{ logged ? "Wyloguj" : "Zaloguj" }}
       </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
 
-  <mat-sidenav-content class="sidenav-content" role="main">
+  <!-- <mat-sidenav-content class="sidenav-content" role="main" style="min-height: 50px; height: 100%;"> -->
+    <mat-sidenav-content class="sidenav-content" role="main">
     <router-outlet></router-outlet>
 
     <!--<footer class="page-footer footer-container">-->

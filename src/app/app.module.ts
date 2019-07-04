@@ -32,6 +32,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material';
 import { MatTreeModule } from '@angular/material';
 import { MatDialogModule } from '@angular/material';
+import { MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { ApplicationsListComponent } from './content/applications-list/applications-list.component';
 import { ConfiguratorsListComponent } from './content/configurators-list/configurators-list.component';
@@ -47,6 +49,8 @@ import { ApplicationInfoComponent } from './components/application-info/applicat
 import { GroupInfoComponent } from './content/eligibility/group-info/group-info.component';
 import { SimpleTableComponent } from './components/simple-table/simple-table.component';
 import { InterpolateDialogComponent } from './content/eligibility/interpolate-dialog/interpolate-dialog.component';
+import { SettingsComponent } from './content/settings/settings.component';
+
 
 
 @NgModule({
@@ -65,7 +69,8 @@ import { InterpolateDialogComponent } from './content/eligibility/interpolate-di
     ApplicationInfoComponent,
     GroupInfoComponent,
     SimpleTableComponent,
-    InterpolateDialogComponent
+    InterpolateDialogComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -96,7 +101,9 @@ import { InterpolateDialogComponent } from './content/eligibility/interpolate-di
     MatTableModule,
     MatDialogModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatSelectModule,
+    MatMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
