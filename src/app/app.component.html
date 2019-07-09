@@ -17,47 +17,23 @@
           <span class="sidenav-icon"></span>Konfiguracja
         </button>
         <button mat-flat-button color="primary" routerLink="/eligibility/users">
-          <span class="sidenav-icon"></span>Uprawnienia 
+          <span class="sidenav-icon"></span>Uprawnienia
         </button>
       </div>
       <div class="buttons-container">
-
-
-          <!-- <mat-form-field>
-              <mat-select  #t
-              [(ngModel)]="theme$"
-              (selectionChange)="callType(t.value)"
-              >
-                  <mat-option *ngFor="let themesDataSelection of keys(themesDataSelections)" [value]="themesDataSelection" >{{themesDataSelection.name}}</mat-option>
-                </mat-select>
-          </mat-form-field> -->
-
-
           <div style="margin-right: 20px;"></div>
           <mat-form-field>
               <mat-select  #t
               [(ngModel)]="theme$"
-              (selectionChange)="callType(t.value)"
+              (selectionChange)="changeTEST($event)"
               >
-                  <mat-option *ngFor="let themeSelection of keys(themeSelections)" [value]="themeSelection" >{{themeSelection}}</mat-option>
+                  <mat-option *ngFor="let themesElement of themesElements; let i = index"
+                    [attr.data-index]="i"
+                    [value]="themesElement.id">
+                    {{themesElement.displayName}}
+                  </mat-option>
                 </mat-select>
           </mat-form-field>
-
-
-          <!-- <mat-form-field>
-          <mat-select  #t
-          [(ngModel)]="theme$"
-          (selectionChange)="onThemeChange()"
-          >
-              <mat-option *ngFor="let themeSelection of keys(themeSelections)" [value]="themeSelection" >{{themeSelections[themeSelection]}}</mat-option>
-            </mat-select>
-          </mat-form-field> -->
-
-
-
-      <!-- <mat-select>
-        <mat-option *ngFor="let themeSelection of keys(themeSelections)" [value]="themeSelection">{{themeSelections[themeSelection]}}</mat-option>
-      </mat-select> -->
       </div>
       <!-- <div class="buttons-container">
         <button mat-raised-button color="primary" >Primary</button>
@@ -66,19 +42,19 @@
       </div> -->
       <!-- (selectionChange)="updateThemeOverlay()" -->
       <div style="margin-right: 20px;"></div>
-      <mat-form-field>
+      <!-- <mat-form-field>
         <mat-select
         [(ngModel)]="theme2"
-        (selectionChange)="onThemeChange()"
+        (selectionChange)="onThemeChange3()"
         >
           <mat-option value="dark-theme">Black</mat-option>
-          <mat-option value="light-theme">Light</mat-option>
+          <mat-option value="light-theme">Light</mat-option> -->
           <!-- <option *ngFor="let item of countries | keys" [value]="item.key">{{item.value}}</option> -->
           <!-- *ngFor="let key of keys" [value]="key" [label]="countries[key]"> -->
           <!-- <mat-option *ngFor="let key of themes" [value]="key" > {{themes[key]}}</mat-option> -->
           <!-- <option *ngFor="let theme of keys(themes)" [ngValue]="theme">{{themes[theme]}}</option> -->
-        </mat-select>
-      </mat-form-field>
+        <!-- </mat-select>
+      </mat-form-field> -->
     </div>
 
 
@@ -90,7 +66,15 @@
         <span [ngClass]="logged ? 'logout-icon' : 'login-icon'"></span>
         {{ logged ? "Wyloguj" : "Zaloguj" }}
       </button>
+    
+
+      <button mat-flat-button
+      routerLink="/settings">
+        <i class="fa fa-cog"> </i>
+      </button>
     </div>
+
+
   </mat-toolbar-row>
 
   <mat-toolbar-row class="screen-under-960">

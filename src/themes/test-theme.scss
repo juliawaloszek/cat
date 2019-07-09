@@ -1,0 +1,9 @@
+$test-primary: mat-palette($mat-pink, 700, 300, 900);
+$test-accent: mat-palette($mat-red, 400);
+$test-warn: mat-palette($mat-indigo, 500);
+
+$test-theme: mat-dark-theme(
+  $test-primary,
+  $test-accent,
+  $test-warn
+);

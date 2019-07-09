@@ -18,11 +18,11 @@ export class AppComponent implements OnInit {
   private activeUser$: Observable<User>;
   themeClass: string;
 
-  @HostBinding('class.light-theme')
-  LightThemeClass = true;
+  // @HostBinding('class.light-theme')
+  // LightThemeClass = true;
 
-  @HostBinding('class.dark-theme')
-  DarkThemeClass = false;
+  // @HostBinding('class.dark-theme')
+  // DarkThemeClass = false;
 
   @HostBinding('class')
   componentCssClass;
@@ -50,18 +50,8 @@ export class AppComponent implements OnInit {
   // theme2 = '';
 
   themes = Themes;
-  themesData = THEMES_DATA;
-  // themesDataSelections = THEMES_DATA;
-  // themeKeys = THEMES_DATA.[displayName];
+  themesElements: any = THEMES_DATA;
 
-
-
-  // values = Object.keys(this.themes);
-  // values = Object.keys;
-
-  keys = Object.keys;
-  symbols = Themes;
-  themeSelections = Themes;
 
   tempDATA: any;
 
@@ -81,25 +71,10 @@ export class AppComponent implements OnInit {
     // this.onThemeChange3('unicorn-theme');
     // this.themeService.theme$.subscribe();
     // this.theme$ = this.themeService.theme$;
-    // console.log('this.theme$ ');
-    // console.log(this.theme$ );
-    console.log('test: ' + this.themesData);
-    console.log(this.themesData);
-    console.log(this.themesData.filter(theme => theme.id === 2));
-    console.log((this.themesData.filter(theme => theme.id === 2)).toString());
-    // var test = this.themesData.filter(theme => theme.id === 2)['name'];
-    // console.log(test.);
-    // console.log(Object.values(this.themesData.filter(theme => theme.id === 2)));
 
-    // this.tempDATA = THEMES_DATA.filter(theme => theme.id === id);
+    console.log(this.themesElements);
+    console.log(this.themesElements.filter(theme => theme.id === 2)[0].displayName);
 
-    // this.themeService.theme$.subscribe(theme => this.theme2 = theme);
-    // console.log(this.theme2 );
-    // console.log(this.themes );
-
-    // currentMessage.subscribe(message => this.message = message
-
-    // this.findTheme(0);
 
 
   }
@@ -127,23 +102,27 @@ export class AppComponent implements OnInit {
     }
   }
 
-  onThemeChange() {
-    if (this.theme2 == 'light-theme') {
-      this.LightThemeClass = true;
-      this.DarkThemeClass = false;
-    }
+  // onThemeChange() {
+  //   if (this.theme2 == 'light-theme') {
+  //     this.LightThemeClass = true;
+  //     this.DarkThemeClass = false;
+  //   }
 
-    if (this.theme2 == 'dark-theme') {
-      this.LightThemeClass = false;
-      this.DarkThemeClass = true;
-    }
-    console.log('this.THEME' + this.theme2);
-    this.updateThemeOverlay();
-  }
+  //   if (this.theme2 == 'dark-theme') {
+  //     this.LightThemeClass = false;
+  //     this.DarkThemeClass = true;
+  //   }
+  //   console.log('this.THEME' + this.theme2);
+  //   this.updateThemeOverlay();
+  // }
 
   onThemeChange3(theme) {
     this.overlayContainer.getContainerElement().classList.add(theme);
+    console.log('theme: ' + theme);
+    console.log('theme2: ' + this.theme2);
     this.componentCssClass = theme;
+
+    this.updateThemeOverlay();
   }
 
   updateThemeOverlay() {
@@ -163,14 +142,26 @@ export class AppComponent implements OnInit {
 
   callType(value) {
     console.log(value);
+    // console.log(this.themesElements.filter(theme => theme.id === 2)[0].displayName);
   }
 
-  findTheme(id) {
+  changeTEST($event) {
+    const themeId = $event.source.value;
+    let themeClassName;
+    // console.log(event);
+    console.log($event.source.value);
+    themeClassName = this.themesElements.filter(theme => theme.id === themeId)[0].className;
+    console.log(themeClassName);
+    // console.log(event.source.value, event.source.selected);
 
-    this.tempDATA = THEMES_DATA.filter(theme => theme.id === id);
-    console.log('this.tempDATA: ' + this.tempDATA );
+    this.overlayContainer.getContainerElement().classList.add(themeClassName);
+    console.log('theme: ' + themeClassName);
 
+    this.componentCssClass = themeClassName;
+
+    this.themeService.setTheme(themeClassName);
+
+    this.updateThemeOverlay();
   }
-
 
 }

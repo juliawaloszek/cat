@@ -20,19 +20,31 @@ $cat-toolbar-height: 64px;
 
 @import 'themes/light-theme.scss';
 @import 'themes/dark-theme.scss';
-@import 'themes/unicorn-theme.scss';
+// @import 'themes/unicorn-theme.scss';
+@import 'themes/test-theme.scss';
 
 .light-theme{
   @include angular-material-theme($light-theme);
 }
 
+// .dark-theme{
+//   @include angular-material-theme($dark-theme);
+// }
+
+// .unicorn-theme{
+//   @include angular-material-theme($unicorn-theme);
+// }
+
+.test-theme{
+  @include angular-material-theme($test-theme);
+}
+
+
 .dark-theme{
   @include angular-material-theme($dark-theme);
 }
 
-.unicorn-theme{
-  @include angular-material-theme($unicorn-theme);
-}
+
 
 
 

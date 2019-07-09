@@ -49,6 +49,7 @@ import { ApplicationInfoComponent } from './components/application-info/applicat
 import { GroupInfoComponent } from './content/eligibility/group-info/group-info.component';
 import { SimpleTableComponent } from './components/simple-table/simple-table.component';
 import { InterpolateDialogComponent } from './content/eligibility/interpolate-dialog/interpolate-dialog.component';
+import { SettingsComponent } from './content/settings/settings.component';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { InterpolateDialogComponent } from './content/eligibility/interpolate-di
     ApplicationInfoComponent,
     GroupInfoComponent,
     SimpleTableComponent,
-    InterpolateDialogComponent
+    InterpolateDialogComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,

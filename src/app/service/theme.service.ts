@@ -9,18 +9,13 @@ export enum Themes {
   UNICORN = 'unicorn-theme',
 }
 
-export const THEMES_DATA = [
+export const THEMES_DATA: Array<any> = [
   {id: 0, name: 'LIGHT', className: 'light-theme', displayName: 'Jasne tło'},
   {id: 1, name: 'DARK', className: 'dark-theme', displayName: 'Ciemne tło'},
-  {id: 2, name: 'UNICORN', className: 'unicorn-theme', displayName: 'Cukierkowe tło'}
+  {id: 2, name: 'TEST', className: 'test-theme', displayName: 'Test'}
 ];
 
-
-// export enum Themes {
-//   'light-theme' = 'LIGHT',
-//   'dark-theme' = 'DARK',
-//   'unicorn-theme' = 'UNICORN',
-// }
+export let ACTIVE_THEME: any = THEMES_DATA[0].className;
 
 @Injectable({
   providedIn: 'root'
@@ -39,20 +34,19 @@ export class ThemeService {
   constructor( private cookieService: CookieService, ) { }
 
   setTheme(themeName: string) {
-
+    console.log('setTheme: Theme.Service');
     this.theme = Themes[themeName];
     console.log(this.theme);
 
-    this.cookieService.set( this.cookieName , themeName, 365);
+    // this.cookieService.set( this.cookieName , themeName, 365);
     this.themeSource.next(this.theme);
 
     // if (!this.cookieService.check( this.cookieName )) {
     //   this.cookieService.set( this.cookieName , this.theme , 365);
     // }
 
-
-
   }
+
 
   getTheme() {
     console.log(this.theme);
