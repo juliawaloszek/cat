@@ -40,7 +40,7 @@
         <mat-form-field>
             <mat-select  #t
             [(ngModel)]="theme$"
-            (selectionChange)="changeTEST($event)"
+            (selectionChange)="changeTheme($event)"
             >
                 <mat-option *ngFor="let themesElement of themesElements; let i = index"
                   [attr.data-index]="i"

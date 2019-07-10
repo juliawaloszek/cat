@@ -5,7 +5,7 @@ import { User } from './service/model/user';
 import {Observable} from 'rxjs';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { debug } from 'util';
-import { ThemeService, Themes, THEMES_DATA } from './service/theme.service';
+import { ThemeService, THEMES_DATA, ACTIVE_THEME } from './service/theme.service';
 
 @Component({
   // selector: 'body',
@@ -16,7 +16,7 @@ import { ThemeService, Themes, THEMES_DATA } from './service/theme.service';
 export class AppComponent implements OnInit {
   @ViewChild('sidenavMenu') sidenav: MatSidenav;
   private activeUser$: Observable<User>;
-  themeClass: string;
+  // themeClass: string;
 
   // @HostBinding('class.light-theme')
   // LightThemeClass = true;
@@ -26,6 +26,13 @@ export class AppComponent implements OnInit {
 
   @HostBinding('class')
   componentCssClass;
+
+
+  // materialTheme: Theme;
+
+  // themes: Theme[] = new Array<Theme>();
+
+
 
   linksList = [{
     name: 'Strona Główna',
@@ -46,17 +53,22 @@ export class AppComponent implements OnInit {
   }];
   title = 'CAT';
   logged = false;
-  theme2 = 'light-theme';
+  // theme2 = 'light-theme';
   // theme2 = '';
 
-  themes = Themes;
-  themesElements: any = THEMES_DATA;
+  // themes = Themes;
+  // themesElements: any = THEMES_DATA;
 
 
-  tempDATA: any;
+  // tempDATA: any;
 
 
-  theme$: Observable<any>;
+  // theme$: Observable<any>;
+
+  themesArray = THEMES_DATA;
+  themeActive = ACTIVE_THEME;
+
+
 
   constructor(private userService: UserService,
               private overlayContainer: OverlayContainer,
@@ -67,13 +79,27 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     // debugger;
     this.activeUser$ = this.userService.active();
-    this.updateThemeOverlay();
+    // // // this.updateThemeOverlay();
+
+
     // this.onThemeChange3('unicorn-theme');
     // this.themeService.theme$.subscribe();
     // this.theme$ = this.themeService.theme$;
 
-    console.log(this.themesElements);
-    console.log(this.themesElements.filter(theme => theme.id === 2)[0].displayName);
+    // console.log(this.themesElements);
+    // console.log(this.themesElements.filter(theme => theme.id === 2)[0].displayName);
+
+    // // // this.themes = this.themeService.getThemes();
+
+    // this.themeService.activeTheme.subscribe(theme => {
+    //     this.materialTheme = theme;
+    // });
+
+    // this.themesArray = this.themeService.getThemes();
+
+    this.themeService.theme$.subscribe(theme => {
+        this.themeActive = theme;
+    });
 
 
 
@@ -116,52 +142,42 @@ export class AppComponent implements OnInit {
   //   this.updateThemeOverlay();
   // }
 
-  onThemeChange3(theme) {
-    this.overlayContainer.getContainerElement().classList.add(theme);
-    console.log('theme: ' + theme);
-    console.log('theme2: ' + this.theme2);
-    this.componentCssClass = theme;
+  // onThemeChange3(theme) {
+  //   this.overlayContainer.getContainerElement().classList.add(theme);
+  //   console.log('theme: ' + theme);
+  //   console.log('theme2: ' + this.theme2);
+  //   this.componentCssClass = theme;
 
-    this.updateThemeOverlay();
-  }
+  //   this.updateThemeOverlay();
+  // }
 
-  updateThemeOverlay() {
-    const overlayContainerClasses = this.overlayContainer.getContainerElement().classList;
-    const themeClassesToRemove = Array.from(overlayContainerClasses).filter((item: string) => item.includes('-theme'));
-    if (themeClassesToRemove.length) {
-         overlayContainerClasses.remove(...themeClassesToRemove);
-      }
-    overlayContainerClasses.add(this.theme2);
-  }
+  // updateThemeOverlay() {
+  //   const overlayContainerClasses = this.overlayContainer.getContainerElement().classList;
+  //   const themeClassesToRemove = Array.from(overlayContainerClasses).filter((item: string) => item.includes('-theme'));
+  //   if (themeClassesToRemove.length) {
+  //        overlayContainerClasses.remove(...themeClassesToRemove);
+  //     }
+  //   overlayContainerClasses.add(this.theme2);
+  // }
+  changeTEST($event) {}
 
-  test() {
-    this.themeService.setTheme('DARK');
-    console.log('test udany');
-  }
+  // changeTEST($event) {
+  //   const themeId = $event.source.value;
+  //   let themeClassName;
+  //   // console.log(event);
+  //   console.log($event.source.value);
+  //   themeClassName = this.themesElements.filter(theme => theme.id === themeId)[0].className;
+  //   console.log(themeClassName);
+  //   // console.log(event.source.value, event.source.selected);
 
+  //   this.overlayContainer.getContainerElement().classList.add(themeClassName);
+  //   console.log('theme: ' + themeClassName);
 
-  callType(value) {
-    console.log(value);
-    // console.log(this.themesElements.filter(theme => theme.id === 2)[0].displayName);
-  }
+  //   this.componentCssClass = themeClassName;
 
-  changeTEST($event) {
-    const themeId = $event.source.value;
-    let themeClassName;
-    // console.log(event);
-    console.log($event.source.value);
-    themeClassName = this.themesElements.filter(theme => theme.id === themeId)[0].className;
-    console.log(themeClassName);
-    // console.log(event.source.value, event.source.selected);
+  //   this.themeService.setTheme(themeClassName);
 
-    this.overlayContainer.getContainerElement().classList.add(themeClassName);
-    console.log('theme: ' + themeClassName);
-
-    this.componentCssClass = themeClassName;
-
-    this.themeService.setTheme(themeClassName);
-
-    this.updateThemeOverlay();
-  }
+  //   this.updateThemeOverlay();
+  // }
 
 }
