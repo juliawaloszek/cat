@@ -2,6 +2,7 @@ import {Password} from './password';
 import {History} from './history';
 import {Group} from './group';
 import {LastLogon} from './lastlogon';
+import {Application} from './application';
 
 export class User {
   id = '';
@@ -14,6 +15,7 @@ export class User {
     full: ''
   };
   group: Group[];
+  applications: Application[];
   history: History;
   lastLogon: LastLogon;
   password: Password;

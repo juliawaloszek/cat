@@ -4,7 +4,7 @@ import {Group} from '../../service/model/group';
 import {GroupService} from '../../service/group.service';
 import {FormControl} from '@angular/forms';
 import {Observable, of} from 'rxjs';
-import {catchError, map, startWith, tap} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {UserService} from '../../service/user.service';
 import {AppSource} from '../../content/eligibility/model/app-source';
 import {GroupSource} from '../../content/eligibility/model/group-source';
@@ -34,8 +34,8 @@ export class UserInfoComponent implements OnInit {
 
   ngOnInit() {
     if (this.user) {
-      this.groups$ = this.groupService.groups;
       this.groupSource = new GroupSource(this.user.group || []);
+      this.appSource = new AppSource(this.user.applications || []);
     }
   }
 
@@ -70,16 +70,18 @@ export class UserInfoComponent implements OnInit {
   public save(id: string) {
     const request = id === 'new' ? this.userService.create(this.user) : this.userService.update(this.user);
 
-    request.pipe(
-      map(response => {
+    request.subscribe(
+      response => {
         console.log('map', response);
         return response;
-      }),
-      catchError(error => {
+      },
+      error => {
         console.log('usererror', error);
         return of();
-      })
-    );
+      },
+      () => {
+        console.log('complete');
+      });
   }
 
 }

@@ -50,6 +50,10 @@ button {
   margin: .25rem;
 }
 
+mat-card-header::ng-deep {
+  align-items: center;
+}
+
 .layout-flex-row {
   display: flex;
   justify-content: center;
@@ -67,7 +71,7 @@ button {
 
 .filler {
   align-self: stretch;
-  flex-grow: 1;
+  flex: 1;
 }
 
 .spacer {

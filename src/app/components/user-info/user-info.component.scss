@@ -3,29 +3,27 @@
 .form-container {
   @extend .absolute-container;
 
-  margin-top: .5rem;
-  display: flex;
-  flex-direction: row;
-}
-
-.qualifications-container {
   display: flex;
   flex-direction: column;
-  flex: 3;
-  margin: .5rem;
 }
 
 .account-info-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-content: space-between;
   margin: .5rem;
-  flex: 2;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: .25rem;
 }
 
 .user-history {
   display: flex;
-  font-size: small;
+  font-size: smaller;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
@@ -33,18 +31,26 @@
   align-self: flex-end;
 }
 
+.qualifications-container {
+  display: flex;
+  flex-direction: row;
+  flex: 3;
+  margin: .5rem;
+}
+
 .groups-container {
   flex: 1;
-  margin: 0 .5rem .5rem .5rem;
+  margin-right: .5rem;
 }
 
 .applications-container {
   flex: 1;
-  margin: .5rem .5rem 0 .5rem;
+  margin-left: .5rem;
 }
 
 mat-form-field {
   margin: 3px;
+  flex: 1;
 }
 
 mat-card-content {

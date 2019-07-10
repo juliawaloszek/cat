@@ -1,42 +1,56 @@
 <div *ngIf="user" class="form-container">
 
   <mat-card class="account-info-container">
-    <mat-form-field [hideRequiredMarker]="true" [floatLabel]="'always'">
-      <input matInput [(ngModel)]="user.id" placeholder="Login" required>
-    </mat-form-field>
+    <div class="column">
+      <mat-form-field [hideRequiredMarker]="true" [floatLabel]="'always'">
+        <input matInput [(ngModel)]="user.id" placeholder="Login" required>
+      </mat-form-field>
 
-    <mat-form-field [hideRequiredMarker]="true" [floatLabel]="'always'">
-      <input matInput [(ngModel)]="user.name.full" placeholder="Nazwa użytkownika" required>
-    </mat-form-field>
+      <mat-form-field [hideRequiredMarker]="true" [floatLabel]="'always'">
+        <input matInput [(ngModel)]="user.name.full" placeholder="Nazwa użytkownika" required>
+      </mat-form-field>
 
-    <mat-form-field [hideRequiredMarker]="true" [floatLabel]="'always'">
-      <input matInput [(ngModel)]="user.department" placeholder="Wydział">
-    </mat-form-field>
+      <mat-form-field [hideRequiredMarker]="true" [floatLabel]="'always'">
+        <input matInput [(ngModel)]="user.department" placeholder="Wydział">
+      </mat-form-field>
 
-    <mat-form-field [hideRequiredMarker]="true" [floatLabel]="'always'">
-      <input matInput [(ngModel)]="user.email" placeholder="Email" required>
-    </mat-form-field>
-
-    <mat-checkbox [(ngModel)]="user.active">Aktywny</mat-checkbox>
-    <mat-checkbox [(ngModel)]="user.administrator">Administrator</mat-checkbox>
-    <mat-checkbox [(ngModel)]="!user.password.expires">Hasło nigdy nie wygasa</mat-checkbox>
-    <mat-checkbox [(ngModel)]="user.password.immutable">Użytkownik może zmienić hasło</mat-checkbox>
-    <mat-checkbox [(ngModel)]="user.password.mustChange">Użytkownik musi zmienić hasło przy następnym logowaniu</mat-checkbox>
-    <mat-checkbox [(ngModel)]="user" [disabled]="true">Konto zablokowane</mat-checkbox>
-
-    <div class="filler"></div>
-    <div class="user-history" *ngIf="user.history">
-      <div>Udane logowanie: {{ user.lastLogon.successful }}</div>
-      <div>Nieudane logowanie: {{ user.lastLogon.failed }}</div>
-      <div>Utworzony: {{ user.history.created }}</div>
-      <div>Data ostatniej modyfikacji: {{ user.history.modified }}</div>
+      <mat-form-field [hideRequiredMarker]="true" [floatLabel]="'always'">
+        <input matInput [(ngModel)]="user.email" placeholder="Email" required>
+      </mat-form-field>
     </div>
+
+    <div class="column">
+      <mat-checkbox [(ngModel)]="user.active">Aktywny</mat-checkbox>
+      <mat-checkbox [(ngModel)]="user.administrator">Administrator</mat-checkbox>
+      <mat-checkbox [(ngModel)]="!user.password.expires">Hasło nigdy nie wygasa</mat-checkbox>
+      <mat-checkbox [(ngModel)]="user.password.immutable">Użytkownik może zmienić hasło</mat-checkbox>
+      <mat-checkbox [(ngModel)]="user.password.mustChange">Użytkownik musi zmienić hasło przy następnym logowaniu</mat-checkbox>
+      <mat-checkbox [(ngModel)]="user" [disabled]="true">Konto zablokowane</mat-checkbox>
+
+      <div class="filler"></div>
+      <div class="user-history" *ngIf="user.history">
+        <table class="table-borderless">
+          <tr><td>Udane logowanie:</td><td>{{ user.lastLogon.successful }}</td></tr>
+          <tr><td>Nieudane logowanie:</td><td>{{ user.lastLogon.failed }}</td></tr>
+          <tr><td>Utworzony:</td><td>{{ user.history.created }}</td></tr>
+          <tr><td>Data ostatniej modyfikacji:</td><td>{{ user.history.modified }}</td></tr>
+        </table>
+
+
+<!--        <div>Udane logowanie: {{ user.lastLogon.successful }}</div>-->
+<!--        <div>Nieudane logowanie: {{ user.lastLogon.failed }}</div>-->
+<!--        <div>Utworzony: {{ user.history.created }}</div>-->
+<!--        <div>Data ostatniej modyfikacji: {{ user.history.modified }}</div>-->
+      </div>
+    </div>
+
   </mat-card>
 
   <div class="qualifications-container">
     <mat-card class="groups-container">
       <mat-card-header>
         <mat-card-title>Grupy</mat-card-title>
+        <div class="spacer"></div>
         <button mat-mini-fab color="accent" (click)="onAddGroupButton()">
           <mat-icon class="mat-18">add</mat-icon>
         </button>
@@ -77,9 +91,9 @@
 <!--        </button>-->
       </mat-card-header>
       <mat-card-content>
-        <!--        <div *ngIf="group.applications">-->
-<!--        <app-simple-table [config]="appsData"></app-simple-table>-->
-        <!--        </div>-->
+        <div *ngIf="user.applications">
+          <app-simple-table [config]="appSource"></app-simple-table>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>
