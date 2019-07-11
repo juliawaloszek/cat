@@ -1,6 +1,7 @@
 <div class="settings-wrapper">
   <div class="card-wrapper">
     <mat-card class="card-el">
+      <mat-card-title>Dane konta</mat-card-title>
       <mat-form-field [floatLabel]="'always'">
         <input matInput [(ngModel)]="user.id" placeholder="Login" [readonly]="!editable" />
       </mat-form-field>
@@ -18,20 +19,22 @@
       </mat-form-field>
     </mat-card>
     <mat-card>
-      <div><img src="assets/img/random-user.jpg" /></div>
+      <div class="img-wrapper">
+        <img src="assets/img/user.png" />
+      </div>
     </mat-card>
   </div>
 
   <div class="card-wrapper">
     <mat-card>
-      <mat-card-header>
-        <mat-card-title>Ustawienia kolorystyczne</mat-card-title>
-      </mat-card-header>
+      <!-- <mat-card-header> -->
+        <mat-card-title>Ustawienia</mat-card-title>
+      <!-- </mat-card-header> -->
       <div class="buttons-container">
-        <div style="margin-right: 20px;"></div>
-        <mat-form-field>
+        <label>Kolorystyka aplikacji:</label>
+        <mat-form-field class="themeField">
             <mat-select  #t
-            [(ngModel)]="theme$"
+            [(ngModel)]="themeActive"
             (selectionChange)="changeTheme($event)"
             >
                 <mat-option *ngFor="let themesElement of themesElements; let i = index"
