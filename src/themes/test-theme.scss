@@ -1,9 +1,84 @@
-$test-primary: mat-palette($mat-pink, 700, 300, 900);
-$test-accent: mat-palette($mat-red, 400);
-$test-warn: mat-palette($mat-indigo, 500);
+$test-primary: mat-palette($mat-pink, 50);
+$test-accent: mat-palette($mat-pink, 50);
+$test-warn: mat-palette($mat-pink, 50);
+$test-background-color: map_get($mat-pink, 50);
+// $test-app-bar-color: yellow;
+
+
+
+// $test-primary: mat-palette($mat-pink, 700, 300, 900);
+// $test-accent: mat-palette($mat-red, 400);
+// $test-warn: mat-palette($mat-indigo, 500);
+// $test-background-color: map_get($mat-pink, 50);
+// $test-app-bar-color: yellow;
 
 $test-theme: mat-dark-theme(
   $test-primary,
   $test-accent,
   $test-warn
 );
+
+
+
+$test-background: map-get($test-theme, background);
+
+$test-background: map_merge($test-background, (background: $test-background-color));
+$test-background: map_merge($test-background, (app-bar: purple));
+$test-background: map_merge($test-background, (dialog: red));
+$test-background: map_merge($test-background, (card: blue));
+$test-background: map_merge($test-background, (raised-button: yellow));
+
+$test-theme: map_merge($test-theme, (background: $test-background));
+
+
+
+
+
+
+
+
+
+// $test-app-bar: map-get($test-theme, background);
+// $test-app-bar: map_merge($test-app-bar, (background: $test-background-color, app-bar: $test-app-bar-color));
+// $test-theme: map_merge($test-theme, ( app-bar: $test-app-bar));
+
+// $test-background: map-get($test-theme, background);
+// $test-background: map_merge($test-background, (background: $test-background-color));
+// $test-theme: map_merge($test-theme, (background: $test-background));
+
+
+
+
+
+
+// $test-palette-background: map-get($test-theme, background);
+// $test-palette-background: map_merge(test-palette-background, (
+//   background: $test-background-color,
+//   app-bar: $test-app-bar-color,
+//   ));
+
+// $test-theme: map_merge($test-theme, (background: $test-palette-background));
+
+
+
+// $test-background: map-get($test-theme, background);
+// $test-app-bar: map-get($test-theme, app-bar);
+
+// $test-background: map_merge($test-background, (background: $test-background-color));
+// $test-app-bar: map_merge($test-app-bar, (app-bar: $test-app-bar-color));
+
+// $test-theme: map_merge($test-theme, (background: $test-background));
+// $test-theme: map_merge($test-theme, (app-bar: $test-app-bar));
+
+// $my-test-theme-background: (
+//   background: orange,
+//   app-bar:    map_get($mat-blue, 900),
+//   dialog:     map_get($mat-yellow, 800),
+// );
+
+// $test-background: map-get($test-theme, background);
+// $test-app-bar: map-get($test-theme, app-bar);
+// $test-dialog: map-get($test-theme, dialog);
+
+
+
