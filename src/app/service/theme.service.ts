@@ -27,10 +27,28 @@ export class ThemeService {
   constructor( private cookieService: CookieService, ) { }
 
   setTheme(themeName: string) {
+    this.themeSource.next(themeName);
+    console.log('SERVICE: ' + themeName);
+
+    this.cookieService.set( this.cookieName , themeName, 365);
+
   }
 
   getThemes(): Array<any> {
       return THEMES_DATA;
+  }
+
+  initialTheme(): Array<any> {
+    if (!this.cookieService.check( this.cookieName )) {
+      console.log('Nie ma ciasteczka!');
+      this.cookieService.set( this.cookieName , this.theme , 365);
+    } else {
+      console.log('om nom nom - COOKIES!');
+      this.cookieService.get(this.cookieName);
+      console.log(this.cookieService.get(this.cookieName));
+      this.setTheme(this.cookieService.get(this.cookieName));
+    }
+    return THEMES_DATA;
   }
 
   getActiveTheme() {

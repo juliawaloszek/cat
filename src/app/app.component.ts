@@ -16,23 +16,9 @@ import { ThemeService, THEMES_DATA, ACTIVE_THEME } from './service/theme.service
 export class AppComponent implements OnInit {
   @ViewChild('sidenavMenu') sidenav: MatSidenav;
   private activeUser$: Observable<User>;
-  // themeClass: string;
-
-  // @HostBinding('class.light-theme')
-  // LightThemeClass = true;
-
-  // @HostBinding('class.dark-theme')
-  // DarkThemeClass = false;
 
   @HostBinding('class')
   componentCssClass;
-
-
-  // materialTheme: Theme;
-
-  // themes: Theme[] = new Array<Theme>();
-
-
 
   linksList = [{
     name: 'Strona Główna',
@@ -53,17 +39,6 @@ export class AppComponent implements OnInit {
   }];
   title = 'CAT';
   logged = false;
-  // theme2 = 'light-theme';
-  // theme2 = '';
-
-  // themes = Themes;
-  // themesElements: any = THEMES_DATA;
-
-
-  // tempDATA: any;
-
-
-  // theme$: Observable<any>;
 
   themesArray = THEMES_DATA;
   themeActive = ACTIVE_THEME;
@@ -77,43 +52,20 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit() {
-    // debugger;
     this.activeUser$ = this.userService.active();
-    // // // this.updateThemeOverlay();
-
-
-    // this.onThemeChange3('unicorn-theme');
-    // this.themeService.theme$.subscribe();
-    // this.theme$ = this.themeService.theme$;
-
-    // console.log(this.themesElements);
-    // console.log(this.themesElements.filter(theme => theme.id === 2)[0].displayName);
-
-    // // // this.themes = this.themeService.getThemes();
-
-    // this.themeService.activeTheme.subscribe(theme => {
-    //     this.materialTheme = theme;
-    // });
-
-    // this.themesArray = this.themeService.getThemes();
-
     this.themeService.theme$.subscribe(theme => {
         this.themeActive = theme;
+        this.componentCssClass = theme;
+        this.updateThemeOverlay();
     });
-
-
-
+    this.themeService.initialTheme();
   }
 
-//   ngAfterViewInit() {
-//     this.themeService.theme$.subscribe(() => {
-//         this.datagrid.resize();
-//     });
-// }
-
-  // ngOnDestroy() {
-  //   this.renderer.removeClass(document.body, 'modal-open');
-  // }
+  setTheme($event) {
+    const themeId = $event.source.value;
+    const themeClassName = this.themesArray.filter(theme => theme.id === themeId)[0].className;
+    this.themeService.setTheme(themeClassName);
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -128,56 +80,13 @@ export class AppComponent implements OnInit {
     }
   }
 
-  // onThemeChange() {
-  //   if (this.theme2 == 'light-theme') {
-  //     this.LightThemeClass = true;
-  //     this.DarkThemeClass = false;
-  //   }
-
-  //   if (this.theme2 == 'dark-theme') {
-  //     this.LightThemeClass = false;
-  //     this.DarkThemeClass = true;
-  //   }
-  //   console.log('this.THEME' + this.theme2);
-  //   this.updateThemeOverlay();
-  // }
-
-  // onThemeChange3(theme) {
-  //   this.overlayContainer.getContainerElement().classList.add(theme);
-  //   console.log('theme: ' + theme);
-  //   console.log('theme2: ' + this.theme2);
-  //   this.componentCssClass = theme;
-
-  //   this.updateThemeOverlay();
-  // }
-
-  // updateThemeOverlay() {
-  //   const overlayContainerClasses = this.overlayContainer.getContainerElement().classList;
-  //   const themeClassesToRemove = Array.from(overlayContainerClasses).filter((item: string) => item.includes('-theme'));
-  //   if (themeClassesToRemove.length) {
-  //        overlayContainerClasses.remove(...themeClassesToRemove);
-  //     }
-  //   overlayContainerClasses.add(this.theme2);
-  // }
-  changeTEST($event) {}
-
-  // changeTEST($event) {
-  //   const themeId = $event.source.value;
-  //   let themeClassName;
-  //   // console.log(event);
-  //   console.log($event.source.value);
-  //   themeClassName = this.themesElements.filter(theme => theme.id === themeId)[0].className;
-  //   console.log(themeClassName);
-  //   // console.log(event.source.value, event.source.selected);
-
-  //   this.overlayContainer.getContainerElement().classList.add(themeClassName);
-  //   console.log('theme: ' + themeClassName);
-
-  //   this.componentCssClass = themeClassName;
-
-  //   this.themeService.setTheme(themeClassName);
-
-  //   this.updateThemeOverlay();
-  // }
+  updateThemeOverlay() {
+    const overlayContainerClasses = this.overlayContainer.getContainerElement().classList;
+    const themeClassesToRemove = Array.from(overlayContainerClasses).filter((item: string) => item.includes('-theme'));
+    if (themeClassesToRemove.length) {
+         overlayContainerClasses.remove(...themeClassesToRemove);
+      }
+    overlayContainerClasses.add(this.themeActive);
+  }
 
 }

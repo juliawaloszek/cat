@@ -7,18 +7,16 @@
 
 .card-wrapper{
     display: flex;
-    // border:solid red;
-    // width: 100%;
-
-    // flex-direction: column;
-    // justify-content:space-evenly;
 }
 
 
 mat-card{
     display: flex;
     flex-direction: column;
-    margin: .5rem;
-    width: 47%;
-    min-height: 278px
+    margin: 1%;
+    max-width: 48%;
+    min-width: 48%;
+    width: 48%;
+    min-height: 350px;
+    box-sizing: border-box;
 }

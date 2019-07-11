@@ -20,53 +20,14 @@
           <span class="sidenav-icon"></span>Uprawnienia
         </button>
       </div>
-      <div class="buttons-container">
-          <div style="margin-right: 20px;"></div>
-          <mat-form-field>
-              <mat-select  #t
-              [(ngModel)]="theme$"
-              (selectionChange)="changeTEST($event)"
-              >
-                  <mat-option *ngFor="let themesElement of themesElements; let i = index"
-                    [attr.data-index]="i"
-                    [value]="themesElement.id">
-                    {{themesElement.displayName}}
-                  </mat-option>
-                </mat-select>
-          </mat-form-field>
-      </div>
-      <!-- <div class="buttons-container">
-        <button mat-raised-button color="primary" >Primary</button>
-        <button mat-raised-button color="accent" >Accent</button>
-        <button mat-raised-button color="warn" (click)='test()'>Test setTheme</button>
-      </div> -->
-      <!-- (selectionChange)="updateThemeOverlay()" -->
-      <div style="margin-right: 20px;"></div>
-      <!-- <mat-form-field>
-        <mat-select
-        [(ngModel)]="theme2"
-        (selectionChange)="onThemeChange3()"
-        >
-          <mat-option value="dark-theme">Black</mat-option>
-          <mat-option value="light-theme">Light</mat-option> -->
-          <!-- <option *ngFor="let item of countries | keys" [value]="item.key">{{item.value}}</option> -->
-          <!-- *ngFor="let key of keys" [value]="key" [label]="countries[key]"> -->
-          <!-- <mat-option *ngFor="let key of themes" [value]="key" > {{themes[key]}}</mat-option> -->
-          <!-- <option *ngFor="let theme of keys(themes)" [ngValue]="theme">{{themes[theme]}}</option> -->
-        <!-- </mat-select>
-      </mat-form-field> -->
     </div>
-
-
-
-
     <div class="header login-container">
       <span *ngIf="activeUser$ | async as user" class="user-icon">{{ user.name.full }}</span>
       <button mat-flat-button color="accent" (click)="onLoggingButtonClick()">
         <span [ngClass]="logged ? 'logout-icon' : 'login-icon'"></span>
         {{ logged ? "Wyloguj" : "Zaloguj" }}
       </button>
-    
+
 
       <button mat-flat-button
       routerLink="/settings">
