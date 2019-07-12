@@ -17,6 +17,12 @@ const routes: Routes = [{
 }, {
   path: 'eligibility/:name/:id',
   component: EligibilityComponent
+// }, {
+//   path: 'eligibility/applications/:id/:functionality',
+//   component: EligibilityComponent
+// }, {
+//   path: 'eligibility/applications/:id/:functionality/:privilege',
+//   component: EligibilityComponent
 }, {
   path: 'configuration',
   component: ConfiguratorsListComponent

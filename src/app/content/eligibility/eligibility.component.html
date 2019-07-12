@@ -83,8 +83,9 @@
               <div class="sidenav-list-content">
                 <mat-list *ngIf="groups" class="">
                     <mat-list-item [@displayMenuText]="linkText ? 'hide' : 'show'"
-                    *ngFor="let group of groups"
-                    routerLink="/eligibility/groups/{{ group.id }}" matRipple>
+                                    *ngFor="let group of groups"
+                                    routerLink="/eligibility/groups/{{ group.id }}" matRipple
+                                    routerLinkActive="active">
                     {{ group.name }}
                   </mat-list-item>
                 </mat-list>
@@ -115,18 +116,15 @@
         <mat-sidenav #appSideNav mode="side" opened>
           <mat-list>
             <mat-list-item class="" *ngFor="let application of applications$ | async"
-              routerLink="/eligibility/applications/{{ application.id }}" matRipple>
+                           routerLink="/eligibility/applications/{{ application.id }}" matRipple
+                           routerLinkActive="active">
               {{ application.name }}
             </mat-list-item>
           </mat-list>
-          <!--          <mat-tree>-->
-
-          <!--          </mat-tree>-->
         </mat-sidenav>
         <section>
           <div *ngIf="application$ | async as application">
             <app-application-info #appData [application]="application"></app-application-info>
-            Aplikacja: {{ application.name }}
           </div>
         </section>
       </mat-sidenav-container>

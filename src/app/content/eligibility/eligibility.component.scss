@@ -1,7 +1,60 @@
 @import '~src/styles';
 
+.form-container {
+  @extend .absolute-container;
+
+  display: flex;
+  flex-direction: column;
+}
+
 .tab-container {
   @extend .absolute-container;
+}
+
+.column-container {
+  @extend .layout-flex-row;
+  margin: .25rem;
+  flex: 1;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: .25rem;
+}
+
+.column-left {
+  @extend .column;
+  margin-right: .5rem;
+}
+
+.column-right {
+  @extend .column;
+  margin-left: .5rem;
+}
+
+.row-container {
+  @extend .layout-flex-column;
+  margin: .25rem;
+  flex: 1;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  margin: .25rem;
+}
+
+.row-top {
+  @extend .row;
+  margin-bottom: .5rem;
+}
+
+.row-bottom {
+  @extend .row;
+  margin-top: .5rem;
 }
 
 mat-sidenav-container {

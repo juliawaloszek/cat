@@ -1,18 +1,18 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {User} from '../../service/model/user';
-import {Group} from '../../service/model/group';
-import {UserService} from '../../service/user.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {MatButton, MatSidenav, MatTabGroup} from '@angular/material';
-import {GroupService} from '../../service/group.service';
-import {Observable, Subject} from 'rxjs';
-import {ApplicationService} from '../../service/application.service';
-import {Application} from '../../service/model/application';
-import {tap} from 'rxjs/operators';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { User } from '../../service/model/user';
+import { Group } from '../../service/model/group';
+import { UserService } from '../../service/user.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatTabGroup } from '@angular/material';
+import { GroupService } from '../../service/group.service';
+import { Observable, Subject } from 'rxjs';
+import { ApplicationService } from '../../service/application.service';
+import { Application } from '../../service/model/application';
+import { tap} from 'rxjs/operators';
 import { animateSideNav, animateSideNavContent, displayMenuText } from 'src/app/animations/animations';
-import {GroupInfoComponent} from './group-info/group-info.component';
-import {UserInfoComponent} from '../../components/user-info/user-info.component';
-import {ApplicationInfoComponent} from '../../components/application-info/application-info.component';
+import { GroupInfoComponent } from './group-info/group-info.component';
+import { UserInfoComponent } from './user-info/user-info.component';
+import { ApplicationInfoComponent } from './application-info/application-info.component';
 
 @Component({
   selector: 'app-eligibility',
@@ -109,7 +109,6 @@ export class EligibilityComponent implements OnInit {
   }
 
   private initGroups(id: string) {
-    // this.groups$ =
     this.groupService.list().subscribe(
       list => this.groups = list
     );

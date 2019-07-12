@@ -1,0 +1,56 @@
+@import '../eligibility.component.scss';
+
+.form-container {
+  @extend .absolute-container;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.account-info-container {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  margin: .5rem;
+}
+
+.user-history {
+  display: flex;
+  font-size: smaller;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  text-align: right;
+  align-self: flex-end;
+}
+
+.groups-container {
+  flex: 1;
+  margin-right: .5rem;
+}
+
+.applications-container {
+  flex: 1;
+  margin-left: .5rem;
+}
+
+mat-form-field {
+  margin: 3px;
+  flex: 1;
+}
+
+mat-card-content {
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 959px) {
+  .form-container {
+    flex-wrap: wrap;
+  }
+
+  .groups-container, .applications-container {
+    margin: 0 !important;
+  }
+}

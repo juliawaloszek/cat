@@ -9,6 +9,6 @@ export class Application {
   version: object;
   type: string;
   logo: string;
-  restrictions: Array<Restriction>;
-  functionalities: Array<Functionality>;
+  restrictions: {restriction};
+  functionalities: {functionality};
 }

@@ -1,0 +1,8 @@
+<div class="form-container" *ngIf="application">
+  <app-application-card class="list-container" [application]="application"></app-application-card>
+
+  <div class="row-container">
+    <app-user-card class="row-top" [users]="users"></app-user-card>
+    <app-group-card class="row-bottom" [groups]="groups"></app-group-card>
+  </div>
+</div>

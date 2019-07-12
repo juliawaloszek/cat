@@ -1,0 +1,16 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Grupy</mat-card-title>
+    <div class="spacer"></div>
+    <button mat-mini-fab color="accent" (click)="onAddGroupButton()">
+      <mat-icon class="mat-18">add</mat-icon>
+    </button>
+    <button mat-mini-fab color="accent" (click)="onRemoveGroupButton()">
+      <mat-icon class="mat-18">delete</mat-icon>
+    </button>
+  </mat-card-header>
+
+  <mat-card-content>
+    <app-simple-table #table [config]="groupSource"></app-simple-table>
+  </mat-card-content>
+</mat-card>
