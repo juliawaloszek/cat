@@ -1,0 +1,38 @@
+.settings-wrapper {
+    display: flex;
+    justify-content:space-evenly;
+    flex-direction: column;
+}
+
+.card-wrapper {
+    display: flex;
+}
+
+
+mat-card {
+    display: flex;
+    flex-direction: column;
+    margin: 1%;
+    max-width: 48%;
+    min-width: 48%;
+    width: 48%;
+    min-height: 350px;
+    box-sizing: border-box;
+
+    .themeField{
+        width: 50%;
+        padding-left: 1%;
+    }
+}
+
+img {
+max-width: 200px;
+}
+
+.img-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+}

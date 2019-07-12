@@ -1,0 +1,20 @@
+$test-primary: mat-palette($mat-pink, 50);
+$test-accent: mat-palette($mat-pink, 50);
+$test-warn: mat-palette($mat-pink, 50);
+$test-background-color: map_get($mat-pink, 50);
+
+$test-theme: mat-dark-theme(
+  $test-primary,
+  $test-accent,
+  $test-warn
+);
+
+$test-background: map-get($test-theme, background);
+
+$test-background: map_merge($test-background, (background: $test-background-color));
+$test-background: map_merge($test-background, (app-bar: purple));
+$test-background: map_merge($test-background, (dialog: red));
+$test-background: map_merge($test-background, (card: blue));
+$test-background: map_merge($test-background, (raised-button: yellow));
+
+$test-theme: map_merge($test-theme, (background: $test-background));

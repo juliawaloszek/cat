@@ -1,0 +1,65 @@
+<div class="settings-wrapper">
+  <div class="card-wrapper">
+    <mat-card class="card-el">
+      <mat-card-title>Dane konta</mat-card-title>
+      <mat-form-field [floatLabel]="'always'">
+        <input
+          matInput
+          [(ngModel)]="user.id"
+          placeholder="Login"
+          [readonly]="!editable" />
+      </mat-form-field>
+
+      <mat-form-field [hideRequiredMarker]="true" [floatLabel]="'always'">
+        <input
+          matInput
+          [(ngModel)]="user.name.full"
+          placeholder="Nazwa użytkownika"
+          [readonly]="!editable" />
+      </mat-form-field>
+
+      <mat-form-field [hideRequiredMarker]="true" [floatLabel]="'always'">
+        <input
+          matInput
+          [(ngModel)]="user.department"
+          placeholder="Wydział"
+          [readonly]="!editable" />
+      </mat-form-field>
+
+      <mat-form-field [hideRequiredMarker]="true" [floatLabel]="'always'">
+        <input
+          matInput
+          [(ngModel)]="user.email"
+          placeholder="Email"
+          [readonly]="!editable" />
+      </mat-form-field>
+    </mat-card>
+    <mat-card>
+      <div class="img-wrapper">
+        <img src="assets/img/user.png" />
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="card-wrapper">
+    <mat-card>
+      <mat-card-title>Ustawienia</mat-card-title>
+      <div class="buttons-container">
+        <label>Kolorystyka aplikacji:</label>
+        <mat-form-field class="themeField">
+          <mat-select
+            #t
+            [(ngModel)]="themeActive"
+            (selectionChange)="changeTheme($event)" >
+            <mat-option
+              *ngFor="let themesElement of themesElements; let i = index"
+              [attr.data-index]="i"
+              [value]="themesElement.id" >
+              {{ themesElement.displayName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card>
+  </div>
+</div>
