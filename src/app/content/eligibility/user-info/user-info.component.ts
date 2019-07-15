@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from '../../../service/model/user';
 import {Group} from '../../../service/model/group';
 import {GroupService} from '../../../service/group.service';
@@ -16,15 +16,12 @@ import {GroupSource} from '../model/group-source';
 })
 export class UserInfoComponent implements OnInit {
   @Input() user: User;
+  @Output() updateList = new EventEmitter<any>();
 
   private groups$: Observable<Group[]>;
-  private groupControl = new FormControl();
-
   private appSource: AppSource;
-  private groupSource: GroupSource;
 
-  constructor(private userService: UserService,
-              private groupService: GroupService) {
+  constructor(private userService: UserService) {
   }
 
   ngOnInit() {
@@ -32,22 +29,6 @@ export class UserInfoComponent implements OnInit {
       this.user.group = this.user.group || [];
       this.appSource = new AppSource(this.user.applications || []);
     }
-  }
-
-  onAddGroupButton() {
-
-  }
-
-  onRemoveGroupButton() {
-
-  }
-
-  private onRemoveGroup(group) {
-
-  }
-
-  private onGroupOptionSelected(event) {
-
   }
 
   private filterGroups(value: string, caseSensitive = false): Observable<Group[]> {
@@ -63,11 +44,14 @@ export class UserInfoComponent implements OnInit {
   }
 
   public save(id: string) {
-    const request = id === 'new' ? this.userService.create(this.user) : this.userService.update(this.user);
+    const request = (id === 'new') ?
+      this.userService.create(this.user, true) :
+      this.userService.update(this.user, id, true);
 
     request.subscribe(
       response => {
         console.log('map', response);
+        this.updateList.emit(response);
         return response;
       },
       error => {

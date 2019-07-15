@@ -19,6 +19,7 @@ export class User {
   history: History;
   lastLogon: LastLogon;
   password: Password;
+  lockedOut?: boolean;
 
   constructor() {
     if (!this.password) {

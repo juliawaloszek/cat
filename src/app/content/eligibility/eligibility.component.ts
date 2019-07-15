@@ -8,7 +8,7 @@ import { GroupService } from '../../service/group.service';
 import { Observable, Subject } from 'rxjs';
 import { ApplicationService } from '../../service/application.service';
 import { Application } from '../../service/model/application';
-import { tap} from 'rxjs/operators';
+import {merge, tap} from 'rxjs/operators';
 import { animateSideNav, animateSideNavContent, displayMenuText } from 'src/app/animations/animations';
 import { GroupInfoComponent } from './group-info/group-info.component';
 import { UserInfoComponent } from './user-info/user-info.component';
@@ -31,9 +31,8 @@ export class EligibilityComponent implements OnInit {
   @ViewChild('appData') appDataPanel: ApplicationInfoComponent;
   private params: any = {};
 
-  users$: Observable<User[]>;
+  users: User[];
   user$: Observable<User>;
-  groups$: Observable<Group[]>;
   groups: Group[];
   group$: Observable<Group>;
   applications$: Observable<Application[]>;
@@ -92,9 +91,9 @@ export class EligibilityComponent implements OnInit {
   }
 
   private initUsers(id: string) {
-    if (!this.users$) {
-      this.users$ = this.userService.list();
-    }
+    this.userService.list().subscribe(
+      list => this.users = list
+    );
 
     if (id) {
       if (id === 'new') {
@@ -102,7 +101,7 @@ export class EligibilityComponent implements OnInit {
       } else if (id === 'delete') {
         // TODO delete array of users
       } else {
-        this.user$ = this.userService.read(id);
+        this.user$ = this.userService.read(id, true);
         console.log(this.user$);
       }
     }
@@ -110,7 +109,7 @@ export class EligibilityComponent implements OnInit {
 
   private initGroups(id: string) {
     this.groupService.list().subscribe(
-      list => this.groups = list
+      groups => this.groups = groups
     );
 
     if (id) {
@@ -119,10 +118,7 @@ export class EligibilityComponent implements OnInit {
       } else if (id === 'delete') {
         // TODO delete array of groups
       } else {
-        this.group$ = this.groupService.read(id, {
-          applications: true,
-          users: true
-        });
+        this.group$ = this.groupService.read(id, true);
       }
     }
   }
@@ -131,18 +127,42 @@ export class EligibilityComponent implements OnInit {
     this.applications$ = this.applicationService.list();
 
     if (id) {
-      this.application$ = this.applicationService.read(id, {
-        functionalities: true,
-        privileges: true,
-        users: true
-      }).pipe(
+      this.application$ = this.applicationService.read(id, true).pipe(
         tap(response => console.log(response))
       );
     }
   }
 
-  private deleteSelected(name: string)  {
-    // TODO
+  private deleteSelected() {
+    this.route.params.subscribe(params => {
+      if (params.id) {
+        switch (params.name) {
+          case 'groups':
+            this.groupService.delete(params.id);
+            break;
+          case 'users':
+            this.userService.delete(params.id);
+            break;
+        }
+      }
+    });
+  }
+
+  private updateList()  {
+    this.route.params.subscribe(params => {
+      switch (params.name) {
+        case 'groups':
+          this.groupService.list().subscribe(
+            list => this.groups = list
+          );
+          break;
+        case 'users':
+          this.userService.list().subscribe(
+            list => this.users = list
+          );
+          break;
+      }
+    });
   }
 
   onSaveButtonClick() {

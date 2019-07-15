@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Group} from '../../../service/model/group';
 import {MatDialog} from '@angular/material';
 import {GroupService} from '../../../service/group.service';
@@ -15,6 +15,7 @@ import {AppSource} from '../model/app-source';
 
 export class GroupInfoComponent implements OnInit {
   @ViewChild('userTable') userTable: SimpleTableComponent;
+  @Output() updateList = new EventEmitter<any>();
   @Input() group: Group;
 
   private appsData: AppSource;
@@ -28,10 +29,13 @@ export class GroupInfoComponent implements OnInit {
   }
 
   public save(id: string) {
-    const request = (id === 'new') ? this.groupService.create(this.group) : this.groupService.update(this.group, id);
+    const request = (id === 'new') ?
+      this.groupService.create(this.group, true) :
+      this.groupService.update(this.group, id, true);
 
     request.subscribe(
       response => {
+        this.updateList.emit(response);
         console.log('map', response);
         return response;
       },

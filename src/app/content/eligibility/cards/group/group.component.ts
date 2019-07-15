@@ -49,7 +49,8 @@ export class GroupComponent implements OnInit {
   }
 
   onRemoveGroupButton() {
-    this.groupTable.removeSelection();
+    this.groups = this.groupTable.removeSelection();
+    console.log(this.groups);
   }
 
   createDialog(data: object, width: string = '350px') {

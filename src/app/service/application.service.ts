@@ -15,6 +15,12 @@ export class ApplicationService {
   private httpOptions = {
     withCredentials: true // necessary for dev version
   };
+  private config = {
+    functionalities: true,
+    privileges: true,
+    users: true,
+    groups: true
+  };
 
   private applicationsCache$: Observable<Application[]>;
   private baseUrl;
@@ -26,7 +32,8 @@ export class ApplicationService {
   public list(): Observable<Application[]> {
     if (!this.applicationsCache$) {
       this.applicationsCache$ = this.http.get<{application}>(this.baseUrl, this.httpOptions).pipe(
-        map(applications => applications.application),
+        map(applications => applications.application
+          .sort((appA, appB) => appB.name.toLowerCase() > appA.name.toLowerCase() ? -1 : 1)),
         catchError(this.handleError<Plugin[]>('getApplications', [])),
         shareReplay()
       );
@@ -34,12 +41,17 @@ export class ApplicationService {
     return this.applicationsCache$;
   }
 
-  public read(id: string, config: any): Observable<Application> {
+  public read(id: string, addConfig?: boolean): Observable<Application> {
     const options = Object.assign({
-      params: config
+      params: addConfig ? this.config : undefined
     }, this.httpOptions);
 
-    return this.http.get<Application>(this.baseUrl + id, options);
+    return this.http.get<Application>(this.baseUrl + id, options).pipe(
+      map(application => {
+        application.functionalities.functionality = application.functionalities.functionality
+          .sort((funcA, funcB) => funcB.name.toLowerCase() > funcA.name.toLowerCase() ? -1 : 1);
+        return application;
+      }));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

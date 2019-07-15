@@ -11,23 +11,38 @@ import { User } from './model/user';
 })
 
 export class UserService {
-  private httpOptions = {};
+  private httpOptions = {
+    withCredentials: true
+  };
   private activeUserUrl = '';
   private url = '';
+
+  private config = {
+    groups: true,
+    applications: true,
+    functionalities: true,
+    privileges: true
+  };
 
   private usersCache$: Observable<User[]>;
   private activeUserCache$: Observable<User>;
 
   constructor(private http: HttpClient) {
     if (isDevMode()) {
-      this.httpOptions = {
-        withCredentials: true
-      };
       this.activeUserUrl = this.url = 'https://vm-kajko:8181';
     }
 
     this.activeUserUrl += '/setup/user/';
     this.url += '/setup/realms/iuip/users/';
+  }
+
+  get users(): Observable<User[]> {
+    return this.http.get<{user}>(this.url, this.httpOptions).pipe(
+      map(response => response.user
+        .sort((userA, userB) => userB.name.full.toLowerCase() > userA.name.full.toLowerCase() ? -1 : 1)),
+      catchError(this.handleError<User[]>('getUsers', [])),
+      shareReplay()
+    );
   }
 
   public active(): Observable<User> {
@@ -41,25 +56,30 @@ export class UserService {
     return this.activeUserCache$;
   }
 
-  public list(): Observable<User[]> {
-    if (!this.usersCache$) {
-      this.usersCache$ = this.http.get<{user}>(this.url, this.httpOptions).pipe(
-        map(response => response.user.sort((userA, userB) => userB.id > userA.id ? -1 : 1)),
-        catchError(this.handleError<User[]>('getUsers', [])),
-        shareReplay()
-      );
+  public list(update?: boolean): Observable<User[]> {
+    if (!this.usersCache$ || update) {
+      this.usersCache$ = this.users;
     }
     return this.usersCache$;
   }
 
-  public read(id: string): Observable<User> {
-    return this.http.get<User>(this.url + id, this.httpOptions).pipe(
+  public read(id: string, addConfig?: boolean): Observable<User> {
+    const options = Object.assign({
+      params: addConfig ? this.config : undefined
+    }, this.httpOptions);
+
+    return this.http.get<User>(this.url + id, options).pipe(
       shareReplay()
     );
   }
 
-  public create(user: User): Observable<any> {
-    return this.http.post<User>(this.url, user).pipe(
+  public create(user: User, addConfig?: boolean): Observable<any> {
+    const options = Object.assign({
+      params: addConfig ? this.config : undefined
+    }, this.httpOptions);
+
+    return this.http.post<User>(this.url, this.transform(user), options).pipe(
+      tap(() => this.list(true)),
       catchError(error => {
         console.log('bład dodawania użytkownika', error);
         return of();
@@ -68,8 +88,13 @@ export class UserService {
     );
   }
 
-  public update(user: User): Observable<any> {
-    return this.http.put<User>(this.url + user.id, user).pipe(
+  public update(user: User, id: string, addConfig?: boolean): Observable<any> {
+    const options = Object.assign({
+      params: addConfig ? this.config : undefined
+    }, this.httpOptions);
+
+    return this.http.put<User>(this.url + id, this.transform(user), options).pipe(
+      tap(() => this.list(true)),
       catchError(error => {
         console.log('bład edycji użytkownika', error);
         return of();
@@ -79,10 +104,22 @@ export class UserService {
   }
 
   public delete(id: string) {
-    this.http.delete(this.url + id).pipe(
-      catchError(this.handleError<User>()),
-      shareReplay()
+    this.http.delete(this.url + id, this.httpOptions).pipe(
+      tap(() => this.list(true)),
+      catchError(error => {
+        console.log('bład usuwania użytkownika', error);
+        return of();
+      })
     );
+  }
+
+  private transform(user) {
+    return Object.assign(user, {
+      group: user.group.map(group => ({id: group.id}))
+      // applications: {
+      //   application: user.applications.application.map(application => ({id: application.id}))
+      // }
+    });
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
