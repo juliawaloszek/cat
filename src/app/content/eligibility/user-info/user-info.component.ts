@@ -26,8 +26,7 @@ export class UserInfoComponent implements OnInit {
 
   ngOnInit() {
     if (this.user) {
-      this.user.group = this.user.group || [];
-      this.appSource = new AppSource(this.user.applications || []);
+      this.appSource = new AppSource(this.user.applications.application);
     }
   }
 

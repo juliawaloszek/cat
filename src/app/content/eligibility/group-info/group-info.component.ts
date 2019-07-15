@@ -25,7 +25,7 @@ export class GroupInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.appsData = new AppSource(this.group.applications.application || []);
+    this.appsData = new AppSource(this.group.applications.application);
   }
 
   public save(id: string) {

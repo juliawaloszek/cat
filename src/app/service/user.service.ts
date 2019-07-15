@@ -69,6 +69,12 @@ export class UserService {
     }, this.httpOptions);
 
     return this.http.get<User>(this.url + id, options).pipe(
+      map(user => Object.assign(user, {
+        group: user.group || [],
+        applications: (user.applications && user.applications.application) || {
+          application: []
+        }
+      })),
       shareReplay()
     );
   }

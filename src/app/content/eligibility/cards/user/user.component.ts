@@ -20,7 +20,7 @@ export class UserComponent implements OnInit {
               private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.userSource = new UserSource(this.users || []);
+    this.userSource = new UserSource(this.users);
   }
 
   onAddUsersButton() {

@@ -20,7 +20,7 @@ export class GroupComponent implements OnInit {
               private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.groupSource = new GroupSource(this.groups || []);
+    this.groupSource = new GroupSource(this.groups);
   }
 
   onAddGroupButton() {

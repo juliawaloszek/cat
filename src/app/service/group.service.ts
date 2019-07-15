@@ -48,6 +48,12 @@ export class GroupService {
     }, this.httpOptions);
 
     return this.http.get<Group>(this.baseUrl + id, options).pipe(
+      map(group => Object.assign(group, {
+        user: group.user || [],
+        applications: (group.applications && group.applications.application) || {
+          application: []
+        }
+      })),
       shareReplay()
     );
   }
