@@ -34,6 +34,7 @@ export class ApplicationComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.application);
   }
 
   setActive(active) {

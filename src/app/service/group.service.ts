@@ -50,7 +50,7 @@ export class GroupService {
     return this.http.get<Group>(this.baseUrl + id, options).pipe(
       map(group => Object.assign(group, {
         user: group.user || [],
-        applications: (group.applications && group.applications.application) || {
+        applications: (group.applications && group.applications.application) ? group.applications : {
           application: []
         }
       })),
