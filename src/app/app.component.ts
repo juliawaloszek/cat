@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
     this.themeService.theme$.subscribe(theme => {
         this.themeActive = theme;
         this.themeClass = theme;
-        this.updateThemeOverlay();
+        this.themeService.updateThemeOverlay();
     });
     this.themeService.initialTheme();
   }
@@ -71,17 +71,8 @@ export class AppComponent implements OnInit {
   }
 
   setTheme($event) {
-    const themeId = $event.source.value;
-    const themeClassName = this.themesArray.filter(theme => theme.id === themeId)[0].className;
-    this.themeService.setTheme(themeClassName);
+    this.themeService.setTheme($event.source.value);
   }
 
-  updateThemeOverlay() {
-    const overlayContainerClasses = this.overlayContainer.getContainerElement().classList;
-    const themeClassesToRemove = Array.from(overlayContainerClasses).filter((item: string) => item.includes('-theme'));
-    if (themeClassesToRemove.length) {
-         overlayContainerClasses.remove(...themeClassesToRemove);
-      }
-    overlayContainerClasses.add(this.themeActive);
-  }
+
 }

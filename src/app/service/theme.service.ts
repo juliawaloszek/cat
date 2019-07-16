@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { debug } from 'util';
 
 
 export const THEMES_DATA: Array<any> = [
@@ -23,13 +25,16 @@ export class ThemeService {
   theme$ = this.themeSource.asObservable();
   cookieName = 'THEME';
 
-  constructor( private cookieService: CookieService, ) { }
+  constructor( private cookieService: CookieService,
+               private overlayContainer: OverlayContainer ) { }
 
-  setTheme(themeName: string) {
-    this.themeSource.next(themeName);
-    this.cookieService.set(this.cookieName, themeName, 365);
-    ACTIVE_THEME = themeName;
+  setTheme(id: string) {
+    const themeClassName = THEMES_DATA.filter(theme => theme.className === id)[0].className;
+    this.themeSource.next(themeClassName);
+    this.cookieService.set(this.cookieName, themeClassName, 365);
+    ACTIVE_THEME = themeClassName;
   }
+
 
   getThemes(): Array<any> {
       return THEMES_DATA;
@@ -47,6 +52,15 @@ export class ThemeService {
 
   getActiveTheme() {
     return ACTIVE_THEME;
+  }
+
+  updateThemeOverlay() {
+    const overlayContainerClasses = this.overlayContainer.getContainerElement().classList;
+    const themeClassesToRemove = Array.from(overlayContainerClasses).filter((item: string) => item.includes('-theme'));
+    if (themeClassesToRemove.length) {
+         overlayContainerClasses.remove(...themeClassesToRemove);
+      }
+    overlayContainerClasses.add(this.themeSource.value);
   }
 
 }
