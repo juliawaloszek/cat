@@ -18,9 +18,7 @@ export let ACTIVE_THEME: any = THEMES_DATA[0].className;
 })
 
 export class ThemeService {
-
   theme = ACTIVE_THEME;
-
   themeSource = new BehaviorSubject<any>(this.theme);
   theme$ = this.themeSource.asObservable();
   cookieName = 'THEME';
