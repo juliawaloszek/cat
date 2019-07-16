@@ -44,8 +44,7 @@ export class AppComponent implements OnInit {
 
   constructor(private userService: UserService,
               private overlayContainer: OverlayContainer,
-              private themeService: ThemeService,
-              ) { }
+              private themeService: ThemeService) { }
 
   ngOnInit() {
     this.activeUser$ = this.userService.active();
@@ -73,6 +72,5 @@ export class AppComponent implements OnInit {
   setTheme($event) {
     this.themeService.setTheme($event.source.value);
   }
-
 
 }

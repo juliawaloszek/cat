@@ -35,7 +35,7 @@
 
   <mat-toolbar-row class="screen-under-960">
     <div class="layout-flex-row v-center">
-      <button mat-icon-button color="accent" class="menu-button" (click)="sidenavMenu.toggle()" >
+      <button mat-icon-button color="accent" class="menu-button" (click)="sidenavMenu.toggle()">
         <mat-icon>list</mat-icon>
       </button>
       <div class="logo-container" matRipple>
@@ -54,18 +54,18 @@
 <mat-divider></mat-divider>
 
 <mat-sidenav-container class="content-container">
-  <mat-sidenav #sidenavMenu class="screen-under-960" role="navigation" autoFocus="false" >
+  <mat-sidenav #sidenavMenu class="screen-under-960" role="navigation" autoFocus="false">
     <mat-nav-list>
       <div *ngFor="let link of linksList">
         <mat-list-item class="list-item list-item-header-container"
                        [routerLink]="link.link"
-                       (click)="link.link ? sidenavMenu.close() : null" >
+                       (click)="link.link ? sidenavMenu.close() : null">
           <span [ngClass]="link.iconClass"></span>{{ link.name }}
         </mat-list-item>
         <app-list *ngIf="link.type" [type]="link.type"></app-list>
       </div>
 
-      <mat-list-item class="list-item login-option" routerLink="/logout" (click)="onLoggingButtonClick()" >
+      <mat-list-item class="list-item login-option" routerLink="/logout" (click)="onLoggingButtonClick()">
         <span [ngClass]="logged ? 'logout-icon' : 'login-icon'"></span>
         {{ logged ? "Wyloguj" : "Zaloguj" }}
       </mat-list-item>
