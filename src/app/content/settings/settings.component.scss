@@ -1,37 +1,36 @@
 .settings-wrapper {
-    display: flex;
-    justify-content:space-evenly;
-    flex-direction: column;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
 }
 
 .card-wrapper {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
-
 mat-card {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    margin: .7rem;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 0.7rem;
 
-    .themeField {
-        padding-left: 1rem;
-    }
+  .themeField {
+    padding-left: 1rem;
+  }
 }
 
 img {
-    max-width: 200px;
+  max-width: 200px;
 }
 
 .img-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
-.spacer{
-    visibility: hidden;
+.spacer {
+  visibility: hidden;
 }

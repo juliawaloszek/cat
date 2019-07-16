@@ -29,7 +29,8 @@ export class ThemeService {
                private overlayContainer: OverlayContainer ) { }
 
   setTheme(id: string) {
-    const themeClassName = THEMES_DATA.filter(theme => theme.className === id)[0].className;
+    // const themeClassName = THEMES_DATA.filter(theme => theme.className === id)[0].className;
+    const themeClassName = THEMES_DATA.find(theme => theme.className === id).className;
     this.themeSource.next(themeClassName);
     this.cookieService.set(this.cookieName, themeClassName, 365);
     ACTIVE_THEME = themeClassName;
