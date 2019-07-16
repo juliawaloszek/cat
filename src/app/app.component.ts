@@ -74,5 +74,4 @@ export class AppComponent implements OnInit {
     this.themeService.setTheme($event.source.value);
   }
 
-
 }
