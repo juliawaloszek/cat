@@ -1,7 +1,7 @@
 <div *ngIf="user" class="form-container">
 
   <mat-card class="account-info-container">
-    <div class="column">
+    <div class="column-left">
       <mat-form-field [hideRequiredMarker]="true" [floatLabel]="'always'">
         <input matInput [(ngModel)]="user.id" placeholder="Login" required>
       </mat-form-field>
@@ -19,13 +19,13 @@
       </mat-form-field>
     </div>
 
-    <div class="column">
+    <div class="column-right">
       <mat-checkbox [(ngModel)]="user.active">Aktywny</mat-checkbox>
       <mat-checkbox [(ngModel)]="user.administrator">Administrator</mat-checkbox>
       <mat-checkbox [(ngModel)]="!user.password.expires">Hasło nigdy nie wygasa</mat-checkbox>
       <mat-checkbox [(ngModel)]="user.password.immutable">Użytkownik może zmienić hasło</mat-checkbox>
       <mat-checkbox [(ngModel)]="user.password.mustChange">Użytkownik musi zmienić hasło przy następnym logowaniu</mat-checkbox>
-      <mat-checkbox [(ngModel)]="user" [disabled]="true">Konto zablokowane</mat-checkbox>
+      <mat-checkbox [disabled]="true">Konto zablokowane</mat-checkbox> <!-- [(ngModel)]="user" -->
 
       <div class="filler"></div>
       <div class="user-history" *ngIf="user.history">
@@ -35,52 +35,15 @@
           <tr><td>Utworzony:</td><td>{{ user.history.created }}</td></tr>
           <tr><td>Data ostatniej modyfikacji:</td><td>{{ user.history.modified }}</td></tr>
         </table>
-
-
-<!--        <div>Udane logowanie: {{ user.lastLogon.successful }}</div>-->
-<!--        <div>Nieudane logowanie: {{ user.lastLogon.failed }}</div>-->
-<!--        <div>Utworzony: {{ user.history.created }}</div>-->
-<!--        <div>Data ostatniej modyfikacji: {{ user.history.modified }}</div>-->
       </div>
     </div>
 
   </mat-card>
 
-  <div class="qualifications-container">
-    <mat-card class="groups-container">
-      <mat-card-header>
-        <mat-card-title>Grupy</mat-card-title>
-        <div class="spacer"></div>
-        <button mat-mini-fab color="accent" (click)="onAddGroupButton()">
-          <mat-icon class="mat-18">add</mat-icon>
-        </button>
-        <button mat-mini-fab color="accent" (click)="onRemoveGroupButton()">
-          <mat-icon class="mat-18">delete</mat-icon>
-        </button>
-      </mat-card-header>
-      <mat-card-content>
-        <app-simple-table #groupTable [config]="groupSource"></app-simple-table>
-<!--        <mat-form-field>-->
+  <div class="column-container">
+    <app-group-card class="column-left" [groups]="user.group"></app-group-card>
 
-<!--          <mat-chip-list #chipList>-->
-<!--            <mat-chip *ngFor="let group of user.group" [selectable]="true"-->
-<!--              [removable]="true" (removed)="onRemoveGroup(group)">-->
-<!--              {{ group.name }}-->
-<!--              <mat-icon class="mat-icon-size-medium">close</mat-icon></mat-chip>-->
-<!--            <input [formControl]="groupControl" [matChipInputFor]="chipList" > &lt;!&ndash; [matAutocomplete]="auto" &ndash;&gt;-->
-<!--          </mat-chip-list>-->
-
-<!--          <mat-autocomplete *ngIf="filteredGroups" #auto="matAutocomplete" (optionSelected)="onGroupOptionSelected($event)">-->
-<!--            <mat-option *ngFor="let group of filteredGroups | async" [value]="group.id">-->
-<!--              {{ group.name }}-->
-<!--            </mat-option>-->
-<!--          </mat-autocomplete>-->
-
-<!--        </mat-form-field>-->
-      </mat-card-content>
-    </mat-card>
-
-    <mat-card class="applications-container">
+    <mat-card class="column-right">
       <mat-card-header>
         <mat-card-title>Aplikacje</mat-card-title><div class="spacer"></div>
 <!--        <button mat-mini-fab color="accent" (click)="onAddApplicationsButton()">-->

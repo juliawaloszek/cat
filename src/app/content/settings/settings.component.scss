@@ -6,27 +6,23 @@
 
 .card-wrapper {
     display: flex;
+    flex-direction: row;
 }
 
 
 mat-card {
     display: flex;
+    flex: 1;
     flex-direction: column;
-    margin: 1%;
-    max-width: 48%;
-    min-width: 48%;
-    width: 48%;
-    min-height: 350px;
-    box-sizing: border-box;
+    margin: .7rem;
 
-    .themeField{
-        width: 50%;
-        padding-left: 1%;
+    .themeField {
+        padding-left: 1rem;
     }
 }
 
 img {
-max-width: 200px;
+    max-width: 200px;
 }
 
 .img-wrapper {
@@ -34,5 +30,8 @@ max-width: 200px;
     justify-content: center;
     align-items: center;
     height: 100%;
+}
 
+.spacer{
+    visibility: hidden;
 }

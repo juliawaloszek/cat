@@ -15,10 +15,13 @@ export class User {
     full: ''
   };
   group: Group[];
-  applications: Application[];
+  applications: {
+    application: Application[]
+  };
   history: History;
   lastLogon: LastLogon;
   password: Password;
+  lockedOut?: boolean;
 
   constructor() {
     if (!this.password) {

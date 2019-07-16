@@ -9,12 +9,12 @@ export const THEMES_DATA: Array<any> = [
   {id: 2, name: 'TEST', className: 'test-theme', displayName: 'Test'}
 ];
 
-
 export let ACTIVE_THEME: any = THEMES_DATA[0].className;
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class ThemeService {
 
   theme = ACTIVE_THEME;
@@ -23,22 +23,21 @@ export class ThemeService {
   theme$ = this.themeSource.asObservable();
   cookieName = 'THEME';
 
-
   constructor( private cookieService: CookieService, ) { }
 
   setTheme(themeName: string) {
     this.themeSource.next(themeName);
-    this.cookieService.set( this.cookieName , themeName, 365);
+    this.cookieService.set(this.cookieName, themeName, 365);
+    ACTIVE_THEME = themeName;
   }
-
 
   getThemes(): Array<any> {
       return THEMES_DATA;
   }
 
   initialTheme(): Array<any> {
-    if (!this.cookieService.check( this.cookieName )) {
-      this.cookieService.set( this.cookieName , this.theme , 365);
+    if (!this.cookieService.check(this.cookieName)) {
+      this.cookieService.set(this.cookieName, this.theme, 365);
     } else {
       this.cookieService.get(this.cookieName);
       this.setTheme(this.cookieService.get(this.cookieName));
@@ -49,6 +48,5 @@ export class ThemeService {
   getActiveTheme() {
     return ACTIVE_THEME;
   }
-
 
 }

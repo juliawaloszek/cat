@@ -44,12 +44,15 @@ import { FooterComponent } from './components/footer/footer.component';
 import { InfoComponent } from './content/info/info.component';
 import { ListComponent } from './components/list/list.component';
 import { EligibilityComponent } from './content/eligibility/eligibility.component';
-import { UserInfoComponent } from './components/user-info/user-info.component';
-import { ApplicationInfoComponent } from './components/application-info/application-info.component';
+import { UserInfoComponent } from './content/eligibility/user-info/user-info.component';
+import { ApplicationInfoComponent } from './content/eligibility/application-info/application-info.component';
 import { GroupInfoComponent } from './content/eligibility/group-info/group-info.component';
 import { SimpleTableComponent } from './components/simple-table/simple-table.component';
 import { InterpolateDialogComponent } from './content/eligibility/interpolate-dialog/interpolate-dialog.component';
 import { SettingsComponent } from './content/settings/settings.component';
+import { GroupComponent } from './content/eligibility/cards/group/group.component';
+import { UserComponent } from './content/eligibility/cards/user/user.component';
+import { ApplicationComponent } from './content/eligibility/cards/application/application.component';
 
 
 @NgModule({
@@ -70,6 +73,9 @@ import { SettingsComponent } from './content/settings/settings.component';
     SimpleTableComponent,
     InterpolateDialogComponent,
     SettingsComponent,
+    GroupComponent,
+    UserComponent,
+    ApplicationComponent
   ],
   imports: [
     BrowserModule,

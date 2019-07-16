@@ -18,7 +18,7 @@
                   [@displayMenuText]="linkText ? 'hide' : 'show'">
                   <mat-icon>add</mat-icon>
                 </button>
-                <button mat-icon-button class="mat-icon" (click)="deleteSelected('users')"
+                <button mat-icon-button class="mat-icon" (click)="deleteSelected()"
                   [@displayMenuText]="linkText ? 'hide' : 'show'">
                   <mat-icon>delete</mat-icon>
                 </button>
@@ -29,9 +29,9 @@
               </div>
             </mat-toolbar>
             <div class="sidenav-list-content" >
-              <mat-list class="">
+              <mat-list class="" *ngIf="users">
                 <mat-list-item [@displayMenuText]="linkText ? 'hide' : 'show'"
-                                *ngFor="let user of users$ | async"
+                                *ngFor="let user of users"
                                 routerLink="/eligibility/users/{{ user.id }}" matRipple
                                 routerLinkActive="active">
                   {{ user.name.full }}
@@ -46,11 +46,11 @@
               <section>
                 <div *ngIf="!createNew">
                   <div *ngIf="user$ | async as user">
-                    <app-user-info #userData [user]="user"></app-user-info>
+                    <app-user-info #userData [user]="user" (updateList)="updateList()"></app-user-info>
                   </div>
                 </div>
                 <div *ngIf="createNew">
-                  <app-user-info #userData [user]="newUser"></app-user-info>
+                  <app-user-info #userData [user]="newUser" (updateList)="updateList()"></app-user-info>
                 </div>
               </section>
             </div>
@@ -70,7 +70,7 @@
                     [@displayMenuText]="linkText ? 'hide' : 'show'">
                     <mat-icon>add</mat-icon>
                   </button>
-                  <button mat-icon-button class="mat-icon" (click)="deleteSelected('users')"
+                  <button mat-icon-button class="mat-icon" (click)="deleteSelected()"
                     [@displayMenuText]="linkText ? 'hide' : 'show'">
                     <mat-icon>delete</mat-icon>
                   </button>
@@ -81,10 +81,11 @@
               </div>
               </mat-toolbar>
               <div class="sidenav-list-content">
-                <mat-list *ngIf="groups" class="">
+                <mat-list class="" *ngIf="groups">
                     <mat-list-item [@displayMenuText]="linkText ? 'hide' : 'show'"
-                    *ngFor="let group of groups"
-                    routerLink="/eligibility/groups/{{ group.id }}" matRipple>
+                                    *ngFor="let group of groups"
+                                    routerLink="/eligibility/groups/{{ group.id }}" matRipple
+                                    routerLinkActive="active">
                     {{ group.name }}
                   </mat-list-item>
                 </mat-list>
@@ -97,11 +98,11 @@
                   <section>
                       <div *ngIf="!createNew">
                         <div *ngIf="group$ | async as group">
-                          <app-group-info #groupData [group]="group"></app-group-info>
+                          <app-group-info #groupData [group]="group" (updateList)="updateList()"></app-group-info>
                         </div>
                       </div>
                       <div *ngIf="createNew">
-                        <app-group-info #groupData [group]="newGroup"></app-group-info>
+                        <app-group-info #groupData [group]="newGroup" (updateList)="updateList()"></app-group-info>
                       </div>
                     </section>
               </div>
@@ -115,18 +116,15 @@
         <mat-sidenav #appSideNav mode="side" opened>
           <mat-list>
             <mat-list-item class="" *ngFor="let application of applications$ | async"
-              routerLink="/eligibility/applications/{{ application.id }}" matRipple>
+                           routerLink="/eligibility/applications/{{ application.id }}" matRipple
+                           routerLinkActive="active">
               {{ application.name }}
             </mat-list-item>
           </mat-list>
-          <!--          <mat-tree>-->
-
-          <!--          </mat-tree>-->
         </mat-sidenav>
         <section>
           <div *ngIf="application$ | async as application">
             <app-application-info #appData [application]="application"></app-application-info>
-            Aplikacja: {{ application.name }}
           </div>
         </section>
       </mat-sidenav-container>

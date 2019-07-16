@@ -75,6 +75,12 @@ mat-card-header::ng-deep {
   flex-direction: row;
 }
 
+.layout-flex-column {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .v-center {
   align-items: center;
   vertical-align: middle;

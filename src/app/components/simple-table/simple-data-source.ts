@@ -23,6 +23,14 @@ export class SimpleDataSource implements DataSource<any> {
     this.filterData();
   }
 
+  get data() {
+    return this.filteredData;
+  }
+
+  set data(data: any[]) {
+    this.filteredData = data;
+  }
+
   connect(): Observable<any[]> {
     return this.dataSubject.asObservable();
   }

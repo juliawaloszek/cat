@@ -1,4 +1,4 @@
-@import '~src/styles';
+@import '../eligibility.component.scss';
 
 .form-container {
   @extend .absolute-container;
@@ -14,13 +14,6 @@
   margin: .5rem;
 }
 
-.column {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  margin: .25rem;
-}
-
 .user-history {
   display: flex;
   font-size: smaller;
@@ -29,13 +22,6 @@
   align-items: flex-end;
   text-align: right;
   align-self: flex-end;
-}
-
-.qualifications-container {
-  display: flex;
-  flex-direction: row;
-  flex: 3;
-  margin: .5rem;
 }
 
 .groups-container {
