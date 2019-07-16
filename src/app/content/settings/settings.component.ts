@@ -28,10 +28,11 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.active()
-      .subscribe(user => {
+    this.userService.active().subscribe(
+      user => {
         this.user = user;
-      }, err => {
+      }, 
+      err => {
         throw err;
       });
 
