@@ -4,6 +4,7 @@ import { InfoComponent } from './content/info/info.component';
 import { ConfiguratorsListComponent } from './content/configurators-list/configurators-list.component';
 import { ApplicationsListComponent } from './content/applications-list/applications-list.component';
 import { EligibilityComponent } from './content/eligibility/eligibility.component';
+import { SettingsComponent } from './content/settings/settings.component';
 
 const routes: Routes = [{
   path: '',
@@ -35,6 +36,9 @@ const routes: Routes = [{
 }, {
   path: 'application/:id',
   component: ApplicationsListComponent
+}, {
+  path: 'settings',
+  component: SettingsComponent
 }];
 
 @NgModule({
