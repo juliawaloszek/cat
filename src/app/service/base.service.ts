@@ -41,6 +41,10 @@ export class BaseService {
     );
   }
 
+  confirmMessage() {
+
+  }
+
   private handleError(operation, message, error?) {
     console.error(operation, message);
     console.error(error);

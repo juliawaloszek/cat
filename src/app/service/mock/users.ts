@@ -20,11 +20,14 @@ export const USERS: User[] = [{
     failed: '2019-05-06T15:49:48+02:00'
   },
   password: {
+    set: '12345',
     expires: false,
     immutable: true,
     mustChange: false
   },
-  applications: []
+  applications: {
+    application: []
+  }
 }, {
   id: 'kalisz2',
   accountId: '6ad11ea7-8395-4c91-a9dd-04cb8262706e',
@@ -45,9 +48,12 @@ export const USERS: User[] = [{
     failed: '2019-04-06T12:49:48+02:00'
   },
   password: {
+    set: '12345',
     expires: false,
     immutable: true,
     mustChange: false
   },
-  applications: []
+  applications: {
+    application: []
+  }
 }];

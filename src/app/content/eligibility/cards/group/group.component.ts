@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import { GroupSource } from '../../model/group-source';
 import { Group } from '../../../../service/model/group';
 import { GroupService } from '../../../../service/group.service';
@@ -14,6 +14,8 @@ import { SimpleTableComponent } from '../../../../components/simple-table/simple
 export class GroupComponent implements OnInit {
   @ViewChild('table') groupTable: SimpleTableComponent;
   @Input() groups: Group[];
+  @Output() updateList = new EventEmitter<any>();
+
   private groupSource: GroupSource;
 
   constructor(private groupService: GroupService,
@@ -49,8 +51,7 @@ export class GroupComponent implements OnInit {
   }
 
   onRemoveGroupButton() {
-    this.groups = this.groupTable.removeSelection();
-    console.log(this.groups);
+    this.updateList.emit(this.groupTable.removeSelection());
   }
 
   createDialog(data: object, width: string = '350px') {

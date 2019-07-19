@@ -32,15 +32,10 @@ export class EligibilityComponent implements OnInit {
   private params: any = {};
 
   users: User[];
-  user$: Observable<User>;
   groups: Group[];
-  group$: Observable<Group>;
-  applications$: Observable<Application[]>;
-  application$: Observable<Application>;
+  applications: Application[];
 
   createNew = false;
-  newUser: User;
-  newGroup: Group;
   sideNavState$: Subject<boolean> = new Subject();
 
   sideNavState = false;
@@ -61,15 +56,21 @@ export class EligibilityComponent implements OnInit {
       switch (params.name) {
         case 'groups':
           this.eligibilityTabPanel.selectedIndex = 1;
-          this.initGroups(params.id);
+          this.groupService.list().subscribe(
+            list => this.groups = list
+          );
           break;
         case 'applications':
           this.eligibilityTabPanel.selectedIndex = 2;
-          this.initApplications(params.id);
+          this.applicationService.list().subscribe(
+            list => this.applications = list
+          );
           break;
         default:
           this.eligibilityTabPanel.selectedIndex = 0;
-          this.initUsers(params.id);
+          this.userService.list().subscribe(
+            list => this.users = list
+          );
           break;
       }
     });
@@ -90,58 +91,19 @@ export class EligibilityComponent implements OnInit {
     }
   }
 
-  private initUsers(id: string) {
-    this.userService.list().subscribe(
-      list => this.users = list
-    );
-
-    if (id) {
-      if (id === 'new') {
-        this.newUser = new User();
-      } else if (id === 'delete') {
-        // TODO delete array of users
-      } else {
-        this.user$ = this.userService.read(id, true);
-        console.log(this.user$);
-      }
-    }
-  }
-
-  private initGroups(id: string) {
-    this.groupService.list().subscribe(
-      groups => this.groups = groups
-    );
-
-    if (id) {
-      if (id === 'new') {
-        this.newGroup = new Group();
-      } else if (id === 'delete') {
-        // TODO delete array of groups
-      } else {
-        this.group$ = this.groupService.read(id, true);
-      }
-    }
-  }
-
-  private initApplications(id: string) {
-    this.applications$ = this.applicationService.list();
-
-    if (id) {
-      this.application$ = this.applicationService.read(id, true).pipe(
-        tap(response => console.log(response))
-      );
-    }
-  }
-
   private deleteSelected() {
     this.route.params.subscribe(params => {
       if (params.id) {
         switch (params.name) {
           case 'groups':
-            this.groupService.delete(params.id);
+            this.groupService.delete(params.id).subscribe(() => {
+              this.router.navigate(['/eligibility/groups']);
+            });
             break;
           case 'users':
-            this.userService.delete(params.id);
+            this.userService.delete(params.id).subscribe(() => {
+              this.router.navigate(['/eligibility/users']);
+            });
             break;
         }
       }
@@ -166,7 +128,6 @@ export class EligibilityComponent implements OnInit {
   }
 
   onSaveButtonClick() {
-    console.log('save');
     let dataPanel;
     switch (this.params.name) {
       case 'groups':
@@ -184,7 +145,20 @@ export class EligibilityComponent implements OnInit {
   }
 
   onCancelButtonClick() {
-    console.log('cancel');
+    let dataPanel;
+    switch (this.params.name) {
+      case 'groups':
+        dataPanel = this.groupDataPanel;
+        break;
+      case 'applications':
+        dataPanel = this.appDataPanel;
+        break;
+      default:
+        dataPanel = this.userDataPanel;
+        break;
+    }
+
+    dataPanel.cancel(this.params.id);
   }
 
   onSideNavToggle() {

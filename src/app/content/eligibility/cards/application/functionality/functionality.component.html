@@ -1,0 +1,21 @@
+<mat-expansion-panel #expansionPanel class="mat-elevation-z0"
+                     [hideToggle]="!functionality.privileges.privilege">
+  <mat-expansion-panel-header (click)="expandPanel(expansionPanel, $event)" matRipple>
+    <mat-checkbox *ngIf="checkAble" (change)="functionalityCheckChange"></mat-checkbox>
+    <mat-panel-title>
+      {{ functionality.name }}
+    </mat-panel-title>
+    <mat-panel-description></mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <mat-list>
+    <mat-list-item *ngFor="let privilege of functionality.privileges.privilege" (click)="loadData(privilege)" matRipple>
+      <mat-checkbox *ngIf="checkAble" (change)="loadData(privilege)"></mat-checkbox>
+      {{ privilege.name }}
+    </mat-list-item>
+  </mat-list>
+</mat-expansion-panel>
+
+<mat-divider [inset]="true"></mat-divider>
+
+

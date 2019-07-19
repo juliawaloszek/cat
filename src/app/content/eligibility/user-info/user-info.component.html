@@ -1,17 +1,25 @@
-<div *ngIf="user" class="form-container">
+<div *ngIf="user$ | async as user" class="form-container">
 
   <mat-card class="account-info-container">
     <div class="column-left">
-      <mat-form-field [hideRequiredMarker]="true" [floatLabel]="'always'">
+      <mat-form-field [floatLabel]="'always'">
         <input matInput [(ngModel)]="user.id" placeholder="Login" required>
       </mat-form-field>
 
-      <mat-form-field [hideRequiredMarker]="true" [floatLabel]="'always'">
+      <mat-form-field [floatLabel]="'always'">
         <input matInput [(ngModel)]="user.name.full" placeholder="Nazwa użytkownika" required>
       </mat-form-field>
 
       <mat-form-field [hideRequiredMarker]="true" [floatLabel]="'always'">
-        <input matInput [(ngModel)]="user.department" placeholder="Wydział">
+        <input matInput placeholder="Wydział" [(ngModel)]="user.department"
+               [formControl]="optionsControl"
+               [matAutocomplete]="auto">
+
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let department of departments" [value]="department">
+            {{ department }}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
 
       <mat-form-field [hideRequiredMarker]="true" [floatLabel]="'always'">
@@ -25,7 +33,7 @@
       <mat-checkbox [(ngModel)]="!user.password.expires">Hasło nigdy nie wygasa</mat-checkbox>
       <mat-checkbox [(ngModel)]="user.password.immutable">Użytkownik może zmienić hasło</mat-checkbox>
       <mat-checkbox [(ngModel)]="user.password.mustChange">Użytkownik musi zmienić hasło przy następnym logowaniu</mat-checkbox>
-      <mat-checkbox [disabled]="true">Konto zablokowane</mat-checkbox> <!-- [(ngModel)]="user" -->
+      <mat-checkbox [(ngModel)]="user.lockedOut" [disabled]="!user.lockedOut">Konto zablokowane</mat-checkbox> <!-- [(ngModel)]="user" -->
 
       <div class="filler"></div>
       <div class="user-history" *ngIf="user.history">
@@ -41,7 +49,7 @@
   </mat-card>
 
   <div class="column-container">
-    <app-group-card class="column-left" [groups]="user.group"></app-group-card>
+    <app-group-card class="column-left" (updateList)="updateGroupList($event)" [groups]="user.group"></app-group-card>
 
     <mat-card class="column-right">
       <mat-card-header>

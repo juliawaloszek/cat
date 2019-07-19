@@ -5,3 +5,19 @@ mat-card {
   margin: .5rem;
   overflow: auto;
 }
+
+mat-list {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-list-item {
+  //display: flex;
+  flex: 1;
+  margin: .25rem;
+}
+//
+app-functionality {
+  //display: flex;
+  flex: 1;
+}

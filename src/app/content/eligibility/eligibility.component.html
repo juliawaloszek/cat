@@ -6,10 +6,8 @@
 
   <mat-tab-group #eligibilityTabPanel (selectedTabChange)="onTabChange($event.index)">
     <mat-tab label="Użytkownicy">
-      <mat-sidenav-container>
-        <!-- to nie zawartość znika tylko chowa się boczny panel z jakiegoś powodu -->
-        <!-- może spróbować z innymi typami paneli -->
-        <mat-sidenav #userSideNav (closedStart)="closedStart('userSideNav')" [@animateSideNav]="sideNavState ? 'close' : 'open'" mode="side" opened>
+      <mat-sidenav-container *ngIf="params.name === 'users'">
+        <mat-sidenav [@animateSideNav]="sideNavState ? 'close' : 'open'" mode="side" opened>
           <div class="no-v-scroll">
             <mat-toolbar>
               <span class="spacer"></span>
@@ -19,7 +17,7 @@
                   <mat-icon>add</mat-icon>
                 </button>
                 <button mat-icon-button class="mat-icon" (click)="deleteSelected()"
-                  [@displayMenuText]="linkText ? 'hide' : 'show'">
+                  [@displayMenuText]="linkText ? 'hide' : 'show'" [disabled]="!params.id">
                   <mat-icon>delete</mat-icon>
                 </button>
                 <button mat-icon-button class="mat-icon" (click)="onSideNavToggle()">
@@ -28,106 +26,102 @@
                 </button>
               </div>
             </mat-toolbar>
-            <div class="sidenav-list-content" >
-              <mat-list class="" *ngIf="users">
+
+            <div class="sidenav-list-content">
+              <mat-list *ngIf="users">
                 <mat-list-item [@displayMenuText]="linkText ? 'hide' : 'show'"
-                                *ngFor="let user of users"
-                                routerLink="/eligibility/users/{{ user.id }}" matRipple
-                                routerLinkActive="active">
+                               *ngFor="let user of users"
+                               routerLink="/eligibility/users/{{ user.id }}"
+                               routerLinkActive="active" matRipple>
                   {{ user.name.full }}
                 </mat-list-item>
               </mat-list>
             </div>
           </div>
         </mat-sidenav>
+
         <mat-sidenav-content [@animateSideNavContent]="sideNavState ? 'close' : 'open'">
-          <div class="main_content">
-            <div style="padding: 20px">
-              <section>
-                <div *ngIf="!createNew">
-                  <div *ngIf="user$ | async as user">
-                    <app-user-info #userData [user]="user" (updateList)="updateList()"></app-user-info>
-                  </div>
-                </div>
-                <div *ngIf="createNew">
-                  <app-user-info #userData [user]="newUser" (updateList)="updateList()"></app-user-info>
-                </div>
-              </section>
-            </div>
-          </div>
+          <app-user-info #userData *ngIf="params.name === 'users' && params.id"
+                         (updateList)="updateList()"></app-user-info>
         </mat-sidenav-content>
       </mat-sidenav-container>
     </mat-tab>
 
-    <mat-tab label="Grupy" routerLink="/eligibility/groups">
-        <mat-sidenav-container>
-          <mat-sidenav #groupSideNav [@animateSideNav]="sideNavState ? 'close' : 'open'" mode="side" opened>
-            <div class="no-v-scroll">
-              <mat-toolbar>
-                <span class="spacer"></span>
-                <div class="buttons-container">
-                  <button mat-icon-button class="mat-icon" routerLink="/eligibility/groups/new"
-                    [@displayMenuText]="linkText ? 'hide' : 'show'">
-                    <mat-icon>add</mat-icon>
-                  </button>
-                  <button mat-icon-button class="mat-icon" (click)="deleteSelected()"
-                    [@displayMenuText]="linkText ? 'hide' : 'show'">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                  <button mat-icon-button class="mat-icon" (click)="onSideNavToggle()">
-                    <mat-icon *ngIf="sideNavState">keyboard_arrow_right</mat-icon>
-                    <mat-icon *ngIf="!sideNavState">keyboard_arrow_left</mat-icon>
-                  </button>
+    <mat-tab label="Grupy">
+      <mat-sidenav-container *ngIf="params.name === 'groups'">
+        <mat-sidenav [@animateSideNav]="sideNavState ? 'close' : 'open'" mode="side" opened>
+          <div class="no-v-scroll">
+            <mat-toolbar>
+              <span class="spacer"></span>
+              <div class="buttons-container">
+                <button mat-icon-button class="mat-icon" routerLink="/eligibility/groups/new"
+                  [@displayMenuText]="linkText ? 'hide' : 'show'">
+                  <mat-icon>add</mat-icon>
+                </button>
+                <button mat-icon-button class="mat-icon" (click)="deleteSelected()"
+                  [@displayMenuText]="linkText ? 'hide' : 'show'" [disabled]="!params.id">
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-icon-button class="mat-icon" (click)="onSideNavToggle()">
+                  <mat-icon *ngIf="sideNavState">keyboard_arrow_right</mat-icon>
+                  <mat-icon *ngIf="!sideNavState">keyboard_arrow_left</mat-icon>
+                </button>
               </div>
-              </mat-toolbar>
-              <div class="sidenav-list-content">
-                <mat-list class="" *ngIf="groups">
-                    <mat-list-item [@displayMenuText]="linkText ? 'hide' : 'show'"
-                                    *ngFor="let group of groups"
-                                    routerLink="/eligibility/groups/{{ group.id }}" matRipple
-                                    routerLinkActive="active">
-                    {{ group.name }}
-                  </mat-list-item>
-                </mat-list>
-              </div>
-            </div>
-          </mat-sidenav>
-          <mat-sidenav-content [@animateSideNavContent]="sideNavState ? 'close' : 'open'">
-            <div class="main_content">
-              <div style="padding: 20px">
-                  <section>
-                      <div *ngIf="!createNew">
-                        <div *ngIf="group$ | async as group">
-                          <app-group-info #groupData [group]="group" (updateList)="updateList()"></app-group-info>
-                        </div>
-                      </div>
-                      <div *ngIf="createNew">
-                        <app-group-info #groupData [group]="newGroup" (updateList)="updateList()"></app-group-info>
-                      </div>
-                    </section>
-              </div>
-            </div>
-          </mat-sidenav-content>
-        </mat-sidenav-container>
-      </mat-tab>
+            </mat-toolbar>
 
-    <mat-tab label="Aplikacje">
-      <mat-sidenav-container>
-        <mat-sidenav #appSideNav mode="side" opened>
-          <mat-list>
-            <mat-list-item class="" *ngFor="let application of applications$ | async"
-                           routerLink="/eligibility/applications/{{ application.id }}" matRipple
-                           routerLinkActive="active">
-              {{ application.name }}
-            </mat-list-item>
-          </mat-list>
-        </mat-sidenav>
-        <section>
-          <div *ngIf="application$ | async as application">
-            <app-application-info #appData [application]="application"></app-application-info>
+            <div class="sidenav-list-content">
+              <mat-list *ngIf="groups">
+                  <mat-list-item [@displayMenuText]="linkText ? 'hide' : 'show'"
+                                  *ngFor="let group of groups"
+                                  routerLink="/eligibility/groups/{{ group.id }}"
+                                  routerLinkActive="active" matRipple>
+                  {{ group.name }}
+                </mat-list-item>
+              </mat-list>
+            </div>
           </div>
-        </section>
+        </mat-sidenav>
+
+        <mat-sidenav-content [@animateSideNavContent]="sideNavState ? 'close' : 'open'">
+          <app-group-info #groupData *ngIf="params.name === 'groups' && params.id"
+                          (updateList)="updateList()"></app-group-info>
+        </mat-sidenav-content>
       </mat-sidenav-container>
     </mat-tab>
+
+    <mat-tab label="Aplikacje">
+      <mat-sidenav-container *ngIf="params.name === 'applications'">
+        <mat-sidenav [@animateSideNav]="sideNavState ? 'close' : 'open'" mode="side" opened>
+          <div class="no-v-scroll">
+            <mat-toolbar>
+              <div class="spacer"></div>
+              <div class="buttons-container">
+                <button mat-icon-button class="mat-icon" (click)="onSideNavToggle()">
+                  <mat-icon *ngIf="sideNavState">keyboard_arrow_right</mat-icon>
+                  <mat-icon *ngIf="!sideNavState">keyboard_arrow_left</mat-icon>
+                </button>
+              </div>
+            </mat-toolbar>
+
+            <div class="sidenav-list-content">
+              <mat-list *ngIf="applications">
+                <mat-list-item [@displayMenuText]="linkText ? 'hide' : 'show'"
+                               *ngFor="let application of applications"
+                               routerLink="/eligibility/applications/{{ application.id }}"
+                               routerLinkActive="active" matRipple>
+                  {{ application.name }}
+                </mat-list-item>
+              </mat-list>
+            </div>
+          </div>
+        </mat-sidenav>
+
+        <mat-sidenav-content [@animateSideNavContent]="sideNavState ? 'close' : 'open'">
+          <app-application-info #appData *ngIf="params.name === 'applications' && params.id"></app-application-info>
+        </mat-sidenav-content>
+
+      </mat-sidenav-container>
+    </mat-tab>
+
   </mat-tab-group>
 </div>

@@ -4,14 +4,14 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border: 3px solid map-get($cat-primary, default);
+  border: 1px solid map-get($cat-primary, default);
   border-radius: 8px;
   height: 20rem;
   box-sizing: border-box;
   margin: 4px 16px 16px 16px;
 
   &:hover {
-    background: map-get($cat-primary, default);
+    background: mat-color($cat-primary, '50');
   }
 }
 

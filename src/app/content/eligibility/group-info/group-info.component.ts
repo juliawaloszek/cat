@@ -4,8 +4,10 @@ import {MatDialog} from '@angular/material';
 import {GroupService} from '../../../service/group.service';
 import {SimpleTableComponent} from '../../../components/simple-table/simple-table.component';
 import {map} from 'rxjs/operators';
-import {of} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {AppSource} from '../model/app-source';
+import {UserService} from '../../../service/user.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-group-info',
@@ -14,38 +16,52 @@ import {AppSource} from '../model/app-source';
 })
 
 export class GroupInfoComponent implements OnInit {
-  @ViewChild('userTable') userTable: SimpleTableComponent;
   @Output() updateList = new EventEmitter<any>();
-  @Input() group: Group;
 
+  private group$: Observable<Group>;
   private appsData: AppSource;
 
-  constructor(private dialog: MatDialog,
-              private groupService: GroupService) {
-  }
+  constructor(private groupService: GroupService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.appsData = new AppSource(this.group.applications.application);
+    this.route.params.subscribe(params => {
+      this.group$ = this.groupService.read(params.id, true);
+
+      this.group$.subscribe(group => {
+        this.appsData = new AppSource(group.applications.application);
+      });
+    });
+  }
+
+  updateUserList(value) {
+    this.group$.subscribe(group => group.user = value);
+  }
+
+  public cancel(id: string) {
+    this.group$ = this.groupService.read(id, true);
   }
 
   public save(id: string) {
-    const request = (id === 'new') ?
-      this.groupService.create(this.group, true) :
-      this.groupService.update(this.group, id, true);
+    this.group$.subscribe(group => {
+      const request = (id === 'new') ?
+        this.groupService.create(group, true) :
+        this.groupService.update(group, id, true);
 
-    request.subscribe(
-      response => {
-        this.updateList.emit(response);
-        console.log('map', response);
-        return response;
-      },
-      error => {
-        console.log('grouperror', error);
-        return of();
-      },
-      () => {
-        console.log('complete');
-      });
+      request.subscribe(
+        response => {
+          this.updateList.emit(response);
+          console.log('map', response);
+          return response;
+        },
+        error => {
+          console.log('grouperror', error);
+          return of();
+        },
+        () => {
+          console.log('complete');
+        });
+    });
   }
 
 }

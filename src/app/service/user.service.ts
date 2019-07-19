@@ -75,7 +75,23 @@ export class UserService {
           application: []
         }
       })),
+      catchError(errorMsg => {
+        console.log(errorMsg);
+        if (errorMsg.status === 404 && id === 'new') {
+          return of(new User());
+        }
+      }),
       shareReplay()
+    );
+  }
+
+  public departments(): Observable<string[]> {
+    return this.http.get<{department}>('https://vm-kajko:8181/setup/realms/iuip/departments', this.httpOptions).pipe(
+      map(response => response.department.sort((departmentA, departmentB) => departmentB > departmentA ? -1 : 1)),
+      catchError(errorMsg => {
+        console.error(errorMsg);
+        return of();
+      })
     );
   }
 
@@ -109,8 +125,8 @@ export class UserService {
     );
   }
 
-  public delete(id: string) {
-    this.http.delete(this.url + id, this.httpOptions).pipe(
+  public delete(id: string): Observable<any> {
+    return this.http.delete<any>(this.url + id, this.httpOptions).pipe(
       tap(() => this.list(true)),
       catchError(error => {
         console.log('bład usuwania użytkownika', error);

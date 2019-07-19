@@ -1,32 +1,7 @@
 <mat-card>
-
-  <mat-list *ngIf="application.functionalities && application.functionalities.functionality">
-    <mat-list-item *ngFor="let functionality of application.functionalities.functionality"
-                   (click)="setActive(functionality)" matRipple>
-
-      <button mat-icon-button (click)="expand($event)">
-        <mat-icon>keyboard_arrow_right</mat-icon>
-<!--        <mat-icon class="mat-18">keyboard_arrow_down</mat-icon>-->
-      </button>
-      {{ functionality.name }}
-<!--      <mat-icon class="mat-18">keyboard_arrow_right</mat-icon> {{ functionality.name }}-->
-<!--      <mat-icon class="mat-18">keyboard_arrow_down</mat-icon> {{ functionality.name }}-->
-    </mat-list-item>
-  </mat-list>
-
+  <mat-accordion *ngIf="application.functionalities && application.functionalities.functionality">
+    <app-functionality *ngFor="let functionality of application.functionalities.functionality; last as last"
+                   [functionality]="functionality" (selected)="selected($event)">
+    </app-functionality>
+  </mat-accordion>
 </mat-card>
-
-<!--<mat-card>-->
-<!--  <mat-tree [dataSource]="dataSource">-->
-<!--    <mat-tree-node *matTreeNodeDef="let functionality" matTreeNodeToggle>-->
-<!--      <li class="mat-tree-node">-->
-<!--        <button mat-icon-button disabled></button>-->
-<!--        {{ functionality.name }}-->
-<!--      </li>-->
-<!--    </mat-tree-node>-->
-
-<!--    &lt;!&ndash;  <mat-nested-tree-node *matTreeNodeDef="let priviledge; when: hasChild">&ndash;&gt;-->
-<!--    &lt;!&ndash;    <li></li>&ndash;&gt;-->
-<!--    &lt;!&ndash;  </mat-nested-tree-node>&ndash;&gt;-->
-<!--  </mat-tree>-->
-<!--</mat-card>-->

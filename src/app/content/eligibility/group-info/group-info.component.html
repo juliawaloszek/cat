@@ -1,4 +1,4 @@
-<div *ngIf="group" class="container" >
+<div *ngIf="group$ | async as group" class="container" >
   <mat-card class="group-info-container">
     <mat-form-field [floatLabel]="'always'"> <!-- [formGroup]="groupForm">-->
       <input matInput [(ngModel)]="group.id" placeholder="ID">
@@ -10,7 +10,7 @@
   </mat-card>
 
   <div class="column-container">
-    <app-user-card class="column-left" [users]="group.user"></app-user-card>
+    <app-user-card class="column-left" [users]="group.user" (updateList)="updateUserList($event)"></app-user-card>
 
     <mat-card class="column-right">
       <mat-card-header>

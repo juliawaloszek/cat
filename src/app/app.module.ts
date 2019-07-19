@@ -34,6 +34,7 @@ import { MatTreeModule } from '@angular/material';
 import { MatDialogModule } from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
 import { CookieService } from 'ngx-cookie-service';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { ApplicationsListComponent } from './content/applications-list/applications-list.component';
 import { ConfiguratorsListComponent } from './content/configurators-list/configurators-list.component';
@@ -53,6 +54,8 @@ import { SettingsComponent } from './content/settings/settings.component';
 import { GroupComponent } from './content/eligibility/cards/group/group.component';
 import { UserComponent } from './content/eligibility/cards/user/user.component';
 import { ApplicationComponent } from './content/eligibility/cards/application/application.component';
+import { FunctionalityComponent } from './content/eligibility/cards/application/functionality/functionality.component';
+import { MessageComponent } from './components/message/message.component';
 
 
 @NgModule({
@@ -75,7 +78,9 @@ import { ApplicationComponent } from './content/eligibility/cards/application/ap
     SettingsComponent,
     GroupComponent,
     UserComponent,
-    ApplicationComponent
+    ApplicationComponent,
+    FunctionalityComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -108,6 +113,7 @@ import { ApplicationComponent } from './content/eligibility/cards/application/ap
     MatPaginatorModule,
     MatSortModule,
     MatSelectModule,
+    MatExpansionModule
   ],
   providers: [ CookieService ],
   bootstrap: [AppComponent],

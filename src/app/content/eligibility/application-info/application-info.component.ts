@@ -2,6 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Application } from '../../../service/model/application';
 import { Group } from '../../../service/model/group';
 import { User } from '../../../service/model/user';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs';
+import {ApplicationService} from '../../../service/application.service';
 
 @Component({
   selector: 'app-application-info',
@@ -10,12 +13,22 @@ import { User } from '../../../service/model/user';
 })
 export class ApplicationInfoComponent implements OnInit {
   @Input() application: Application;
+
+  private application$: Observable<Application>;
   private groups: Group[] = [];
   private users: User[] = [];
 
-  constructor() { }
+  constructor(private applicationService: ApplicationService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.application$ = this.applicationService.read(params.id, true);
+
+      this.application$.subscribe((application => {
+        console.log(application);
+      }));
+    });
   }
 
 }

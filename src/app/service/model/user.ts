@@ -14,22 +14,30 @@ export class User {
   name = {
     full: ''
   };
-  group: Group[];
+  group: Group[] = [];
   applications: {
     application: Application[]
   };
   history: History;
   lastLogon: LastLogon;
-  password: Password;
-  lockedOut?: boolean;
+  password: Password = new Password();
+  lockedOut ? = false;
 
   constructor() {
-    if (!this.password) {
-      this.password = new Password();
-    }
+    {
+      if (!this.password) {
+        this.password = new Password();
+      }
 
-    if (this.group) {
-      this.group = [];
+      if (!this.group) {
+        this.group = [];
+      }
+
+      if (!this.applications) {
+        this.applications = {
+          application: []
+        };
+      }
     }
   }
 }

@@ -4,10 +4,13 @@ import {Group} from '../../../service/model/group';
 import {GroupService} from '../../../service/group.service';
 import {FormControl} from '@angular/forms';
 import {Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {UserService} from '../../../service/user.service';
 import {AppSource} from '../model/app-source';
 import {GroupSource} from '../model/group-source';
+import {ActivatedRoute} from '@angular/router';
+import {error} from 'util';
+import {errorObject} from 'rxjs/internal-compatibility';
 
 @Component({
   selector: 'app-user-info',
@@ -15,51 +18,56 @@ import {GroupSource} from '../model/group-source';
   styleUrls: ['./user-info.component.scss']
 })
 export class UserInfoComponent implements OnInit {
-  @Input() user: User;
   @Output() updateList = new EventEmitter<any>();
 
-  private groups$: Observable<Group[]>;
+  private user$: Observable<User>;
+  private optionsControl = new FormControl();
+  private departments: string[];
   private appSource: AppSource;
 
-  constructor(private userService: UserService) {
-  }
+  constructor(private userService: UserService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
-    if (this.user) {
-      this.appSource = new AppSource(this.user.applications.application);
-    }
+    this.route.params.subscribe(params => {
+      this.user$ = this.userService.read(params.id, true);
+      this.user$.subscribe(user => {
+        this.appSource = new AppSource(user.applications.application);
+        this.userService.departments().subscribe(departments => {
+          this.departments = departments;
+        });
+      });
+    });
   }
 
-  private filterGroups(value: string, caseSensitive = false): Observable<Group[]> {
-    if (caseSensitive) {
-      value = value.toLowerCase();
-    }
+  private updateGroupList(value) {
+    this.user$.subscribe(user => user.group = value);
+  }
 
-    return this.groups$.pipe(
-      map(groups => groups.filter(group => {
-        return caseSensitive ? group.name === value : group.name.toLowerCase() === value.toLowerCase();
-      }))
-    );
+  public cancel(id: string) {
+    this.user$ = this.userService.read(id, true);
   }
 
   public save(id: string) {
-    const request = (id === 'new') ?
-      this.userService.create(this.user, true) :
-      this.userService.update(this.user, id, true);
+    this.user$.subscribe(user => {
+      const request = (id === 'new') ?
+        this.userService.create(user, true) :
+        this.userService.update(user, id, true);
 
-    request.subscribe(
-      response => {
-        console.log('map', response);
-        this.updateList.emit(response);
-        return response;
-      },
-      error => {
-        console.log('usererror', error);
-        return of();
-      },
-      () => {
-        console.log('complete');
-      });
+      request.subscribe(
+        response => {
+          console.log('map', response);
+          this.updateList.emit(response);
+          return response;
+        },
+        errorMsg => {
+          console.log('usererror', errorMsg);
+          return of();
+        },
+        () => {
+          console.log('complete');
+        });
+    });
   }
 
 }

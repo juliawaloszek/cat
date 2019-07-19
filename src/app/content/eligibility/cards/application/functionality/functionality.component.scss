@@ -1,0 +1,12 @@
+@import '../../../eligibility.component';
+
+mat-expansion-panel {
+  //border: none !important;
+  margin: .5rem;
+}
+
+.one-pixel-border {
+  //@extend mat-elevation-z0;
+
+  box-shadow: #ff354d;
+}

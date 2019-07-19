@@ -1,8 +1,8 @@
 <div class="tile" (click)="onClick()" matRipple>
   <div class="tile-logo" [matTooltip]="plugin.name">
-    <div>  <!-- display-flex z klasy powyżej psuło proporcje-->
+    <div>  <!-- display-flex z klasy powyżej psuło proporcje -->
       <img *ngIf="plugin.logo" [src]="plugin.logo" alt="">
-      <!--{{ aplication.logo }}-->
+      {{ plugin.name }}
     </div>
   </div>
 </div>

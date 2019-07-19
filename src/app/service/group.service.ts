@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import {Observable, of, Subject} from 'rxjs';
-import { catchError, map, publish, shareReplay, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { isDevMode } from '@angular/core';
-
 import { Group } from './model/group';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -54,6 +54,12 @@ export class GroupService {
           application: []
         }
       })),
+      catchError(errorMsg => {
+        console.log(errorMsg);
+        if (id === 'new') { // errorMsg.status === 404 &&
+          return of(new Group());
+        }
+      }),
       shareReplay()
     );
   }
@@ -88,8 +94,8 @@ export class GroupService {
     );
   }
 
-  public delete(id: string) {
-    this.http.delete(this.baseUrl + id).pipe(
+  public delete(id: string): Observable<any> {
+    return this.http.delete<Group>(this.baseUrl + id, this.httpOptions).pipe(
       tap(() => this.list(true)),
       catchError(error => {
         console.log('bład usuwania grupy', error);
@@ -100,10 +106,10 @@ export class GroupService {
 
   private transform(group) {
     return Object.assign(group, {
-      user: group.user.map(user => ({id: user.id}))
-      // applications: {
-      //   application: group.applications.application.map(application => ({id: application.id}))
-      // }
+      user: group.user.map(user => ({id: user.id})),
+      applications: group.applications.application.length > 0 ? {
+        application: group.applications.application.map(application => ({id: application.id}))
+      } : undefined
     });
   }
 

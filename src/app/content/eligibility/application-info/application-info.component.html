@@ -1,4 +1,4 @@
-<div class="form-container" *ngIf="application">
+<div class="form-container" *ngIf="application$ | async as application">
   <app-application-card class="list-container" [application]="application"></app-application-card>
 
   <div class="row-container">
