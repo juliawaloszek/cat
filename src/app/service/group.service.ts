@@ -2,123 +2,117 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { isDevMode } from '@angular/core';
 import { Group } from './model/group';
+import { BaseService } from './base.service';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GroupService {
-  private httpOptions = {
-    withCredentials: true // necessary for dev version
-  };
-  private baseUrl;
+export class GroupService extends BaseService {
+  private url = this.baseUrl + '/setup/groups/';
 
-  private config = {
+  config = {
     users: true,
     applications: true,
     functionalities: true,
     privileges: true
   };
 
-  private groupsCache$: Observable<Group[]>;
-
-  constructor(private http: HttpClient) {
-    this.baseUrl = (isDevMode() ? 'https://vm-kajko:8181' : '') + '/setup/groups/';
+  constructor(http: HttpClient, dialog: MatDialog, snack: MatSnackBar) {
+    super(http, dialog, snack);
   }
 
-  get groups(): Observable<Group[]> {
-    return this.http.get<{group}>(this.baseUrl, this.httpOptions).pipe(
-      map(response => response.group
-        .sort((groupA, groupB) => groupB.name.toLowerCase() > groupA.name.toLowerCase() ? -1 : 1)),
+  get _list(): Observable<Group[]> {
+    return this.http.get<{group}>(this.url, this.httpOptions).pipe(
+      map(response => this.sortBy(response.group, 'name')),
+      catchError(err => this.handleError({
+        message: 'Nie udało się pobrać listy grup.',
+        error: err,
+        object: []
+      })),
       shareReplay()
     );
   }
 
-  public list(update?: boolean): Observable<Group[]> {
-    if (!this.groupsCache$ || update) {
-      this.groupsCache$ = this.groups;
-    }
-    return this.groupsCache$;
-  }
-
   public read(id: string, addConfig?: boolean): Observable<Group> {
-    const options = Object.assign({
-      params: addConfig ? this.config : undefined
-    }, this.httpOptions);
-
-    return this.http.get<Group>(this.baseUrl + id, options).pipe(
-      map(group => Object.assign(group, {
-        user: group.user || [],
-        applications: (group.applications && group.applications.application) ? group.applications : {
-          application: []
-        }
+    return this.http.get<Group>(this.url + id, this.getOptions(addConfig)).pipe(
+      map(group => Object.assign(this.fillEmptyValues(group, new Group()), {
+        applications: {
+          application: group.applications.application || []
+        },
+        user: (group.user && group.user.length > 0) ? group.user : []
       })),
-      catchError(errorMsg => {
-        console.log(errorMsg);
-        if (id === 'new') { // errorMsg.status === 404 &&
+      catchError(err => {
+        if (err.status === 404 && id === 'new') {
           return of(new Group());
         }
+
+        return this.handleError({
+          message: 'Grupa o ID: ' + id + ' nie istnieje.',
+          error: err
+        });
       }),
       shareReplay()
     );
   }
 
   public create(group: Group, addConfig?: boolean): Observable<any> {
-    const options = Object.assign({
-      params: addConfig ? this.config : undefined
-    }, this.httpOptions);
-
-    return this.http.post<Group>(this.baseUrl, this.transform(group), options).pipe(
-      tap(() => this.list(true)),
-      catchError(error => {
-        console.log('bład dodawania użytkownika', error);
-        return of();
-      }),
+    return this.http.post<Group>(this.url, this.transform(group), this.getOptions(addConfig)).pipe(
+      tap(() => this.openSnackBar({
+        message: 'Grupa została utworzona'
+      })),
+      catchError(err => this.handleError({
+        message: 'Nie udało się zapisać grupy.',
+        subject: 'Grupa',
+        error: err
+      })),
       shareReplay()
     );
   }
 
   public update(group: Group, id: string, addConfig?: boolean): Observable<any> {
-    const options = Object.assign({
-      params: addConfig ? this.config : undefined
-    }, this.httpOptions);
-
-    return this.http.put<Group>(this.baseUrl + id, group, options).pipe(
-      tap(() => this.list(true)),
-      catchError(error => {
-        console.log('bład edycji grupy', error);
-        return of();
-      }),
+    return this.http.put<Group>(this.url + id, group, this.getOptions(addConfig)).pipe(
+      tap(() => this.openSnackBar({
+        message: 'Grupa została zaktualizowana'
+      })),
+      catchError(err => this.handleError({
+        message: 'Nie udało się zapisać zmian.',
+        subject: 'Grupa',
+        error: err
+      })),
       shareReplay()
     );
   }
 
   public delete(id: string): Observable<any> {
-    return this.http.delete<Group>(this.baseUrl + id, this.httpOptions).pipe(
-      tap(() => this.list(true)),
-      catchError(error => {
-        console.log('bład usuwania grupy', error);
-        return of();
-      })
-    );
+    return this.createDialog({
+      message: 'Czy na pewno chcesz usunąć grupę o ID: ' + id + '?',
+      buttons: 'yes/no'
+    }).afterClosed().pipe(
+      map(response => {
+        if (response === 'yes') {
+          return this.http.delete<any>(this.url + id, this.httpOptions).pipe(
+            tap(() => this.openSnackBar({
+              message: 'Grupa została usunięta'
+            })),
+            catchError(err => this.handleError({
+              message: 'Nie udało się usunąć grupy o ID: ' + id + '.',
+              error: err
+            }))
+          );
+        }
+        return;
+      }));
   }
 
-  private transform(group) {
-    return Object.assign(group, {
+  private transform(group: Group) {
+    return Object.assign({
       user: group.user.map(user => ({id: user.id})),
       applications: group.applications.application.length > 0 ? {
         application: group.applications.application.map(application => ({id: application.id}))
       } : undefined
-    });
-  }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.log('${operation} failed: ${error.message}');
-
-      return of(result as T);
-    };
+    }, group);
   }
 
 }

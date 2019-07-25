@@ -4,6 +4,24 @@ import {Group} from './group';
 import {LastLogon} from './lastlogon';
 import {Application} from './application';
 
+export class Name {
+  full ? = '';
+  firstName ? = '';
+  lastName ? = '';
+
+  constructor() {
+    {
+      if (!this.full && (this.firstName || this.lastName)) {
+        this.full = this.firstName + ' ' + this.lastName;
+      }
+    }
+  }
+}
+
+export class Applications {
+  application?: Application[] = [];
+}
+
 export class User {
   id = '';
   accountId = '';
@@ -11,13 +29,9 @@ export class User {
   administrator = false;
   department = '';
   email = '';
-  name = {
-    full: ''
-  };
+  name: Name = new Name();
   group: Group[] = [];
-  applications: {
-    application: Application[]
-  };
+  applications?: Applications;
   history: History;
   lastLogon: LastLogon;
   password: Password = new Password();
@@ -29,14 +43,16 @@ export class User {
         this.password = new Password();
       }
 
+      if (!this.name) {
+        this.name = new Name();
+      }
+
       if (!this.group) {
         this.group = [];
       }
 
       if (!this.applications) {
-        this.applications = {
-          application: []
-        };
+        this.applications = new Applications();
       }
     }
   }

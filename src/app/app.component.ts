@@ -35,11 +35,16 @@ export class AppComponent implements OnInit {
     iconClass: 'sidenav-icon',
     matIcon: 'settings',
     link: '/configuration'
+  }, {
+    type: 'eligibility',
+    name: 'Uprawnienia',
+    iconClass: 'sidenav-icon',
+    matIcon: 'settings',
+    link: '/eligibility/users'
   }];
   title = 'CAT';
   logged = false;
 
-  themesArray = THEMES_DATA;
   themeActive = ACTIVE_THEME;
 
   constructor(private userService: UserService,

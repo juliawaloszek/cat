@@ -39,28 +39,29 @@ export class GroupInfoComponent implements OnInit {
   }
 
   public cancel(id: string) {
-    this.group$ = this.groupService.read(id, true);
+    this.groupService.cancel(id).subscribe(response => {
+      if (response) {
+        this.group$ = response;
+      }
+    });
   }
 
   public save(id: string) {
     this.group$.subscribe(group => {
-      const request = (id === 'new') ?
-        this.groupService.create(group, true) :
-        this.groupService.update(group, id, true);
+      this.groupService.save(group, true, id).subscribe(newGroup => {
+        this.updateList.emit(id !== 'new' ? {
+          redirect: true,
+          id: newGroup.id
+        } : {});
+      });
+    });
+  }
 
-      request.subscribe(
-        response => {
-          this.updateList.emit(response);
-          console.log('map', response);
-          return response;
-        },
-        error => {
-          console.log('grouperror', error);
-          return of();
-        },
-        () => {
-          console.log('complete');
-        });
+  public deleteItem(id: string) {
+    return this.groupService.delete(id).subscribe(response => {
+      response.subscribe(() => this.updateList.emit({
+        redirect: true
+      }));
     });
   }
 

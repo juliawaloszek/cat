@@ -5,10 +5,9 @@ import { UserService } from '../../service/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatTabGroup } from '@angular/material';
 import { GroupService } from '../../service/group.service';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ApplicationService } from '../../service/application.service';
 import { Application } from '../../service/model/application';
-import {merge, tap} from 'rxjs/operators';
 import { animateSideNav, animateSideNavContent, displayMenuText } from 'src/app/animations/animations';
 import { GroupInfoComponent } from './group-info/group-info.component';
 import { UserInfoComponent } from './user-info/user-info.component';
@@ -29,15 +28,15 @@ export class EligibilityComponent implements OnInit {
   @ViewChild('userData') userDataPanel: UserInfoComponent;
   @ViewChild('groupData') groupDataPanel: GroupInfoComponent;
   @ViewChild('appData') appDataPanel: ApplicationInfoComponent;
+
+  private filterUsers = '';
   private params: any = {};
 
   users: User[];
   groups: Group[];
   applications: Application[];
 
-  createNew = false;
   sideNavState$: Subject<boolean> = new Subject();
-
   sideNavState = false;
   linkText = false;
 
@@ -50,7 +49,6 @@ export class EligibilityComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.createNew = params.id === 'new';
       this.params = params;
 
       switch (params.name) {
@@ -91,74 +89,72 @@ export class EligibilityComponent implements OnInit {
     }
   }
 
-  private deleteSelected() {
-    this.route.params.subscribe(params => {
-      if (params.id) {
-        switch (params.name) {
-          case 'groups':
-            this.groupService.delete(params.id).subscribe(() => {
-              this.router.navigate(['/eligibility/groups']);
-            });
-            break;
-          case 'users':
-            this.userService.delete(params.id).subscribe(() => {
-              this.router.navigate(['/eligibility/users']);
-            });
-            break;
-        }
-      }
-    });
-  }
+  private updateList(config)  {
+    switch (this.params.name) {
+      case 'groups':
+        this.groupService.list(true).subscribe(
+          list => this.groups = list
+        );
+        break;
+      case 'users':
+        this.userService.list(true).subscribe(
+          list => {
+            console.log(list);
+            this.users = list;
+          }
+        );
+        break;
+    }
 
-  private updateList()  {
-    this.route.params.subscribe(params => {
-      switch (params.name) {
-        case 'groups':
-          this.groupService.list().subscribe(
-            list => this.groups = list
-          );
-          break;
-        case 'users':
-          this.userService.list().subscribe(
-            list => this.users = list
-          );
-          break;
-      }
-    });
+    if (config.redirect) {
+      this.router.navigate(['/eligibility/' + this.params.name
+        + (config.id ? '/' + config.id : '')]);
+    }
   }
 
   onSaveButtonClick() {
-    let dataPanel;
     switch (this.params.name) {
       case 'groups':
-        dataPanel = this.groupDataPanel;
+        this.groupDataPanel.save(this.params.id);
         break;
-      case 'applications':
-        dataPanel = this.appDataPanel;
-        break;
+      // case 'applications':
+      //   this.appDataPanel.save(this.params.id);
+      //   break;
       default:
-        dataPanel = this.userDataPanel;
+        this.userDataPanel.save(this.params.id);
         break;
     }
-
-    dataPanel.save(this.params.id);
   }
 
   onCancelButtonClick() {
-    let dataPanel;
     switch (this.params.name) {
       case 'groups':
-        dataPanel = this.groupDataPanel;
+        this.groupDataPanel.cancel(this.params.id);
         break;
-      case 'applications':
-        dataPanel = this.appDataPanel;
-        break;
+      // case 'applications':
+      //   this.appDataPanel.cancel(this.params.id);
+      //   break;
       default:
-        dataPanel = this.userDataPanel;
+        this.userDataPanel.cancel(this.params.id);
         break;
     }
+  }
 
-    dataPanel.cancel(this.params.id);
+  private deleteSelected() {
+    if (this.params.id) {
+      switch (this.params.name) {
+        case 'groups':
+          this.groupDataPanel.deleteItem(this.params.id);
+          break;
+        case 'users':
+          this.userDataPanel.deleteItem(this.params.id);
+          break;
+      }
+    }
+  }
+
+  disableApp(application) {
+    return !(application.functionalities && application.functionalities.functionality);
   }
 
   onSideNavToggle() {
@@ -169,13 +165,27 @@ export class EligibilityComponent implements OnInit {
     this.sideNavState$.next(this.sideNavState);
   }
 
-  closedStart(sideNavId) {
-    console.log('user sidenav close');
-    console.log('sidenav', this[sideNavId]);
+  searchInObject(object, value): boolean {
+    const me = this;
 
-    // to nie działa
-    // this[sideNavId].open();
+    return !!Object.keys(object).find(key => {
+      if (Array.isArray(object[key])) {
+        return false;
+      } else {
+        switch (typeof object[key]) {
+          case 'object':
+            return me.searchInObject(object[key], value);
+          case 'boolean':
+            return false;
+          default:
+            const keyValue = typeof object[key] === 'string' ?
+              object[key].toLowerCase() :
+              object[key].toString();
 
+            return keyValue.indexOf(value) !== -1;
+        }
+      }
+    });
   }
 
 }

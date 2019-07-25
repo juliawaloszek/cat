@@ -1,64 +1,92 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, map, shareReplay } from 'rxjs/operators';
+import {catchError, map, shareReplay, tap} from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { isDevMode } from '@angular/core';
 
 import { Application } from './model/application';
-import { Plugin } from './model/plugin';
+import { BaseService } from './base.service';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class ApplicationService {
-  private httpOptions = {
-    withCredentials: true // necessary for dev version
-  };
-  private config = {
+export class ApplicationService extends BaseService {
+  private url = this.baseUrl + '/setup/applications/';
+  protected listCache$: Observable<Application>;
+
+  config = {
     functionalities: true,
     privileges: true,
     users: true,
     groups: true
   };
 
-  private applicationsCache$: Observable<Application[]>;
-  private baseUrl;
-
-  constructor(private http: HttpClient) {
-    this.baseUrl = (isDevMode() ? 'https://vm-kajko:8181' : '') + '/setup/applications/';
+  constructor(http: HttpClient, dialog: MatDialog, snack: MatSnackBar) {
+    super(http, dialog, snack);
   }
 
-  public list(): Observable<Application[]> {
-    if (!this.applicationsCache$) {
-      this.applicationsCache$ = this.http.get<{application}>(this.baseUrl, this.httpOptions).pipe(
-        map(applications => applications.application
-          .sort((appA, appB) => appB.name.toLowerCase() > appA.name.toLowerCase() ? -1 : 1)),
-        catchError(this.handleError<Plugin[]>('getApplications', [])),
-        shareReplay()
-      );
-    }
-    return this.applicationsCache$;
+  get _list(): Observable<Application[]> {
+    const options = Object.assign({
+      params: {
+        functionalities: true
+      }
+    }, this.httpOptions);
+
+    return this.http.get<{application}>(this.url, options).pipe(
+      map(response => this.sortBy(response.application, 'name')),
+      catchError(err => this.handleError({
+        message: 'Nie udało się pobrać listy aplikacji.',
+        error: err,
+        object: []
+      })),
+      shareReplay()
+    );
   }
 
   public read(id: string, addConfig?: boolean): Observable<Application> {
-    const options = Object.assign({
-      params: addConfig ? this.config : undefined
-    }, this.httpOptions);
-
-    return this.http.get<Application>(this.baseUrl + id, options).pipe(
+    return this.http.get<Application>(this.url + id, this.getOptions(addConfig)).pipe(
       map(application => {
-        application.functionalities.functionality = application.functionalities.functionality
-          .sort((funcA, funcB) => funcB.name.toLowerCase() > funcA.name.toLowerCase() ? -1 : 1);
+        if (application.functionalities && application.functionalities.functionality) {
+          application.functionalities.functionality =
+            this.sortBy(application.functionalities.functionality, 'name');
+
+          if (application.functionalities.functionality.privileges) {
+            application.functionalities.functionality.privileges =
+              this.sortBy(application.functionalities.functionality.privileges.privilege, 'name');
+          }
+        }
         return application;
-      }));
+      }),
+      catchError(err => this.handleError({
+        message: 'Aplikacja o ID: ' + id + ' nie istnieje.',
+        error: err,
+        object: []
+      })),
+      shareReplay()
+    );
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.log('${operation} failed: ${error.message}');
-
-      return of(result as T);
-    };
+  public create(item, addConfig?: boolean): Observable<any> {
+    console.error('Nieprawidłowa metoda dla tego typu obiektu');
+    return of();
   }
+
+  public update(application: Application, id: string, addConfig?: boolean): Observable<Application> {
+    return this.http.put<Application>(this.url + id, application, this.getOptions(addConfig)).pipe(
+      tap(() => this.openSnackBar({
+        message: 'Aplikacja została zaktualizowana.'
+      })),
+      catchError(err => this.handleError({
+        message: 'Nie udało się zapisać zmian.',
+        error: err
+      })),
+      shareReplay()
+    );
+  }
+
+  private transform(application: Application) {
+    return {};
+  }
+
 }

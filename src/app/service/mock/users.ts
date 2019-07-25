@@ -24,9 +24,6 @@ export const USERS: User[] = [{
     expires: false,
     immutable: true,
     mustChange: false
-  },
-  applications: {
-    application: []
   }
 }, {
   id: 'kalisz2',
@@ -52,8 +49,5 @@ export const USERS: User[] = [{
     expires: false,
     immutable: true,
     mustChange: false
-  },
-  applications: {
-    application: []
   }
 }];

@@ -4,7 +4,7 @@ import {Group} from '../../../service/model/group';
 import {GroupService} from '../../../service/group.service';
 import {FormControl} from '@angular/forms';
 import {Observable, of} from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 import {UserService} from '../../../service/user.service';
 import {AppSource} from '../model/app-source';
 import {GroupSource} from '../model/group-source';
@@ -45,28 +45,33 @@ export class UserInfoComponent implements OnInit {
   }
 
   public cancel(id: string) {
-    this.user$ = this.userService.read(id, true);
+    this.userService.cancel(id).subscribe(response => {
+      if (response) {
+        this.user$ = response;
+      }
+    });
   }
 
   public save(id: string) {
     this.user$.subscribe(user => {
-      const request = (id === 'new') ?
-        this.userService.create(user, true) :
-        this.userService.update(user, id, true);
+      this.userService.save(user, true, id).subscribe(newUser => {
+        this.updateList.emit(id !== 'new' ? {
+          redirect: true,
+          id: newUser.id
+        } : {});
+      });
+      // póki co zostawiam dla pamięci, co by pamiętać jak się dostac do odpowiedzi o zapisie
+      // nie do końca jest to możliwe tak jak przy usunięciu, ponieważ przed operacją musi pobrać
+      // model użytkownika
+      // request.subscribe(response => response.subscribe(() => this.updateList.emit());
+    });
+  }
 
-      request.subscribe(
-        response => {
-          console.log('map', response);
-          this.updateList.emit(response);
-          return response;
-        },
-        errorMsg => {
-          console.log('usererror', errorMsg);
-          return of();
-        },
-        () => {
-          console.log('complete');
-        });
+  public deleteItem(id: string) {
+    return this.userService.delete(id).subscribe(response => {
+      response.subscribe(() => this.updateList.emit({
+        redirect: true
+      }));
     });
   }
 

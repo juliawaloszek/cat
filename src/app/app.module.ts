@@ -33,8 +33,10 @@ import { MatChipsModule } from '@angular/material';
 import { MatTreeModule } from '@angular/material';
 import { MatDialogModule } from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
-import { CookieService } from 'ngx-cookie-service';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
+import { CookieService } from 'ngx-cookie-service';
 
 import { ApplicationsListComponent } from './content/applications-list/applications-list.component';
 import { ConfiguratorsListComponent } from './content/configurators-list/configurators-list.component';
@@ -56,6 +58,8 @@ import { UserComponent } from './content/eligibility/cards/user/user.component';
 import { ApplicationComponent } from './content/eligibility/cards/application/application.component';
 import { FunctionalityComponent } from './content/eligibility/cards/application/functionality/functionality.component';
 import { MessageComponent } from './components/message/message.component';
+import { SnackNotificationComponent } from './components/snack-notification/snack-notification.component';
+import { SimpleSidenavComponent } from './content/eligibility/simple-sidenav/simple-sidenav.component';
 
 
 @NgModule({
@@ -80,7 +84,9 @@ import { MessageComponent } from './components/message/message.component';
     UserComponent,
     ApplicationComponent,
     FunctionalityComponent,
-    MessageComponent
+    MessageComponent,
+    SnackNotificationComponent,
+    SimpleSidenavComponent
   ],
   imports: [
     BrowserModule,
@@ -113,10 +119,14 @@ import { MessageComponent } from './components/message/message.component';
     MatPaginatorModule,
     MatSortModule,
     MatSelectModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSnackBarModule
   ],
   providers: [ CookieService ],
   bootstrap: [AppComponent],
-  entryComponents: [InterpolateDialogComponent]
+  entryComponents: [
+    InterpolateDialogComponent,
+    MessageComponent
+  ]
 })
 export class AppModule { }

@@ -1,9 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Plugin} from '../../service/model/plugin';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {PluginService} from '../../service/plugin.service';
-import {filter, map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-list',
@@ -11,6 +10,7 @@ import {filter, map} from 'rxjs/operators';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
+  @Output() afterClickAction = new EventEmitter<any>();
   @Input() type = 'administrative';
   @Input() plugins$: Observable<Plugin[]>;
 

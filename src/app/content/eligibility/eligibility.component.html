@@ -13,11 +13,12 @@
               <span class="spacer"></span>
               <div class="buttons-container">
                 <button mat-icon-button class="mat-icon" routerLink="/eligibility/users/new"
-                  [@displayMenuText]="linkText ? 'hide' : 'show'">
+                        [@displayMenuText]="linkText ? 'hide' : 'show'">
                   <mat-icon>add</mat-icon>
                 </button>
                 <button mat-icon-button class="mat-icon" (click)="deleteSelected()"
-                  [@displayMenuText]="linkText ? 'hide' : 'show'" [disabled]="!params.id">
+                        [@displayMenuText]="linkText ? 'hide' : 'show'"
+                        [disabled]="!params.id || params.id === 'new'">
                   <mat-icon>delete</mat-icon>
                 </button>
                 <button mat-icon-button class="mat-icon" (click)="onSideNavToggle()">
@@ -28,13 +29,21 @@
             </mat-toolbar>
 
             <div class="sidenav-list-content">
+              <div *ngIf="!linkText" class="filter-field">
+<!--                <mat-icon>search</mat-icon>-->
+                <mat-form-field>
+                  <input matInput [(ngModel)]="filterUsers" placeholder="Filtrowanie...">
+                </mat-form-field>
+              </div>
+
               <mat-list *ngIf="users">
-                <mat-list-item [@displayMenuText]="linkText ? 'hide' : 'show'"
-                               *ngFor="let user of users"
-                               routerLink="/eligibility/users/{{ user.id }}"
-                               routerLinkActive="active" matRipple>
-                  {{ user.name.full }}
-                </mat-list-item>
+                <div [@displayMenuText]="linkText ? 'hide' : 'show'"
+                     *ngFor="let user of users">
+                  <mat-list-item *ngIf="searchInObject(user, filterUsers)" routerLink="/eligibility/users/{{ user.id }}"
+                                 routerLinkActive="active" matRipple>
+                    {{ user.name && user.name.full ? user.name.full : user.id }}
+                  </mat-list-item>
+                </div>
               </mat-list>
             </div>
           </div>
@@ -42,7 +51,7 @@
 
         <mat-sidenav-content [@animateSideNavContent]="sideNavState ? 'close' : 'open'">
           <app-user-info #userData *ngIf="params.name === 'users' && params.id"
-                         (updateList)="updateList()"></app-user-info>
+                         (updateList)="updateList($event)"></app-user-info>
         </mat-sidenav-content>
       </mat-sidenav-container>
     </mat-tab>
@@ -55,11 +64,12 @@
               <span class="spacer"></span>
               <div class="buttons-container">
                 <button mat-icon-button class="mat-icon" routerLink="/eligibility/groups/new"
-                  [@displayMenuText]="linkText ? 'hide' : 'show'">
+                        [@displayMenuText]="linkText ? 'hide' : 'show'">
                   <mat-icon>add</mat-icon>
                 </button>
                 <button mat-icon-button class="mat-icon" (click)="deleteSelected()"
-                  [@displayMenuText]="linkText ? 'hide' : 'show'" [disabled]="!params.id">
+                        [@displayMenuText]="linkText ? 'hide' : 'show'"
+                        [disabled]="!params.id || params.id === 'new'">
                   <mat-icon>delete</mat-icon>
                 </button>
                 <button mat-icon-button class="mat-icon" (click)="onSideNavToggle()">
@@ -84,7 +94,7 @@
 
         <mat-sidenav-content [@animateSideNavContent]="sideNavState ? 'close' : 'open'">
           <app-group-info #groupData *ngIf="params.name === 'groups' && params.id"
-                          (updateList)="updateList()"></app-group-info>
+                          (updateList)="updateList($event)"></app-group-info>
         </mat-sidenav-content>
       </mat-sidenav-container>
     </mat-tab>
@@ -105,12 +115,19 @@
 
             <div class="sidenav-list-content">
               <mat-list *ngIf="applications">
-                <mat-list-item [@displayMenuText]="linkText ? 'hide' : 'show'"
-                               *ngFor="let application of applications"
-                               routerLink="/eligibility/applications/{{ application.id }}"
-                               routerLinkActive="active" matRipple>
-                  {{ application.name }}
-                </mat-list-item>
+                <div [@displayMenuText]="linkText ? 'hide' : 'show'"
+                     *ngFor="let application of applications">
+                  <mat-list-item *ngIf="!disableApp(application)"
+                                 routerLink="/eligibility/applications/{{ application.id }}"
+                                 routerLinkActive="active" matRipple>
+                    {{ application.name }}
+                  </mat-list-item>
+
+                  <mat-list-item *ngIf="disableApp(application)"
+                                 matTooltip="Brak możliwości sterowania uprawnieniami dla tej aplikacji.">
+                    <span class="disabler">{{ application.name }}</span>
+                  </mat-list-item>
+                </div>
               </mat-list>
             </div>
           </div>

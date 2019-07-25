@@ -31,4 +31,17 @@ export class ApplicationInfoComponent implements OnInit {
     });
   }
 
+  public cancel(id: string) {
+    this.applicationService.cancel(id).subscribe(response => {
+      if (response) {
+        this.application$ = response;
+      }
+    });
+  }
+
+  public save(id: string) {
+    this.application$.subscribe(application =>
+      this.applicationService.save(application, true, id).subscribe());
+  }
+
 }

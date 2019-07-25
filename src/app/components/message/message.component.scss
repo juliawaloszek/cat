@@ -1,0 +1,15 @@
+@import '~src/styles';
+
+.dialog-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons-container {
+  //@extend .absolute-container;
+
+  display: flex;
+  justify-content: center;
+  margin: .25rem;
+  top: auto;
+}

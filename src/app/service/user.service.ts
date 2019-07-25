@@ -2,45 +2,43 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { isDevMode } from '@angular/core';
 
 import { User } from './model/user';
+import { BaseService } from './base.service';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
 })
+export class UserService extends BaseService {
+  private activeUserCache$: Observable<User>;
+  private activeUserUrl: string;
+  private departmentsUrl: string;
+  private url: string;
 
-export class UserService {
-  private httpOptions = {
-    withCredentials: true
-  };
-  private activeUserUrl = '';
-  private url = '';
-
-  private config = {
+  config = {
     groups: true,
     applications: true,
     functionalities: true,
     privileges: true
   };
 
-  private usersCache$: Observable<User[]>;
-  private activeUserCache$: Observable<User>;
+  constructor(http: HttpClient, dialog: MatDialog, snack: MatSnackBar) {
+    super(http, dialog, snack);
 
-  constructor(private http: HttpClient) {
-    if (isDevMode()) {
-      this.activeUserUrl = this.url = 'https://vm-kajko:8181';
-    }
-
-    this.activeUserUrl += '/setup/user/';
-    this.url += '/setup/realms/iuip/users/';
+    this.activeUserUrl = this.baseUrl + '/setup/user/';
+    this.departmentsUrl = this.baseUrl + '/setup/realms/iuip/departments';
+    this.url = this.baseUrl + '/setup/realms/iuip/users/';
   }
 
-  get users(): Observable<User[]> {
+  get _list(): Observable<User[]> {
     return this.http.get<{user}>(this.url, this.httpOptions).pipe(
-      map(response => response.user
-        .sort((userA, userB) => userB.name.full.toLowerCase() > userA.name.full.toLowerCase() ? -1 : 1)),
-      catchError(this.handleError<User[]>('getUsers', [])),
+      map(response => this.sortBy(response.user, 'name.full')),
+      catchError(err => this.handleError({
+        message: 'Nie udało się pobrać listy użytkowników.',
+        error: err,
+        object: []
+      })),
       shareReplay()
     );
   }
@@ -49,90 +47,101 @@ export class UserService {
     if (!this.activeUserCache$) {
       this.activeUserCache$ = this.http.get<User>(this.activeUserUrl, this.httpOptions).pipe(
         tap(response => console.log(response)),
-      ).pipe(
+        catchError(err => this.handleError({
+          message: 'Nie udało się pobrać aktywnego użytkownika.',
+          error: err
+        })),
         shareReplay()
       );
     }
     return this.activeUserCache$;
   }
 
-  public list(update?: boolean): Observable<User[]> {
-    if (!this.usersCache$ || update) {
-      this.usersCache$ = this.users;
-    }
-    return this.usersCache$;
-  }
-
   public read(id: string, addConfig?: boolean): Observable<User> {
-    const options = Object.assign({
-      params: addConfig ? this.config : undefined
-    }, this.httpOptions);
-
-    return this.http.get<User>(this.url + id, options).pipe(
-      map(user => Object.assign(user, {
-        group: user.group || [],
-        applications: (user.applications && user.applications.application) ? user.applications : {
-          application: []
-        }
+    return this.http.get<User>(this.url + id, this.getOptions(addConfig)).pipe(
+      map(user => Object.assign(this.fillEmptyValues(user, new User()), {
+        applications: {
+          application: user.applications.application || []
+        },
+        group: user.group.length > 0 ? user.group : []
       })),
-      catchError(errorMsg => {
-        console.log(errorMsg);
-        if (errorMsg.status === 404 && id === 'new') {
+      catchError(err => {
+        if (err.status === 404 && id === 'new') {
           return of(new User());
         }
+
+        return this.handleError({
+          message: 'Użytkownik o ID: ' + id + ' nie istnieje.',
+          error: err
+        });
       }),
       shareReplay()
     );
   }
 
   public departments(): Observable<string[]> {
-    return this.http.get<{department}>('https://vm-kajko:8181/setup/realms/iuip/departments', this.httpOptions).pipe(
-      map(response => response.department.sort((departmentA, departmentB) => departmentB > departmentA ? -1 : 1)),
-      catchError(errorMsg => {
-        console.error(errorMsg);
-        return of();
-      })
+    return this.http.get<{department}>(this.departmentsUrl, this.httpOptions).pipe(
+      map(response => this.sortBy(response.department)),
+      catchError(err => this.handleError({
+        message: 'Nie udało się pobranić słownika wydziałów.',
+        error: err
+      }))
     );
   }
 
   public create(user: User, addConfig?: boolean): Observable<any> {
-    const options = Object.assign({
-      params: addConfig ? this.config : undefined
-    }, this.httpOptions);
-
-    return this.http.post<User>(this.url, this.transform(user), options).pipe(
-      tap(() => this.list(true)),
-      catchError(error => {
-        console.log('bład dodawania użytkownika', error);
-        return of();
-      }),
+    return this.http.post<User>(this.url, this.transform(user), this.getOptions(addConfig)).pipe(
+      tap(() => this.openSnackBar({
+        message: 'Utworzono nowego użytkownika'
+      })),
+      catchError(err => this.handleError({
+        message: 'Nie udało się zapisać użytkownika.',
+        subject: 'Użytkownik',
+        error: err
+      })),
       shareReplay()
     );
   }
 
-  public update(user: User, id: string, addConfig?: boolean): Observable<any> {
-    const options = Object.assign({
-      params: addConfig ? this.config : undefined
-    }, this.httpOptions);
-
-    return this.http.put<User>(this.url + id, this.transform(user), options).pipe(
-      tap(() => this.list(true)),
-      catchError(error => {
-        console.log('bład edycji użytkownika', error);
-        return of();
-      }),
+  public update(user: User, id: string, addConfig?: boolean) {
+    return this.http.put<User>(this.url + id, this.transform(user), this.getOptions(addConfig)).pipe(
+      tap(() => this.openSnackBar({
+        message: 'Zaktualizowano użytkownika'
+      })),
+      catchError(err => this.handleError({
+        message: 'Nie udało się zapisać zmian.',
+        subject: 'Użytkownik',
+        error: err
+      })),
       shareReplay()
     );
   }
 
   public delete(id: string): Observable<any> {
-    return this.http.delete<any>(this.url + id, this.httpOptions).pipe(
-      tap(() => this.list(true)),
-      catchError(error => {
-        console.log('bład usuwania użytkownika', error);
-        return of();
-      })
-    );
+    return this.createDialog({
+      message: 'Czy na pewno chcesz usunąć konto użytkownika: ' + id + '?',
+      buttons: 'yes/no'
+    }).afterClosed().pipe(
+      map(response => {
+        if (response === 'yes') {
+          return this.http.delete<any>(this.url + id, this.httpOptions).pipe(
+            tap(() => this.openSnackBar({
+              message: 'Usunięto użytkownika'
+            })),
+            catchError(err => {
+              const message = (err.status === 400) ?
+                'Nie można usunąć swojego konta użytkownika.' :
+                'Nie udało się usunąć użytkownika o ID: ' + id + '.';
+
+              return this.handleError({
+                message,
+                error: err
+              });
+            })
+          );
+        }
+        return;
+      }));
   }
 
   private transform(user) {
@@ -142,14 +151,6 @@ export class UserService {
       //   application: user.applications.application.map(application => ({id: application.id}))
       // }
     });
-  }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.log('${operation} failed: ${error.message}');
-
-      return of(result as T);
-    };
   }
 
 }
