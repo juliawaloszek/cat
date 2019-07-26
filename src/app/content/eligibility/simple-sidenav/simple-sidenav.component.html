@@ -1,0 +1,48 @@
+<mat-sidenav-container>
+  <mat-sidenav>
+    <div class="">
+      <mat-toolbar>
+        <div class="spacer"></div>
+        <button></button>
+
+        <div class="buttons-container">
+          <button mat-icon-button *ngIf="!hideToolbarButtons" class="mat-icon"
+                  [@displayMenuText]="sidenavIsExpanded ? 'show' : 'hide'"
+                  routerLink="{{ path }} + new">
+            <mat-icon class="mat-18">add</mat-icon>
+          </button>
+          <button mat-icon-button *ngIf="!hideToolbarButtons" class="mat-icon"
+                  [@displayMenuText]="sidenavIsExpanded ? 'show' : 'hide'"
+                  (click)="onDeleteButtonClick()">
+            <mat-icon class="mat-18">add</mat-icon>
+          </button>
+          <button mat-icon-button class="mat-icon" (click)="toggleSidenav()">
+            <mat-icon *ngIf="!sidenavIsExpanded">keyboard_arrow_right</mat-icon>
+            <mat-icon *ngIf="sidenavIsExpanded">keyboard_arrow_left</mat-icon>
+          </button>
+        </div>
+      </mat-toolbar>
+
+      <div class="list-content">
+        <div *ngIf="sidenavIsExpanded" class="filter-field">
+          <!--                <mat-icon>search</mat-icon>-->
+          <mat-form-field>
+            <input matInput [(ngModel)]="filterUsers" placeholder="Filtrowanie...">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <mat-list *ngIf="service.list() | async as list">
+        <div *ngFor="let item of list" [@displayMenuText]="sidenavIsExpanded ? 'show' : 'hide'">
+          <mat-list-item *ngIf="searchInObject(item, filterUsers)">
+            {{ user.name && user.name.full ? user.name.full : user.id }}
+          </mat-list-item>
+        </div>
+      </mat-list>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content [@animateSideNavContent]="sidenavIsExpanded ? 'close' : 'open'">
+    <app-user-info #userData *ngIf="params.name === 'users' && params.id"
+                   (updateList)="updateList($event)"></app-user-info>
+  </mat-sidenav-content>
+</mat-sidenav-container>
