@@ -16,7 +16,7 @@ export class GroupComponent implements OnInit {
   @Input() groups: Group[];
   @Output() updateList = new EventEmitter<any>();
 
-  private groupSource: GroupSource;
+  groupSource: GroupSource;
 
   constructor(private groupService: GroupService,
               private dialog: MatDialog) { }

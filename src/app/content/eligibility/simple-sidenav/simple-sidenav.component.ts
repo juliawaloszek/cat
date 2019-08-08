@@ -12,12 +12,12 @@ export class SimpleSidenavComponent implements OnInit {
   @Input() service;
   @Input() path: string;
 
-  private item$: Observable<any>;
-  private sidenavIsExpanded = true;
-  private filterUsers = '';
-  private params: any;
-  private panel;
-  private list;
+  item$: Observable<any>;
+  sidenavIsExpanded = true;
+  filterUsers = '';
+  params: any;
+  panel;
+  list;
 
   constructor(private route: ActivatedRoute,
               private router: Router) { }

@@ -1,10 +1,10 @@
-import {Component, HostListener, OnInit, ViewChild, HostBinding} from '@angular/core';
+import { Component, HostBinding, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material';
 import { UserService } from './service/user.service';
 import { User } from './service/model/user';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { ThemeService, THEMES_DATA, ACTIVE_THEME } from './service/theme.service';
+import { ACTIVE_THEME, ThemeService } from './service/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +14,7 @@ import { ThemeService, THEMES_DATA, ACTIVE_THEME } from './service/theme.service
 
 export class AppComponent implements OnInit {
   @ViewChild('sidenavMenu') sidenav: MatSidenav;
-  private activeUser$: Observable<User>;
+  activeUser$: Observable<User>;
 
   @HostBinding('class')
   themeClass;

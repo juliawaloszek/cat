@@ -29,14 +29,12 @@ export class EligibilityComponent implements OnInit {
   @ViewChild('groupData') groupDataPanel: GroupInfoComponent;
   @ViewChild('appData') appDataPanel: ApplicationInfoComponent;
 
-  private filterUsers = '';
-  private filterGroups = '';
-  private params: any = {};
-
+  filterUsers = '';
+  filterGroups = '';
+  params: any = {};
   users: User[];
   groups: Group[];
   applications: Application[];
-
   sideNavState$: Subject<boolean> = new Subject();
   sideNavState = false;
   linkText = false;
@@ -75,7 +73,7 @@ export class EligibilityComponent implements OnInit {
     });
   }
 
-  private onTabChange(index) {
+  public onTabChange(index) {
     console.log(this.eligibilityTabPanel);
     switch (index) {
       case 0:

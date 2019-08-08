@@ -1,13 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Group} from '../../../service/model/group';
-import {MatDialog} from '@angular/material';
-import {GroupService} from '../../../service/group.service';
-import {SimpleTableComponent} from '../../../components/simple-table/simple-table.component';
-import {map} from 'rxjs/operators';
-import {Observable, of} from 'rxjs';
-import {AppSource} from '../model/app-source';
-import {UserService} from '../../../service/user.service';
-import {ActivatedRoute} from '@angular/router';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Group } from '../../../service/model/group';
+import { GroupService } from '../../../service/group.service';
+import { Observable } from 'rxjs';
+import { AppSource } from '../model/app-source';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-group-info',
@@ -18,8 +14,8 @@ import {ActivatedRoute} from '@angular/router';
 export class GroupInfoComponent implements OnInit {
   @Output() updateList = new EventEmitter<any>();
 
-  private group$: Observable<Group>;
-  private appsData: AppSource;
+  group$: Observable<Group>;
+  appsData: AppSource;
 
   constructor(private groupService: GroupService,
               private route: ActivatedRoute) { }

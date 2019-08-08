@@ -14,9 +14,9 @@ import {ApplicationService} from '../../../service/application.service';
 export class ApplicationInfoComponent implements OnInit {
   @Input() application: Application;
 
-  private application$: Observable<Application>;
-  private groups: Group[] = [];
-  private users: User[] = [];
+  application$: Observable<Application>;
+  groups: Group[] = [];
+  users: User[] = [];
 
   constructor(private applicationService: ApplicationService,
               private route: ActivatedRoute) { }

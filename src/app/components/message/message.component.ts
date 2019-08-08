@@ -19,7 +19,7 @@ export class Config {
   styleUrls: ['./message.component.scss']
 })
 export class MessageComponent implements OnInit {
-  private buttons: Button[] = [{
+  buttons: Button[] = [{
     text: 'OK',
     code: 'ok',
     function: this.closeDialog

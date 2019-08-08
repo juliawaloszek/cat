@@ -1,16 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {User} from '../../../service/model/user';
-import {Group} from '../../../service/model/group';
-import {GroupService} from '../../../service/group.service';
-import {FormControl} from '@angular/forms';
-import {Observable, of} from 'rxjs';
-import {catchError, map, tap} from 'rxjs/operators';
-import {UserService} from '../../../service/user.service';
-import {AppSource} from '../model/app-source';
-import {GroupSource} from '../model/group-source';
-import {ActivatedRoute} from '@angular/router';
-import {error} from 'util';
-import {errorObject} from 'rxjs/internal-compatibility';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { User } from '../../../service/model/user';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { UserService } from '../../../service/user.service';
+import { AppSource } from '../model/app-source';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-info',
@@ -20,7 +14,7 @@ import {errorObject} from 'rxjs/internal-compatibility';
 export class UserInfoComponent implements OnInit {
   @Output() updateList = new EventEmitter<any>();
 
-  private user$: Observable<User>;
+  user$: Observable<User>;
   private optionsControl = new FormControl();
   private departments: string[];
   private appSource: AppSource;

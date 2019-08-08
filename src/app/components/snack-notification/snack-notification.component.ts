@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./snack-notification.component.scss']
 })
 export class SnackNotificationComponent implements OnInit {
+  message = '';
 
   constructor() { }
 

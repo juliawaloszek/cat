@@ -15,7 +15,8 @@ export class UserComponent implements OnInit {
   @ViewChild('table') userTable: SimpleTableComponent;
   @Output() updateList = new EventEmitter<any>();
   @Input() users: User[];
-  private userSource: UserSource;
+
+  userSource: UserSource;
 
   constructor(private userService: UserService,
               private dialog: MatDialog) { }
