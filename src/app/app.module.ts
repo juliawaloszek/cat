@@ -59,6 +59,7 @@ import { ApplicationComponent } from './content/eligibility/cards/application/ap
 import { FunctionalityComponent } from './content/eligibility/cards/application/functionality/functionality.component';
 import { MessageComponent } from './components/message/message.component';
 import { SimpleSidenavComponent } from './content/eligibility/simple-sidenav/simple-sidenav.component';
+import { SnackNotificationComponent } from './components/snack-notification/snack-notification.component';
 
 
 @NgModule({
@@ -84,7 +85,8 @@ import { SimpleSidenavComponent } from './content/eligibility/simple-sidenav/sim
     ApplicationComponent,
     FunctionalityComponent,
     MessageComponent,
-    SimpleSidenavComponent
+    SimpleSidenavComponent,
+    SnackNotificationComponent
   ],
   imports: [
     BrowserModule,
