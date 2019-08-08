@@ -30,6 +30,7 @@ export class EligibilityComponent implements OnInit {
   @ViewChild('appData') appDataPanel: ApplicationInfoComponent;
 
   private filterUsers = '';
+  private filterGroups = '';
   private params: any = {};
 
   users: User[];
@@ -117,9 +118,9 @@ export class EligibilityComponent implements OnInit {
       case 'groups':
         this.groupDataPanel.save(this.params.id);
         break;
-      // case 'applications':
-      //   this.appDataPanel.save(this.params.id);
-      //   break;
+      case 'applications':
+        this.appDataPanel.save(this.params.id);
+        break;
       default:
         this.userDataPanel.save(this.params.id);
         break;
@@ -131,9 +132,9 @@ export class EligibilityComponent implements OnInit {
       case 'groups':
         this.groupDataPanel.cancel(this.params.id);
         break;
-      // case 'applications':
-      //   this.appDataPanel.cancel(this.params.id);
-      //   break;
+      case 'applications':
+        this.appDataPanel.cancel(this.params.id);
+        break;
       default:
         this.userDataPanel.cancel(this.params.id);
         break;

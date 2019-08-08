@@ -28,14 +28,14 @@
               </div>
             </mat-toolbar>
 
-            <div class="sidenav-list-content">
-              <div *ngIf="!linkText" class="filter-field">
+            <div *ngIf="!linkText" class="filter-field">
 <!--                <mat-icon>search</mat-icon>-->
-                <mat-form-field>
-                  <input matInput [(ngModel)]="filterUsers" placeholder="Filtrowanie...">
-                </mat-form-field>
-              </div>
+              <mat-form-field [floatLabel]="'never'">
+                <input matInput [(ngModel)]="filterUsers" placeholder="Filtrowanie..."/>
+              </mat-form-field>
+            </div>
 
+            <div class="sidenav-list-content">
               <mat-list *ngIf="users">
                 <div [@displayMenuText]="linkText ? 'hide' : 'show'"
                      *ngFor="let user of users">
@@ -79,14 +79,23 @@
               </div>
             </mat-toolbar>
 
+            <div *ngIf="!linkText" class="filter-field">
+              <!--                <mat-icon>search</mat-icon>-->
+              <mat-form-field [floatLabel]="'never'">
+                <input matInput [(ngModel)]="filterGroups" placeholder="Filtrowanie..."/>
+              </mat-form-field>
+            </div>
+
             <div class="sidenav-list-content">
               <mat-list *ngIf="groups">
-                  <mat-list-item [@displayMenuText]="linkText ? 'hide' : 'show'"
-                                  *ngFor="let group of groups"
-                                  routerLink="/eligibility/groups/{{ group.id }}"
-                                  routerLinkActive="active" matRipple>
-                  {{ group.name }}
-                </mat-list-item>
+                <div [@displayMenuText]="linkText ? 'hide' : 'show'"
+                     *ngFor="let group of groups">
+                  <mat-list-item *ngIf="searchInObject(group, filterGroups)"
+                                 routerLink="/eligibility/groups/{{ group.id }}"
+                                 routerLinkActive="active" matRipple>
+                    {{ group.name }}
+                  </mat-list-item>
+                </div>
               </mat-list>
             </div>
           </div>

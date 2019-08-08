@@ -58,7 +58,6 @@ import { UserComponent } from './content/eligibility/cards/user/user.component';
 import { ApplicationComponent } from './content/eligibility/cards/application/application.component';
 import { FunctionalityComponent } from './content/eligibility/cards/application/functionality/functionality.component';
 import { MessageComponent } from './components/message/message.component';
-import { SnackNotificationComponent } from './components/snack-notification/snack-notification.component';
 import { SimpleSidenavComponent } from './content/eligibility/simple-sidenav/simple-sidenav.component';
 
 
@@ -85,7 +84,6 @@ import { SimpleSidenavComponent } from './content/eligibility/simple-sidenav/sim
     ApplicationComponent,
     FunctionalityComponent,
     MessageComponent,
-    SnackNotificationComponent,
     SimpleSidenavComponent
   ],
   imports: [

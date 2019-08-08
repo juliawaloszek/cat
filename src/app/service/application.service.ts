@@ -51,10 +51,12 @@ export class ApplicationService extends BaseService {
           application.functionalities.functionality =
             this.sortBy(application.functionalities.functionality, 'name');
 
-          if (application.functionalities.functionality.privileges) {
-            application.functionalities.functionality.privileges =
-              this.sortBy(application.functionalities.functionality.privileges.privilege, 'name');
-          }
+          const functionalities = application.functionalities.functionality;
+          functionalities.forEach(function(functionality) {
+            if (functionality.privileges) {
+              functionality.privileges = this.sortBy(functionality.privileges.privilege, 'name');
+            }
+          });
         }
         return application;
       }),

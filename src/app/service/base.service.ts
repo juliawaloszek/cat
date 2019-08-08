@@ -1,5 +1,5 @@
 import { Injectable, isDevMode } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { MessageComponent } from '../components/message/message.component';
@@ -9,7 +9,12 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export abstract class BaseService {
-  protected httpOptions;
+  protected httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    }),
+    withCredentials: false
+  };
   protected baseUrl;
   protected config;
   protected listCache$;
@@ -23,9 +28,7 @@ export abstract class BaseService {
                         protected dialog: MatDialog,
                         protected snack: MatSnackBar) {
     if (isDevMode()) {
-      this.httpOptions = {
-        withCredentials: true
-      };
+      this.httpOptions.withCredentials = true;
       this.baseUrl = 'https://vm-kajko:8181';
     }
   }
@@ -123,10 +126,10 @@ export abstract class BaseService {
       case 403: // dla niezalogowanego użytkownika
         // dowiedzieć się jak zatrzymać resztę wypływających żądań
         message = 'Brak uprawnień do danego żądania. Czy chcesz zalogować się na inne konto?';
-        buttons = 'yes/no'
+        buttons = 'yes/no';
         break;
       case 409:
-        message = config.subject + ' o takim ID już istnieje.'
+        message = config.subject + ' o takim ID już istnieje.';
         break;
       case 500:
         message = 'Wewnętrzny błąd serwera, proszę się skontaktować z administratorem.';
